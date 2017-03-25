@@ -119,7 +119,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
-        
+
         initView();
 
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -260,16 +260,21 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
     @Override
     public void show(int timeout) {
+
+        doPauseResume();
+
         if (!mShowing || mIsLocked) {
             if (mPlayPause != null)
                 mPlayPause.requestFocus();
             showOverlay();
             mShowing = true;
         }
+
         if (!mIsLocked) {
             updatePlayPause();
             mHandler.sendEmptyMessage(SHOW_PROGRESS);
         }
+
         if (timeout != 0) {
             mHandler.removeMessages(FADE_OUT);
             mHandler.sendMessageDelayed(mHandler.obtainMessage(FADE_OUT),
@@ -426,19 +431,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
         mTouchAction = TOUCH_VOLUME;
         vol = vol * 100 / mAudioMax;
-//        showInfoWithVerticalBar(getString(R.string.volume) + "\n" + Integer.toString(vol) + '%', 1000, vol);
     }
 
     private void mute(boolean mute) {
         mMute = mute;
-//        if (mMute)
-//            mVolSave = mService.getVolume();
-//        mService.setVolume(mMute ? 0 : mVolSave);
     }
 
     private void updateMute () {
         mute(!mMute);
-//        showInfo(mMute ? R.string.sound_off : R.string.sound_on, 1000);
     }
 
     private void changeBrightness(float delta) {
@@ -625,10 +625,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
         if (mMediaPlayerControl.isPlaying()) {
             mPlayPause.setImageResource(R.drawable.ic_pause);
-//            Log.i(TAG, "isPlaying setImageResource pause");
+            Log.i(TAG, "isPlaying setImageResource pause");
         } else {
             mPlayPause.setImageResource(R.drawable.ic_play);
-//            Log.i(TAG, "!isPlaying setImageResource play");
+            Log.i(TAG, "!isPlaying setImageResource play");
         }
     }
 
