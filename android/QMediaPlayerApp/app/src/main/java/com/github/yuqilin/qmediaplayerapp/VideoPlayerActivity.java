@@ -82,8 +82,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     ImageView mRotateScreen;
 
     // center tools view
-    View mToolsView;
-    ImageView mSnapshot;
+//    View mToolsView;
+//    ImageView mSnapshot;
     ImageView mTakeGif;
     ImageView mLockCenter;
 
@@ -222,8 +222,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
     private void initView() {
         mVideoView = (QMediaPlayerVideoView) findViewById(R.id.player_video_view);
-//        mTitleView = (PlayerTitleView) findViewById(R.id.player_title_view);
-//        mBottomView = (PlayerBottomView) findViewById(R.id.player_bottom_view);
 
         // title view
         mTitleView = findViewById(R.id.player_title_view);
@@ -247,9 +245,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mRotateScreen = (ImageView) findViewById(R.id.view_player_rotation);
 
         // center tools view
-        mToolsView = findViewById(R.id.player_tools_view);
-        mSnapshot = (ImageView) findViewById(R.id.view_player_take_snapshot);
-        mTakeGif = (ImageView) findViewById(R.id.view_player_take_gif);
         mLockCenter = (ImageView) findViewById(R.id.view_player_lock_center);
 
         mBack.setOnClickListener(mBackListener);
@@ -261,8 +256,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mRewind.setOnClickListener(mRewindListener);
         mDisplayRatio.setOnClickListener(mDisplayRatioListener);
         mRotateScreen.setOnClickListener(mRotateScreenListener);
-        mSnapshot.setOnClickListener(mSnapshotListener);
-        mTakeGif.setOnClickListener(mTakeGifListener);
         mSeekBar.setOnSeekBarChangeListener(mSeekListener);
         mLockCenter.setOnClickListener(mLockScreenListener);
 
@@ -497,24 +490,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     }
 
     private long getTime() {
-//        long time = mVideoView.getCurrentPosition();
-//        if (mForcedTime != -1 && mLastTime != -1) {
-//            /* XXX: After a seek, mService.getTime can return the position before or after
-//             * the seek position. Therefore we return mForcedTime in order to avoid the seekBar
-//             * to move between seek position and the actual position.
-//             * We have to wait for a valid position (that is after the seek position).
-//             * to re-init mLastTime and mForcedTime to -1 and return the actual position.
-//             */
-//            if (mLastTime > mForcedTime) {
-//                if (time <= mLastTime && time > mForcedTime || time > mLastTime)
-//                    mLastTime = mForcedTime = -1;
-//            } else {
-//                if (time > mForcedTime)
-//                    mLastTime = mForcedTime = -1;
-//            }
-//        } else if (time == 0)
-//            time = (int) mService.getCurrentMediaWrapper().getTime();
-//        return mForcedTime == -1 ? time : mForcedTime;
         return 0;
     }
 
@@ -669,16 +644,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private View.OnClickListener mSnapshotListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            takeSnapshot();
+//            takeSnapshot();
         }
     };
 
-    private View.OnClickListener mTakeGifListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            takeGif();
-        }
-    };
 
     private void updatePlayPause() {
         if (mPlayPause == null)
@@ -851,7 +820,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 //            mLockCenter.setVisibility(View.INVISIBLE);
             mTitleView.setVisibility(View.VISIBLE);
             mBottomView.setVisibility(View.VISIBLE);
-            mToolsView.setVisibility(View.VISIBLE);
+//            mToolsView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -861,9 +830,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         } else {
             mTitleView.setVisibility(View.INVISIBLE);
             mBottomView.setVisibility(View.INVISIBLE);
-            mToolsView.setVisibility(View.INVISIBLE);
+//            mToolsView.setVisibility(View.INVISIBLE);
         }
 
     }
-
 }
