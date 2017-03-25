@@ -73,13 +73,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     TextView mCurrentTime;
     TextView mTotalTime;
     SeekBar mSeekBar;
-    ImageView mLockScreen;
-    ImageView mFloatScreen;
-    ImageView mForward;
     ImageView mPlayPause;
-    ImageView mRewind;
-    ImageView mDisplayRatio;
-    ImageView mRotateScreen;
 
     // center tools view
 //    View mToolsView;
@@ -125,8 +119,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
-
-
+        
         initView();
 
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -233,26 +226,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mCurrentTime = (TextView) findViewById(R.id.view_player_current_time);
         mTotalTime = (TextView) findViewById(R.id.view_player_total_time);
         mSeekBar = (SeekBar) findViewById(R.id.view_player_seekbar);
-        mLockScreen = (ImageView) findViewById(R.id.view_player_lock_screen);
-        mFloatScreen = (ImageView) findViewById(R.id.view_player_float_screen);
-        mForward = (ImageView) findViewById(R.id.view_player_forward);
         mPlayPause = (ImageView) findViewById(R.id.view_player_play_pause);
-        mRewind = (ImageView) findViewById(R.id.view_player_rewind);
-        mDisplayRatio = (ImageView) findViewById(R.id.view_player_display_ratio);
-        mRotateScreen = (ImageView) findViewById(R.id.view_player_rotation);
 
         // center tools view
         mLockCenter = (ImageView) findViewById(R.id.view_player_lock_center);
 
         mBack.setOnClickListener(mBackListener);
         mShowMore.setOnClickListener(mShowMoreListener);
-        mLockScreen.setOnClickListener(mLockScreenListener);
-        mFloatScreen.setOnClickListener(mFloatScreenListener);
-        mForward.setOnClickListener(mForwardListener);
         mPlayPause.setOnClickListener(mPlayPauseListener);
-        mRewind.setOnClickListener(mRewindListener);
-        mDisplayRatio.setOnClickListener(mDisplayRatioListener);
-        mRotateScreen.setOnClickListener(mRotateScreenListener);
         mSeekBar.setOnSeekBarChangeListener(mSeekListener);
         mLockCenter.setOnClickListener(mLockScreenListener);
 
