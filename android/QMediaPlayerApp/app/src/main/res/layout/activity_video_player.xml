@@ -52,16 +52,20 @@
 
     </LinearLayout>
 
-    <com.github.yuqilin.qmediaplayer.QMediaPlayerVideoView
-        android:id="@+id/player_video_view"
+    <LinearLayout
+        android:id="@+id/video_videw"
         android:layout_width="match_parent"
-        android:layout_height="342dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" >
-
-
-    </com.github.yuqilin.qmediaplayer.QMediaPlayerVideoView>
+        android:layout_height="342dp">
+        <com.github.yuqilin.qmediaplayer.QMediaPlayerVideoView
+            android:id="@+id/player_video_view"
+            android:layout_width="match_parent"
+            android:layout_height="342dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true">
+        </com.github.yuqilin.qmediaplayer.QMediaPlayerVideoView>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/player_bottom_view"

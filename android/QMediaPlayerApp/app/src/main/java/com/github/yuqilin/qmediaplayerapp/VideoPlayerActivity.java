@@ -129,9 +129,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
         initView();
 
-        hideStatusBar();
-//        dimStatusBar(true);
-
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
 
         mVideoPath = getIntent().getStringExtra("videoPath");
@@ -277,7 +274,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
     @Override
     public void show() {
-        show(DEFAULT_TIMEOUT);
+        show(0);
     }
 
     @Override
@@ -301,12 +298,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
     @Override
     public void hide() {
-        if (mShowing || mIsLocked) {
-            mHandler.removeMessages(FADE_OUT);
-            mHandler.removeMessages(SHOW_PROGRESS);
-            hideOverlay();
-            mShowing = false;
-        }
+//        if (mShowing || mIsLocked) {
+//            mHandler.removeMessages(FADE_OUT);
+//            mHandler.removeMessages(SHOW_PROGRESS);
+//            hideOverlay();
+//            mShowing = false;
+//        }
     }
 
     @Override
@@ -469,7 +466,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         float brightness =  Math.min(Math.max(lp.screenBrightness + delta, 0.01f), 1f);
         setWindowBrightness(brightness);
         brightness = Math.round(brightness * 100);
-//        showInfoWithVerticalBar(getString(R.string.brightness) + "\n" + (int) brightness + '%', 1000, (int) brightness);
     }
 
     private void setWindowBrightness(float brightness) {
@@ -641,13 +637,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         }
     };
 
-    private View.OnClickListener mSnapshotListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-//            takeSnapshot();
-        }
-    };
-
 
     private void updatePlayPause() {
         if (mPlayPause == null)
@@ -754,14 +743,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mIntent.setClass(VideoPlayerActivity.this, PlayBackService.class);
         VideoPlayerActivity.this.startService(mIntent);
         VideoPlayerActivity.this.finish();
-    }
-
-    private void takeSnapshot() {
-        FFmpegInvoke.help();
-    }
-
-    private void takeGif() {
-
     }
 
     /**
