@@ -20,4 +20,9 @@
     <!--<string name="fragment_page_home">HOME</string>-->
     <!--<string name="fragment_page_videos">VIDEOS</string>-->
     <!--<string name="fragment_page_folders">FOLDERS</string>-->
+
+    <string name="type_music">Music</string>
+    <string name="type_alarm">Alarm</string>
+    <string name="type_notification">Notification</string>
+    <string name="type_ringtone">Ringtone</string>
 </resources>

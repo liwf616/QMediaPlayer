@@ -30,4 +30,6 @@
     <color name="text_black">#de000000</color>
     <color name="text_gray">#8a000000</color>
 
+    <color name="gray_background">#4d4d4d</color>
+
 </resources>

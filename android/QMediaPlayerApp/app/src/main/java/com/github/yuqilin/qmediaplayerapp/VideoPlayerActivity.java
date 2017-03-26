@@ -22,8 +22,11 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.yuqilin.qmediaplayer.FFmpegInvoke;
@@ -34,6 +37,7 @@ import com.github.yuqilin.qmediaplayerapp.util.Permissions;
 import com.github.yuqilin.qmediaplayerapp.util.Util;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -55,8 +59,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private static final int FAST_FORWARD_STEP = 15000; // milliseconds
 
     private String mVideoPath;
-//    private PlayerTitleView mTitleView;
-//    private PlayerBottomView mBottomView;
     private QMediaPlayerVideoView mVideoView;
     private IMediaController.MediaPlayerControl mMediaPlayerControl;
 
@@ -76,8 +78,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     ImageView mPlayPause;
 
     // center tools view
-//    View mToolsView;
-//    ImageView mSnapshot;
     ImageView mTakeGif;
     ImageView mLockCenter;
 
@@ -114,6 +114,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private float mRestoreAutoBrightness = -1f;
 
     private SharedPreferences mSettings;
+
+    //spinner
+    private ArrayList<String> mTypeArray;
+    private Spinner mTypeSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,11 +235,26 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         // center tools view
         mLockCenter = (ImageView) findViewById(R.id.view_player_lock_center);
 
+        //spiiner
+        mTypeArray = new ArrayList<String>();
+        mTypeArray.add("MP3");
+        mTypeArray.add("AAC");
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mTypeArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        mTypeSpinner = (Spinner) findViewById(R.id.view_choose_format);
+        mTypeSpinner.setAdapter(adapter);
+        mTypeSpinner.setSelection(0);
+
         mBack.setOnClickListener(mBackListener);
         mShowMore.setOnClickListener(mShowMoreListener);
         mPlayPause.setOnClickListener(mPlayPauseListener);
         mSeekBar.setOnSeekBarChangeListener(mSeekListener);
         mLockCenter.setOnClickListener(mLockScreenListener);
+
+        mTypeSpinner.setOnItemSelectedListener(mOnSelectTypeListener);
 
         mSeekBar.setThumbOffset(1);
         mSeekBar.setMax(1000);
@@ -246,6 +265,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         mHandler.sendEmptyMessage(UPDATE_SYSTIME);
+
+
     }
 
     @Override
@@ -613,6 +634,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         @Override
         public void onClick(View view) {
             floatScreen();
+        }
+    };
+
+    private AdapterView.OnItemSelectedListener mOnSelectTypeListener = new AdapterView.OnItemSelectedListener () {
+        @Override
+        public void onItemSelected(AdapterView parent, View v, int position, long id) {
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView parent) {
         }
     };
 

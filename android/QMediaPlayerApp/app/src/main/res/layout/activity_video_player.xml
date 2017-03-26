@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/grey400transparent">
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/view_player_current_time"
@@ -115,6 +115,56 @@
             android:layout_marginRight="8dp" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/spinner_view"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/view_format"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FORMAT"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp" />
+
+
+        <TextView
+            android:id="@+id/view_bits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:text="BITS"
+            android:layout_marginLeft="8dp" />
+
+        <Spinner
+            android:id="@+id/view_choose_format"
+            android:layout_width="160dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_alignParentLeft="true"
+            android:background="@color/colorPrimaryDark"
+            android:popupBackground="@color/colorPrimaryDark"
+            android:layout_below="@id/view_format"/>
+
+        <Spinner
+            android:id="@+id/view_choose_bit"
+            android:layout_width="160dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorPrimaryDark"
+            android:popupBackground="@color/colorPrimaryDark"
+            android:layout_below="@id/view_bits"/>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/view_player_lock_center"
