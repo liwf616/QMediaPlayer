@@ -56,11 +56,11 @@
 
 
     <ImageView
-        android:id="@+id/item_video_list_more"
+        android:id="@+id/item_video_cut_2_audio"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="16dp"
-        android:src="@drawable/icon_more"/>
+        android:src="@drawable/icon_cut"/>
 
 </LinearLayout>
