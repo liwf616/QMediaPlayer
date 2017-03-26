@@ -168,6 +168,23 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/player_convert_view"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/view_player_convert_button"
+            android:layout_width="160dp"
+            android:layout_height="48dp"
+            android:padding="4dp"
+            android:src="@drawable/button_convert" />
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/view_player_lock_center"
         android:layout_width="wrap_content"

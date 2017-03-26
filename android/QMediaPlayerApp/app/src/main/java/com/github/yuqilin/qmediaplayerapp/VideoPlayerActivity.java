@@ -121,6 +121,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private ArrayList<String> mBitsArray;
     private Spinner mBitsSpinner;
 
+    //
+    ImageView mConvertButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,7 +240,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         // center tools view
         mLockCenter = (ImageView) findViewById(R.id.view_player_lock_center);
 
-        //spiiner
+        //transcode
+        mConvertButton = (ImageView) findViewById(R.id.view_player_convert_button);
+
+        //spinner
         mTypeArray = new ArrayList<String>();
         mTypeArray.add("MP3");
         mTypeArray.add("AAC");
@@ -251,7 +257,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mBitsArray.add("130kbs vbr(slow)");
         mBitsArray.add("190kb/s VBR(slow)");
         mBitsArray.add("245kb/s VBR(slow)");
-
 
         ArrayAdapter<String> typeAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mTypeArray);
@@ -276,6 +281,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mLockCenter.setOnClickListener(mLockScreenListener);
         mTypeSpinner.setOnItemSelectedListener(mOnSelectTypeListener);
         mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
+        mConvertButton.setOnClickListener(mStartConvertListener);
 
         mSeekBar.setThumbOffset(1);
         mSeekBar.setMax(1000);
@@ -653,6 +659,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         @Override
         public void onClick(View view) {
             floatScreen();
+        }
+    };
+
+    private View.OnClickListener mStartConvertListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Log.i(TAG, "start convert");
         }
     };
 
