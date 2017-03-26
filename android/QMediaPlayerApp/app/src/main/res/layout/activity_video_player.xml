@@ -129,7 +129,8 @@
             android:text="FORMAT"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            android:textSize="18dp"/>
 
 
         <TextView
@@ -140,7 +141,8 @@
             android:layout_marginRight="8dp"
             android:layout_alignParentRight="true"
             android:text="BITS"
-            android:layout_marginLeft="8dp" />
+            android:layout_marginLeft="8dp"
+            android:textSize="18dp"/>
 
         <Spinner
             android:id="@+id/view_choose_format"

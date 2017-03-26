@@ -118,6 +118,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     //spinner
     private ArrayList<String> mTypeArray;
     private Spinner mTypeSpinner;
+    private ArrayList<String> mBitsArray;
+    private Spinner mBitsSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,21 +242,40 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mTypeArray.add("MP3");
         mTypeArray.add("AAC");
 
-        ArrayAdapter<String> adapter =
+        mBitsArray = new ArrayList<String>();
+        mBitsArray.add("copy (32kb/s)");
+        mBitsArray.add("128kbs CBR");
+        mBitsArray.add("192kbs CBR");
+        mBitsArray.add("256kbs CBR");
+        mBitsArray.add("320kbs CBR");
+        mBitsArray.add("130kbs vbr(slow)");
+        mBitsArray.add("190kb/s VBR(slow)");
+        mBitsArray.add("245kb/s VBR(slow)");
+
+
+        ArrayAdapter<String> typeAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mTypeArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         mTypeSpinner = (Spinner) findViewById(R.id.view_choose_format);
-        mTypeSpinner.setAdapter(adapter);
+        mTypeSpinner.setAdapter(typeAdapter);
         mTypeSpinner.setSelection(0);
+
+        ArrayAdapter<String> bitsAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mBitsArray);
+        bitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        mBitsSpinner = (Spinner) findViewById(R.id.view_choose_bit);
+        mBitsSpinner.setAdapter(bitsAdapter);
+        mBitsSpinner.setSelection(0);
 
         mBack.setOnClickListener(mBackListener);
         mShowMore.setOnClickListener(mShowMoreListener);
         mPlayPause.setOnClickListener(mPlayPauseListener);
         mSeekBar.setOnSeekBarChangeListener(mSeekListener);
         mLockCenter.setOnClickListener(mLockScreenListener);
-
         mTypeSpinner.setOnItemSelectedListener(mOnSelectTypeListener);
+        mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
 
         mSeekBar.setThumbOffset(1);
         mSeekBar.setMax(1000);
@@ -265,8 +286,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         mHandler.sendEmptyMessage(UPDATE_SYSTIME);
-
-
     }
 
     @Override
@@ -638,6 +657,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     };
 
     private AdapterView.OnItemSelectedListener mOnSelectTypeListener = new AdapterView.OnItemSelectedListener () {
+        @Override
+        public void onItemSelected(AdapterView parent, View v, int position, long id) {
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView parent) {
+        }
+    };
+
+    private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
 
