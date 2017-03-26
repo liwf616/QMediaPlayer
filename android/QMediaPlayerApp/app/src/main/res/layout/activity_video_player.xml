@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/grey400transparent">
 
     <LinearLayout
         android:id="@+id/player_title_view"
@@ -78,11 +79,11 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="00dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary">
+        android:background="@color/grey400transparent">
 
         <TextView
             android:id="@+id/view_player_current_time"
@@ -114,7 +115,7 @@
             android:layout_marginRight="8dp" />
 
     </LinearLayout>
-    
+
     <ImageView
         android:id="@+id/view_player_lock_center"
         android:layout_width="wrap_content"
