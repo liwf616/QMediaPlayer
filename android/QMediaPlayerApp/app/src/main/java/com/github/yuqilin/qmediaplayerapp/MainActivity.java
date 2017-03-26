@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.View;
 
 import com.github.yuqilin.qmediaplayerapp.gui.home.HomeFragment;
+import com.github.yuqilin.qmediaplayerapp.gui.mp3.MyMp3Fragment;
+import com.github.yuqilin.qmediaplayerapp.gui.tasks.TaskFragment;
 import com.github.yuqilin.qmediaplayerapp.gui.video.VideoFragment;
 import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -62,6 +64,8 @@ public class MainActivity extends BaseActivity {
         mFragments.add(new HomeFragment());
         mVideoFragment = new VideoFragment();
         mFragments.add(mVideoFragment);
+        mFragments.add(new MyMp3Fragment());
+        mFragments.add(new TaskFragment());
 
         mAdpter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
