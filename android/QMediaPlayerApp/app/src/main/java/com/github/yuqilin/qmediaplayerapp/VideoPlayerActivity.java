@@ -261,8 +261,6 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     @Override
     public void show(int timeout) {
 
-        doPauseResume();
-
         if (!mShowing || mIsLocked) {
             if (mPlayPause != null)
                 mPlayPause.requestFocus();
@@ -568,7 +566,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         @Override
         public void onClick(View v) {
             doPauseResume();
-            show(DEFAULT_TIMEOUT);
+//            show(DEFAULT_TIMEOUT);
         }
     };
 
@@ -625,19 +623,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
         if (mMediaPlayerControl.isPlaying()) {
             mPlayPause.setImageResource(R.drawable.ic_pause);
-            Log.i(TAG, "isPlaying setImageResource pause");
         } else {
             mPlayPause.setImageResource(R.drawable.ic_play);
-            Log.i(TAG, "!isPlaying setImageResource play");
         }
     }
 
     private void doPauseResume() {
+        updatePlayPause();
         if (mMediaPlayerControl.isPlaying())
             mMediaPlayerControl.pause();
         else
             mMediaPlayerControl.start();
-        updatePlayPause();
     }
 
     private long setProgress() {
