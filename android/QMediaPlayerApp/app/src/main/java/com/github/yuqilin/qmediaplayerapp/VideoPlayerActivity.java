@@ -666,6 +666,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         @Override
         public void onClick(View view) {
             Log.i(TAG, "start convert");
+            FFmpegInvoke.help();
         }
     };
 
