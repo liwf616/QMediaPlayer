@@ -12,6 +12,13 @@
 
 extern int main(int argc, char **argv);
 
+// processing callback to handler class
+typedef struct tick_context {
+    jclass   mainActivityClz;
+    jobject  mainActivityObj;
+} TickContext;
+TickContext g_ctx;
+
 static JavaVM *g_jvm = NULL;
 
 JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray args) {
@@ -29,7 +36,11 @@ JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray a
             strObjs[i] = (jstring)(*env)->GetObjectArrayElement(env, args, i);
             argv[i] = (char *)(*env)->GetStringUTFChars(env, strObjs[i], NULL);
         }
-    }   
+    }
+
+    jclass clz = (*env)->GetObjectClass(env, obj);
+    g_ctx.mainActivityClz = (*env)->NewGlobalRef(env, clz);
+    g_ctx.mainActivityObj = (*env)->NewGlobalRef(env, obj);
 
     main(argc, argv);
 
@@ -66,6 +77,8 @@ extern JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
     if (!cls) {
         LOG("error:findclass failed for class'%s'", FFMPEG_INVOKE_CLASS);
     }
+
+    g_ctx.mainActivityObj = NULL;
 
     if ((*env)->RegisterNatives(env, cls, g_nativeMethods, sizeof(g_nativeMethods) / sizeof(g_nativeMethods[0])) < 0) {
         LOG("error:register natives failed for class'%s'", FFMPEG_INVOKE_CLASS);
