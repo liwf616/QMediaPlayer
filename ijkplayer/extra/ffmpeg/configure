@@ -1303,7 +1303,7 @@ require(){
     header="$2"
     func="$3"
     shift 3
-    check_lib $header $func "$@" || die "ERROR: $name not found"
+    check_lib $header $func "$@" || die "ERROR: $name header not found"
 }
 
 require2(){
@@ -4562,6 +4562,7 @@ fi
 check_exec <<EOF
 int main(void){ return 0; }
 EOF
+echo wait..
 if test "$?" != 0; then
     echo "$cc is unable to create an executable file."
     if test -z "$cross_prefix" && ! enabled cross_compile ; then

@@ -23,9 +23,9 @@ HEADER_FILES=" \
     $FDKAAC_ROOT/libSYS/include/genericStds.h \
     $FDKAAC_ROOT/libSYS/include/machine_type.h"
 
-mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/output/include
-mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/include
-mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-arm64/output/include
+mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/output/include/fdk-aac
+mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/include/fdk-aac
+mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-arm64/output/include/fdk-aac
 
 mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/output/lib
 mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/lib
@@ -34,9 +34,9 @@ mkdir -p  $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-arm64/output/lib
 
 cd $THIRD_PARTY/fdk-aac-0.1.4
 
-cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/output/include
-cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/include
-cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-arm64/output/include
+cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/output/include/fdk-aac
+cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/include/fdk-aac
+cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-arm64/output/include/fdk-aac
 
 cp -a $FDKAAC_ROOT/obj/local/armeabi/libfdkaac.a $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/output/lib
 cp -a $FDKAAC_ROOT/obj/local/armeabi-v7a/libfdkaac.a $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/lib

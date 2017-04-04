@@ -35,6 +35,7 @@ JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray a
         for(i = 0; i < argc; i++) {
             strObjs[i] = (jstring)(*env)->GetObjectArrayElement(env, args, i);
             argv[i] = (char *)(*env)->GetStringUTFChars(env, strObjs[i], NULL);
+            LOG(argv[i]);
         }
     }
 

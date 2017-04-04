@@ -78,6 +78,7 @@ FF_GCC_64_VER=$IJK_GCC_64_VER
 if [ "$FF_ARCH" = "armv7a" ]; then
     FF_BUILD_NAME=ffmpeg-armv7a
     FF_BUILD_NAME_OPENSSL=openssl-armv7a
+    FF_BUILD_NAME_FDKAAC=fdkaac-armv7a
     FF_BUILD_NAME_LIBSOXR=libsoxr-armv7a
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -96,6 +97,7 @@ if [ "$FF_ARCH" = "armv7a" ]; then
 elif [ "$FF_ARCH" = "armv5" ]; then
     FF_BUILD_NAME=ffmpeg-armv5
     FF_BUILD_NAME_OPENSSL=openssl-armv5
+    FF_BUILD_NAME_FDKAAC=fdkaac-armv5
     FF_BUILD_NAME_LIBSOXR=libsoxr-armv5
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -112,6 +114,7 @@ elif [ "$FF_ARCH" = "armv5" ]; then
 elif [ "$FF_ARCH" = "x86" ]; then
     FF_BUILD_NAME=ffmpeg-x86
     FF_BUILD_NAME_OPENSSL=openssl-x86
+    FF_BUILD_NAME_FDKAAC=fdkaac-x86
     FF_BUILD_NAME_LIBSOXR=libsoxr-x86
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -130,6 +133,7 @@ elif [ "$FF_ARCH" = "x86_64" ]; then
 
     FF_BUILD_NAME=ffmpeg-x86_64
     FF_BUILD_NAME_OPENSSL=openssl-x86_64
+    FF_BUILD_NAME_FDKAAC=fdkaac-x86_64
     FF_BUILD_NAME_LIBSOXR=libsoxr-x86_64
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -148,6 +152,7 @@ elif [ "$FF_ARCH" = "arm64" ]; then
 
     FF_BUILD_NAME=ffmpeg-arm64
     FF_BUILD_NAME_OPENSSL=openssl-arm64
+    FF_BUILD_NAME_FDKAAC=fdkaac-arm64
     FF_BUILD_NAME_LIBSOXR=libsoxr-arm64
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -180,8 +185,13 @@ FF_MAKE_TOOLCHAIN_FLAGS="$FF_MAKE_TOOLCHAIN_FLAGS --install-dir=$FF_TOOLCHAIN_PA
 
 FF_SYSROOT=$FF_TOOLCHAIN_PATH/sysroot
 FF_PREFIX=$FF_BUILD_ROOT/build/$FF_BUILD_NAME/output
+
 FF_DEP_OPENSSL_INC=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_OPENSSL/output/include
 FF_DEP_OPENSSL_LIB=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_OPENSSL/output/lib
+
+FF_DEP_FDKAAC_INC=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_FDKAAC/output/include
+FF_DEP_FDKAAC_LIB=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_FDKAAC/output/lib
+
 FF_DEP_LIBSOXR_INC=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_LIBSOXR/output/include
 FF_DEP_LIBSOXR_LIB=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_LIBSOXR/output/lib
 
@@ -258,6 +268,19 @@ if [ -f "${FF_DEP_LIBSOXR_LIB}/libsoxr.a" ]; then
     FF_DEP_LIBS="$FF_DEP_LIBS -L${FF_DEP_LIBSOXR_LIB} -lsoxr"
 fi
 
+if [ -f "${FF_DEP_FDKAAC_LIB}/libfdkaac.a" ]; then
+    echo "libfdkaac detected"
+    echo ${FF_DEP_FDKAAC_INC}
+    echo ${FF_DEP_FDKAAC_LIB}
+
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-libfdk-aac "
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-gpl"
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-nonfree"
+
+    FF_CFLAGS="$FF_CFLAGS -I${FF_DEP_FDKAAC_INC}"
+    FF_DEP_LIBS="$FF_DEP_LIBS -L${FF_DEP_FDKAAC_LIB} -lfdk-aac -lm"
+fi
+
 FF_CFG_FLAGS="$FF_CFG_FLAGS $COMMON_FF_CFG_FLAGS"
 
 #--------------------
@@ -298,15 +321,19 @@ echo "--------------------"
 echo "[*] configure ffmpeg"
 echo "--------------------"
 cd $FF_SOURCE
-if [ -f "./config.h" ]; then
-    echo 'reuse configure'
-else
+# if [ -f "./config.h" ]; then
+#     echo 'reuse configure'
+# else
+    echo $FF_CFG_FLAGS \
+        --extra-cflags="$FF_CFLAGS $FF_EXTRA_CFLAGS" \
+        --extra-ldflags="$FF_DEP_LIBS $FF_EXTRA_LDFLAGS"
+
     which $CC
     ./configure $FF_CFG_FLAGS \
         --extra-cflags="$FF_CFLAGS $FF_EXTRA_CFLAGS" \
         --extra-ldflags="$FF_DEP_LIBS $FF_EXTRA_LDFLAGS"
     make clean
-fi
+# fi
 
 #--------------------
 echo ""
