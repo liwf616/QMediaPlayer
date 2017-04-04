@@ -321,9 +321,9 @@ echo "--------------------"
 echo "[*] configure ffmpeg"
 echo "--------------------"
 cd $FF_SOURCE
-# if [ -f "./config.h" ]; then
-#     echo 'reuse configure'
-# else
+if [ -f "./config.h" ]; then
+    echo 'reuse configure'
+else
     echo $FF_CFG_FLAGS \
         --extra-cflags="$FF_CFLAGS $FF_EXTRA_CFLAGS" \
         --extra-ldflags="$FF_DEP_LIBS $FF_EXTRA_LDFLAGS"
@@ -333,7 +333,7 @@ cd $FF_SOURCE
         --extra-cflags="$FF_CFLAGS $FF_EXTRA_CFLAGS" \
         --extra-ldflags="$FF_DEP_LIBS $FF_EXTRA_LDFLAGS"
     make clean
-# fi
+fi
 
 #--------------------
 echo ""
