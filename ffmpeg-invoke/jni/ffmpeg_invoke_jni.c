@@ -15,24 +15,22 @@ typedef void (*process_cb)(JNIEnv *env, jobject obj, int progress);
 extern int start_transcode(int argc, char **argv, JNIEnv *env, jobject obj, process_cb cb);
 
 // processing callback to handler class
-typedef struct tick_context {
-    jclass   mainActivityClz;
-    jobject  mainActivityObj;
-} TickContext;
-TickContext g_ctx;
+typedef struct process_context {
+    jclass   ffmpegInvokeClass;
+    jobject  ffmpegInvokeObj;
+} PorcessContext;
+PorcessContext g_ctx;
 
 static JavaVM *g_jvm = NULL;
 
-void  sendProcess(JNIEnv *env, jobject obj,
-                   jmethodID func, int process) {
-    (*env)->CallVoidMethod(env, obj, func, process);
-}
-
-
 static void ProcessCallback(JNIEnv *env, jobject obj, int process) {
-    LOG("%d", process);
-}
 
+    jmethodID processId = (*env)->GetMethodID(env, g_ctx.ffmpegInvokeClass,
+                                             "updateProcess",
+                                             "(I)V");
+    
+    (*env)->CallVoidMethod(env, obj, processId, process);
+}
 
 JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray args) {
     int i = 0;
@@ -53,8 +51,8 @@ JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray a
     }
 
     jclass clz = (*env)->GetObjectClass(env, obj);
-    g_ctx.mainActivityClz = (*env)->NewGlobalRef(env, clz);
-    g_ctx.mainActivityObj = (*env)->NewGlobalRef(env, obj);
+    g_ctx.ffmpegInvokeClass = (*env)->NewGlobalRef(env, clz);
+    g_ctx.ffmpegInvokeObj = (*env)->NewGlobalRef(env, obj);
 
     start_transcode(argc, argv, env, obj, (void*) ProcessCallback);
 
@@ -62,13 +60,20 @@ JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray a
         (*env)->ReleaseStringUTFChars(env, strObjs[i], argv[i]);
     }
 
-    LOG("FFmpegInvoke_run, 0");
     free(strObjs);
-    LOG("FFmpegInvoke_run, 1");
     free(argv);
-    LOG("FFmpegInvoke_run, 2");
-}
 
+    // release object we allocated from StartTicks() function
+    if(g_ctx.ffmpegInvokeClass) {
+         (*env)->DeleteGlobalRef(env, g_ctx.ffmpegInvokeClass);
+          g_ctx.ffmpegInvokeClass = NULL;
+    }
+
+    if(g_ctx.ffmpegInvokeObj) {
+        (*env)->DeleteGlobalRef(env, g_ctx.ffmpegInvokeObj);
+        g_ctx.ffmpegInvokeObj = NULL;
+    }
+}
 
 static JNINativeMethod g_nativeMethods[] = {
     {
@@ -92,7 +97,7 @@ extern JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
         LOG("error:findclass failed for class'%s'", FFMPEG_INVOKE_CLASS);
     }
 
-    g_ctx.mainActivityObj = NULL;
+    g_ctx.ffmpegInvokeObj = NULL;
 
     if ((*env)->RegisterNatives(env, cls, g_nativeMethods, sizeof(g_nativeMethods) / sizeof(g_nativeMethods[0])) < 0) {
         LOG("error:register natives failed for class'%s'", FFMPEG_INVOKE_CLASS);
