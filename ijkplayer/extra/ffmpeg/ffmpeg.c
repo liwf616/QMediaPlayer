@@ -592,8 +592,19 @@ static void ffmpeg_cleanup(int ret)
     } else if (ret && transcode_init_done) {
         av_log(NULL, AV_LOG_INFO, "Conversion failed!\n");
     }
-    term_exit();
+    
     ffmpeg_exited = 1;
+
+    nb_filtergraphs = 0;
+    nb_output_files = 0;
+    nb_output_streams = 0;
+    nb_input_files = 0;
+    nb_input_streams = 0;
+
+    g_exit_code = 0;
+    g_should_exit = 0;
+
+    term_exit();
 }
 
 void remove_avoptions(AVDictionary **a, AVDictionary *b)
@@ -4372,6 +4383,8 @@ static int transcode(void)
         goto fail;
 #endif
 
+    av_log(NULL, AV_LOG_DEBUG, "Transcoder: Begining to transcode");
+
     while (!received_sigterm) {
         int64_t cur_time= av_gettime_relative();
 
@@ -4553,21 +4566,38 @@ int main(int argc, char **argv)
         argv++;
     }
 
+    av_log(NULL, AV_LOG_DEBUG, "Transcoder: begin to init transcode");
+
+    g_should_exit = 0;
     avcodec_register_all();
+
+    av_log(NULL, AV_LOG_DEBUG, "Transcoder: avcodec_register_all success");
+
 #if CONFIG_AVDEVICE
     avdevice_register_all();
 #endif
+
     avfilter_register_all();
+
+    av_log(NULL, AV_LOG_DEBUG, "Transcoder: avfilter_register_all success");
+
     av_register_all();
+
+    av_log(NULL, AV_LOG_DEBUG, "Transcoder: av_register_all success");
+
     avformat_network_init();
 
-    show_banner(argc, argv, options);
+    av_log(NULL, AV_LOG_DEBUG, "Transcoder: avformat_network_init success");
+
+    // show_banner(argc, argv, options);
 
     /* parse options and open all input/output files */
     ret = ffmpeg_parse_options(argc, argv);
     if (ret < 0) {
         exit_program(1);
     }
+
+    av_log(NULL, AV_LOG_DEBUG, "Transcoder: finished to init transcode, %d", g_should_exit);
 
     if (g_should_exit) {
         return g_exit_code;
@@ -4598,21 +4628,26 @@ int main(int argc, char **argv)
     }
 
     current_time = ti = getutime();
+
     if (transcode() < 0) {
 //        exit_program(1);
         return g_exit_code;
     }
+
     ti = getutime() - ti;
     if (do_benchmark) {
         av_log(NULL, AV_LOG_INFO, "bench: utime=%0.3fs\n", ti / 1000000.0);
     }
+
     av_log(NULL, AV_LOG_DEBUG, "%"PRIu64" frames successfully decoded, %"PRIu64" decoding errors\n",
            decode_error_stat[0], decode_error_stat[1]);
+    
     if ((decode_error_stat[0] + decode_error_stat[1]) * max_error_rate < decode_error_stat[1]) {
 //        exit_program(69);
         return g_exit_code;
     }
 
-//    exit_program(received_nb_signals ? 255 : main_return_code);
+    // exit_program(received_nb_signals ? 255 : main_return_code);
+    exit_program(0);
     return main_return_code;
 }
