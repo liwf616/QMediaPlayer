@@ -31,6 +31,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <stdint.h>
+#include <jni.h>
 
 #if HAVE_IO_H
 #include <io.h>
@@ -123,6 +124,8 @@ const char *const forced_keyframes_const_names[] = {
 static void do_video_stats(OutputStream *ost, int frame_size);
 static int64_t getutime(void);
 static int64_t getmaxrss(void);
+
+typedef void (*process_cb)(JNIEnv *env, jobject obj, int progress);
 
 static int run_as_daemon  = 0;
 static int nb_frames_dup = 0;
@@ -1601,7 +1604,8 @@ static void print_final_stats(int64_t total_size)
     }
 }
 
-static void print_report(int is_last_report, int64_t timer_start, int64_t cur_time)
+static void print_report(int is_last_report, int64_t timer_start,
+             int64_t cur_time, JNIEnv *env, jobject obj, process_cb cb)
 {
     char buf[1024];
     AVBPrint buf_script;
@@ -1736,6 +1740,12 @@ static void print_report(int is_last_report, int64_t timer_start, int64_t cur_ti
     snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf),
              "%02d:%02d:%02d.%02d ", hours, mins, secs,
              (100 * us) / AV_TIME_BASE);
+
+    //callback
+
+    if (cb) {
+        cb(env, obj, secs);
+    }
 
     if (bitrate < 0) {
         snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf),"bitrate=N/A");
@@ -4359,7 +4369,7 @@ static int transcode_step(void)
 /*
  * The following code is the main loop of the file converter
  */
-static int transcode(void)
+static int transcode(JNIEnv *env, jobject obj, process_cb cb)
 {
     int ret, i;
     AVFormatContext *os;
@@ -4385,6 +4395,8 @@ static int transcode(void)
 
     av_log(NULL, AV_LOG_DEBUG, "Transcoder: Begining to transcode");
 
+
+
     while (!received_sigterm) {
         int64_t cur_time= av_gettime_relative();
 
@@ -4409,8 +4421,10 @@ static int transcode(void)
         }
 
         /* dump report by using the output first video and audio streams */
-        print_report(0, timer_start, cur_time);
+        print_report(0, timer_start, cur_time, env, obj, cb);
     }
+
+
 #if HAVE_PTHREADS
     free_input_threads();
 #endif
@@ -4444,7 +4458,7 @@ static int transcode(void)
     }
 
     /* dump report by using the first video and audio streams */
-    print_report(1, timer_start, av_gettime_relative());
+    print_report(1, timer_start, av_gettime_relative(), env, obj, NULL);
 
     /* close each encoder */
     for (i = 0; i < nb_output_streams; i++) {
@@ -4543,9 +4557,10 @@ static int64_t getmaxrss(void)
 
 static void log_callback_null(void *ptr, int level, const char *fmt, va_list vl)
 {
+
 }
 
-int main(int argc, char **argv)
+int start_transcode(int argc, char **argv, JNIEnv *env, jobject obj, process_cb cb)
 {
     int i, ret;
     int64_t ti;
@@ -4629,7 +4644,7 @@ int main(int argc, char **argv)
 
     current_time = ti = getutime();
 
-    if (transcode() < 0) {
+    if (transcode(env, obj, cb) < 0) {
 //        exit_program(1);
         return g_exit_code;
     }

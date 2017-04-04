@@ -10,7 +10,9 @@
 
 #define FFMPEG_INVOKE_CLASS     "com/github/yuqilin/qmediaplayer/FFmpegInvoke"
 
-extern int main(int argc, char **argv);
+typedef void (*process_cb)(JNIEnv *env, jobject obj, int progress);
+
+extern int start_transcode(int argc, char **argv, JNIEnv *env, jobject obj, process_cb cb);
 
 // processing callback to handler class
 typedef struct tick_context {
@@ -20,6 +22,17 @@ typedef struct tick_context {
 TickContext g_ctx;
 
 static JavaVM *g_jvm = NULL;
+
+void  sendProcess(JNIEnv *env, jobject obj,
+                   jmethodID func, int process) {
+    (*env)->CallVoidMethod(env, obj, func, process);
+}
+
+
+static void ProcessCallback(JNIEnv *env, jobject obj, int process) {
+    LOG("%d", process);
+}
+
 
 JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray args) {
     int i = 0;
@@ -43,7 +56,7 @@ JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray a
     g_ctx.mainActivityClz = (*env)->NewGlobalRef(env, clz);
     g_ctx.mainActivityObj = (*env)->NewGlobalRef(env, obj);
 
-    main(argc, argv);
+    start_transcode(argc, argv, env, obj, (void*) ProcessCallback);
 
     for(i = 0; i < argc; i++) {
         (*env)->ReleaseStringUTFChars(env, strObjs[i], argv[i]);
