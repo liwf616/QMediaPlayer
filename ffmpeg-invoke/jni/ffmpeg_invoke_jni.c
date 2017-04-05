@@ -26,9 +26,9 @@ static JavaVM *g_jvm = NULL;
 static void ProcessCallback(JNIEnv *env, jobject obj, int process) {
 
     jmethodID processId = (*env)->GetMethodID(env, g_ctx.ffmpegInvokeClass,
-                                             "updateProcess",
-                                             "(I)V");
-    
+                          "updateProcess",
+                          "(I)V");
+
     (*env)->CallVoidMethod(env, obj, processId, process);
 }
 
@@ -43,7 +43,7 @@ JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray a
         argv = (char **) malloc(sizeof(char *) * argc);
         strObjs = (jstring *)malloc(sizeof(jstring) * argc);
 
-        for(i = 0; i < argc; i++) {
+        for (i = 0; i < argc; i++) {
             strObjs[i] = (jstring)(*env)->GetObjectArrayElement(env, args, i);
             argv[i] = (char *)(*env)->GetStringUTFChars(env, strObjs[i], NULL);
             LOG(argv[i]);
@@ -56,7 +56,7 @@ JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray a
 
     start_transcode(argc, argv, env, obj, (void*) ProcessCallback);
 
-    for(i = 0; i < argc; i++) {
+    for (i = 0; i < argc; i++) {
         (*env)->ReleaseStringUTFChars(env, strObjs[i], argv[i]);
     }
 
@@ -64,12 +64,12 @@ JNIEXPORT void JNICALL FFmpegInvoke_run(JNIEnv *env, jobject obj, jobjectArray a
     free(argv);
 
     // release object we allocated from StartTicks() function
-    if(g_ctx.ffmpegInvokeClass) {
-         (*env)->DeleteGlobalRef(env, g_ctx.ffmpegInvokeClass);
-          g_ctx.ffmpegInvokeClass = NULL;
+    if (g_ctx.ffmpegInvokeClass) {
+        (*env)->DeleteGlobalRef(env, g_ctx.ffmpegInvokeClass);
+        g_ctx.ffmpegInvokeClass = NULL;
     }
 
-    if(g_ctx.ffmpegInvokeObj) {
+    if (g_ctx.ffmpegInvokeObj) {
         (*env)->DeleteGlobalRef(env, g_ctx.ffmpegInvokeObj);
         g_ctx.ffmpegInvokeObj = NULL;
     }
@@ -108,5 +108,5 @@ extern JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
 }
 
 extern JNIEXPORT void JNICALL JNI_OnUnload(JavaVM* vm, void* reserved) {
-     LOG("JNI_OnUnload");
+    LOG("JNI_OnUnload");
 }
