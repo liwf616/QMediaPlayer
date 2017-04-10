@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
 //        mPlayBtn = (Button) findViewById(R.id.play_btn);
 //        mVideoPathEdit.setText("/sdcard/tmp/BigBuckBunny_320x180.mp4");
 
-        mFragments.add(new HomeFragment());
+//        mFragments.add(new HomeFragment());
         mVideoFragment = new VideoFragment();
         mFragments.add(mVideoFragment);
         mFragments.add(new MyMp3Fragment());
@@ -141,7 +141,7 @@ public class MainActivity extends BaseActivity {
     private void jumpToPlayerActivity(String videoPath) {
         Intent intent = new Intent(this, VideoPlayerActivity.class);
         intent.putExtra("videoPath", videoPath);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     @Override
@@ -155,8 +155,8 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
-
-
-
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String format = data.getExtras().getString("Format");
+        String bits = data.getExtras().getString("Bits");
+    }
 }

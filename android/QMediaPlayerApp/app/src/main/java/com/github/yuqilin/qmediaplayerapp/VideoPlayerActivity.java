@@ -32,6 +32,7 @@ import android.widget.TextView;
 import com.github.yuqilin.qmediaplayer.FFmpegInvoke;
 import com.github.yuqilin.qmediaplayer.IMediaController;
 import com.github.yuqilin.qmediaplayer.QMediaPlayerVideoView;
+import com.github.yuqilin.qmediaplayerapp.media.MediaInfo;
 import com.github.yuqilin.qmediaplayerapp.util.AndroidDevices;
 import com.github.yuqilin.qmediaplayerapp.util.Permissions;
 import com.github.yuqilin.qmediaplayerapp.util.Util;
@@ -245,18 +246,16 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
         //spinner
         mTypeArray = new ArrayList<String>();
-        mTypeArray.add("MP3");
-        mTypeArray.add("AAC");
+
+        for (String format: MediaInfo.MEDIA_AUDIO_FORMAT) {
+            mTypeArray.add(format.toUpperCase());
+        }
 
         mBitsArray = new ArrayList<String>();
-        mBitsArray.add("copy (32kb/s)");
-        mBitsArray.add("128kbs CBR");
-        mBitsArray.add("192kbs CBR");
-        mBitsArray.add("256kbs CBR");
-        mBitsArray.add("320kbs CBR");
-        mBitsArray.add("130kbs vbr(slow)");
-        mBitsArray.add("190kb/s VBR(slow)");
-        mBitsArray.add("245kb/s VBR(slow)");
+
+        for (int i= 0; i < MediaInfo.MEDIA_AUDIO_BITS.length;i++) {
+            mBitsArray.add(MediaInfo.getComment(i));
+        }
 
         ArrayAdapter<String> typeAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mTypeArray);
@@ -272,7 +271,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
         mBitsSpinner = (Spinner) findViewById(R.id.view_choose_bit);
         mBitsSpinner.setAdapter(bitsAdapter);
-        mBitsSpinner.setSelection(0);
+        mBitsSpinner.setSelection(1);
 
         mBack.setOnClickListener(mBackListener);
         mShowMore.setOnClickListener(mShowMoreListener);
@@ -666,7 +665,17 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         @Override
         public void onClick(View view) {
             Log.i(TAG, "start convert");
-            FFmpegInvoke.help();
+//            FFmpegInvoke.help();
+//            FFmpegInvoke ffmpeg = new FFmpegInvoke();
+//            ffmpeg.run(new String[]{"ffmpeg", "-y" ,"-i", mVideoPath,"-c:v" ,"copy", "-c:a", "libfdk_aac", "/sdcard/Download/ss_audio.mp4"});
+
+            Intent intent = new Intent();
+            //把返回数据存入Intent
+            intent.putExtra("result", "My name is linjiqin");
+            //设置返回数据
+            setResult(RESULT_OK, intent);
+            //关闭Activity
+            finish();
         }
     };
 
