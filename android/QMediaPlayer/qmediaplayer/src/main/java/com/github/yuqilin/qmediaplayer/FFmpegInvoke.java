@@ -12,6 +12,12 @@ public final class FFmpegInvoke {
         System.loadLibrary("ffmpeg_invoke");
     }
 
+    private String mVideoPath;
+    private String mVideoDestPath;
+    private String mBits;
+    private String mType;
+    private String mVbr;
+
     public static void help() {
         FFmpegInvoke ffmpeg = new FFmpegInvoke();
         ffmpeg.run(new String[]{

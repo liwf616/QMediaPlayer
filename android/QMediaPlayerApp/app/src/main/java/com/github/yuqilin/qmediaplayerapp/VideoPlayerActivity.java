@@ -122,6 +122,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private ArrayList<String> mBitsArray;
     private Spinner mBitsSpinner;
 
+    private Boolean mVBR;
+    private String mBitrateSelected;
+    private String mTypeSelected;
+
     //
     ImageView mConvertButton;
 
@@ -670,11 +674,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 //            ffmpeg.run(new String[]{"ffmpeg", "-y" ,"-i", mVideoPath,"-c:v" ,"copy", "-c:a", "libfdk_aac", "/sdcard/Download/ss_audio.mp4"});
 
             Intent intent = new Intent();
-            //把返回数据存入Intent
-            intent.putExtra("result", "My name is linjiqin");
-            //设置返回数据
+            intent.putExtra("videoPath", mVideoPath);
+            intent.putExtra("vbr", mVBR);
+            intent.putExtra("type", mTypeSelected);
+            intent.putExtra("bits", mBitrateSelected);
+
             setResult(RESULT_OK, intent);
-            //关闭Activity
             finish();
         }
     };
@@ -682,7 +687,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private AdapterView.OnItemSelectedListener mOnSelectTypeListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-
+            mTypeSelected = MediaInfo.MEDIA_AUDIO_FORMAT[position];
         }
 
         @Override
@@ -693,7 +698,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-
+            mBitrateSelected = MediaInfo.MEDIA_AUDIO_BITS[position];
+            if( 7 >= position  && position >= 5) {
+                mVBR = true;
+            }
         }
 
         @Override
