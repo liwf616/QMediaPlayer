@@ -6,6 +6,9 @@ package com.github.yuqilin.qmediaplayerapp.media;
 
 public class MediaInfo {
 
+    public String filePath; //绝对路径
+    public String mimeType;
+
     public static final String[] MEDIA_AUDIO_FORMAT = {
             "mp3",
             "aac"
