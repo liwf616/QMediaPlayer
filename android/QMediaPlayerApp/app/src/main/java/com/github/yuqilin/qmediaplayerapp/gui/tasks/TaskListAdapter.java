@@ -1,8 +1,11 @@
+/**
+ * Created by liwenfeng on 17/4/11.
+ */
+
 package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
 import android.content.Context;
 import android.support.annotation.MainThread;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,26 +16,19 @@ import android.widget.TextView;
 
 
 import com.github.yuqilin.qmediaplayerapp.R;
-import com.github.yuqilin.qmediaplayerapp.gui.video.VideoListAdapter;
-import com.github.yuqilin.qmediaplayerapp.media.MediaInfo;
-import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
+import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.util.ITaskEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by liwenfeng on 17/4/11.
- */
 
-public class TaskListAdapter  extends RecyclerView.Adapter<TaskListAdapter.ViewHolder>{
+public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder>{
 
     private ITaskEventHandler mTaskEventsHandler;
-    private ArrayList<MediaInfo> mTasks = new ArrayList<>();
+    private ArrayList<MediaTask> mTasks = new ArrayList<>();
 
     public final static String TAG = "TaskListAdapter";
-    private boolean mListMode = true;
-    private int mGridCardWidth = 0;
 
     public TaskListAdapter(ITaskEventHandler eventHandler) {
         super();
@@ -47,20 +43,13 @@ public class TaskListAdapter  extends RecyclerView.Adapter<TaskListAdapter.ViewH
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate( R.layout.item_task_list, parent, false);
 
-        if (!mListMode) {
-            GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) v.getLayoutParams();
-            params.width = mGridCardWidth;
-            params.height = params.width * 10 / 16;
-            v.setLayoutParams(params);
-        }
-
         return new TaskListAdapter.ViewHolder(v);
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            MediaInfo media = (MediaInfo) view.getTag();
+            MediaTask media = (MediaTask) view.getTag();
             mTaskEventsHandler.onClick(view, 0, media);
         }
     };
@@ -69,17 +58,17 @@ public class TaskListAdapter  extends RecyclerView.Adapter<TaskListAdapter.ViewH
     public void onBindViewHolder(ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder position " + position);
 
-        MediaInfo media = mTasks.get(position);
+        MediaTask media = mTasks.get(position);
         if (media == null) {
             return;
         }
-
-        Log.d(TAG, "position[" + position + "]: " + media.filePath);
 
 //        holder.mTaskStatusPic.setImageIcon("");
         holder.mFileName.setText(media.filePath.substring(media.filePath.lastIndexOf('/') + 1));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
+
+        Log.d(TAG, "position[" + position + "]: " + media.filePath);
     }
 
     @Override
@@ -97,14 +86,15 @@ public class TaskListAdapter  extends RecyclerView.Adapter<TaskListAdapter.ViewH
         super.onViewRecycled(holder);
     }
 
-    public void updateVideos(ArrayList<MediaInfo> tasks) {
+    public void updateVideos(ArrayList<MediaTask> tasks) {
         mTasks = tasks;
         notifyDataSetChanged();
     }
-    public void addVideo(int position, MediaInfo task) {
-        Log.d(TAG, "addVideo position " + position);
+    public void addVideo(int position, MediaTask task) {
         mTasks.add(position, task);
         notifyItemInserted(position);
+
+        Log.d(TAG, "addVideo position " + position);
     }
 
     @Override
@@ -127,6 +117,7 @@ public class TaskListAdapter  extends RecyclerView.Adapter<TaskListAdapter.ViewH
         public ViewHolder(View v) {
             super(v);
             v.setOnFocusChangeListener(this);
+
             mListItem = v.findViewById(R.id.task_list_item_view);
             mTaskStatusPic = (ImageView) v.findViewById(R.id.item_task_list_status);
             mFileName = (TextView) v.findViewById(R.id.item_task_list_filename);

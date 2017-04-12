@@ -4,7 +4,7 @@ package com.github.yuqilin.qmediaplayerapp.media;
  * Created by liwenfeng on 17/4/7.
  */
 
-public class MediaInfo {
+public class MediaTask {
 
     public String filePath; //绝对路径
     public String mimeType;

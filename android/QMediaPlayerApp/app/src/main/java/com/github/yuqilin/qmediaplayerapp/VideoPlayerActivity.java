@@ -18,7 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.InputDevice;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,10 +28,9 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.github.yuqilin.qmediaplayer.FFmpegInvoke;
 import com.github.yuqilin.qmediaplayer.IMediaController;
 import com.github.yuqilin.qmediaplayer.QMediaPlayerVideoView;
-import com.github.yuqilin.qmediaplayerapp.media.MediaInfo;
+import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.util.AndroidDevices;
 import com.github.yuqilin.qmediaplayerapp.util.Permissions;
 import com.github.yuqilin.qmediaplayerapp.util.Util;
@@ -251,14 +249,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         //spinner
         mTypeArray = new ArrayList<String>();
 
-        for (String format: MediaInfo.MEDIA_AUDIO_FORMAT) {
+        for (String format: MediaTask.MEDIA_AUDIO_FORMAT) {
             mTypeArray.add(format.toUpperCase());
         }
 
         mBitsArray = new ArrayList<String>();
 
-        for (int i= 0; i < MediaInfo.MEDIA_AUDIO_BITS.length;i++) {
-            mBitsArray.add(MediaInfo.getComment(i));
+        for (int i = 0; i < MediaTask.MEDIA_AUDIO_BITS.length; i++) {
+            mBitsArray.add(MediaTask.getComment(i));
         }
 
         ArrayAdapter<String> typeAdapter =
@@ -687,7 +685,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private AdapterView.OnItemSelectedListener mOnSelectTypeListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mTypeSelected = MediaInfo.MEDIA_AUDIO_FORMAT[position];
+            mTypeSelected = MediaTask.MEDIA_AUDIO_FORMAT[position];
         }
 
         @Override
@@ -698,7 +696,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mBitrateSelected = MediaInfo.MEDIA_AUDIO_BITS[position];
+            mBitrateSelected = MediaTask.MEDIA_AUDIO_BITS[position];
             if( 7 >= position  && position >= 5) {
                 mVBR = true;
             }

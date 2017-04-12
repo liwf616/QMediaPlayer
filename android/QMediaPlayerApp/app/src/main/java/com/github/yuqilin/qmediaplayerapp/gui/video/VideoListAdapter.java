@@ -59,7 +59,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
 //    private VideoComparator mVideoComparator = new VideoComparator();
 //    private volatile SortedList<MediaWrapper> mVideos = new SortedList<>(MediaWrapper.class, mVideoComparator);
-//    private volatile ArrayList<MediaInfo> mVideos = new ArrayList<>();
+//    private volatile ArrayList<MediaTask> mVideos = new ArrayList<>();
 
 
     private int mGridCardWidth = 0;
