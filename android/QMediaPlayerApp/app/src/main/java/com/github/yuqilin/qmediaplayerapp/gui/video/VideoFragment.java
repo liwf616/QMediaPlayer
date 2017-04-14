@@ -168,7 +168,25 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
     private void jumpToPlayerActivity(String videoPath) {
         Intent intent = new Intent(getContext(), VideoPlayerActivity.class);
         intent.putExtra("videoPath", videoPath);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String videopath = data.getExtras().getString("videoPath");
+        boolean vbr = data.getExtras().getBoolean("vbr",false);
+        String type = data.getExtras().getString("type");
+        String bits = data.getExtras().getString("bits");
+        long duration = data.getExtras().getLong("duration");
+
+//        if (requestCode == 1 && resultCode == 2) {
+//            this.getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.task_list_item_view, mTaskFragment, null)
+//                    .addToBackStack(null)
+//                    .commit();
+//        }
     }
 
     private void updateViewMode() {

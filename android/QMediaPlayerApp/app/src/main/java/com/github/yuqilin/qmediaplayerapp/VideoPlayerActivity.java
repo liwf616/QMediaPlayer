@@ -120,7 +120,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private ArrayList<String> mBitsArray;
     private Spinner mBitsSpinner;
 
-    private Boolean mVBR;
+    private boolean mVBR = false;
     private String mBitrateSelected;
     private String mTypeSelected;
 
@@ -667,16 +667,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         @Override
         public void onClick(View view) {
             Log.i(TAG, "start convert");
-//            FFmpegInvoke.help();
-//            FFmpegInvoke ffmpeg = new FFmpegInvoke();
-//            ffmpeg.run(new String[]{"ffmpeg", "-y" ,"-i", mVideoPath,"-c:v" ,"copy", "-c:a", "libfdk_aac", "/sdcard/Download/ss_audio.mp4"});
 
             Intent intent = new Intent();
             intent.putExtra("videoPath", mVideoPath);
             intent.putExtra("vbr", mVBR);
             intent.putExtra("type", mTypeSelected);
             intent.putExtra("bits", mBitrateSelected);
-            intent.putExtra("duraion", mDuration);
+            intent.putExtra("duration", mDuration);
 
             setResult(RESULT_OK, intent);
             finish();

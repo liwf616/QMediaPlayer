@@ -93,14 +93,6 @@ public class MainActivity extends BaseActivity {
         mViewPagerTab.setDividerColors(getResources().getColor(R.color.transparent));
         mViewPagerTab.setViewPager(mViewPager);
 
-//        LinkedBlockingQueue<Runnable> blockingQueue = new LinkedBlockingQueue<Runnable>();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//            ExecutorService exec = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, blockingQueue);
-//            mTask = new LoadVideoTask().executeOnExecutor(exec);
-//        } else {
-//            mTask = new LoadVideoTask().execute();
-//        }
-
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -139,30 +131,5 @@ public class MainActivity extends BaseActivity {
     @Override
     protected int getFragmentContentId() {
         return 0;
-    }
-
-
-    private void jumpToPlayerActivity(String videoPath) {
-        Intent intent = new Intent(this, VideoPlayerActivity.class);
-        intent.putExtra("videoPath", videoPath);
-        startActivityForResult(intent, 1);
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        String videopath = data.getExtras().getString("videoPath");
-        String vbr = data.getExtras().getString("vbr");
-        String type = data.getExtras().getString("type");
-        String bits = data.getExtras().getString("bits");
-        String duraion = data.getExtras().getString("duraion");
-
-        if (requestCode == 1 && resultCode == 2) {
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.task_list_item_view, mTaskFragment, null)
-                    .addToBackStack(null)
-                    .commit();
-        }
     }
 }
