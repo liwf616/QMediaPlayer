@@ -64,11 +64,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         }
 
 //        holder.mTaskStatusPic.setImageIcon("");
-        holder.mFileName.setText(media.filePath.substring(media.filePath.lastIndexOf('/') + 1));
+
+        holder.mFileName.setText(media.videoPath.substring(media.videoPath.lastIndexOf('/') + 1));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
 
-        Log.d(TAG, "position[" + position + "]: " + media.filePath);
+        Log.d(TAG, "position[" + position + "]: " + media.videoPath);
     }
 
     @Override
@@ -107,6 +108,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         mTasks.clear();
     }
 
+//    void setGridCardWidth(int gridCardWidth) {
+//        mGridCardWidth = gridCardWidth;
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
         private View mListItem;
@@ -142,4 +146,5 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         public void onFocusChange(View v, boolean hasFocus) {
         }
     }
+
 }

@@ -6,8 +6,11 @@ package com.github.yuqilin.qmediaplayerapp.media;
 
 public class MediaTask {
 
-    public String filePath; //绝对路径
-    public String mimeType;
+    public String videoPath; //绝对路径
+    public Boolean vbr;
+    public String  type;
+    public String  bits;
+    public int     duration;
 
     public static final String[] MEDIA_AUDIO_FORMAT = {
             "mp3",

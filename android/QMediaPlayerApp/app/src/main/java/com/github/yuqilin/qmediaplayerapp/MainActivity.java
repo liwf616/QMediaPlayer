@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity {
     private ArrayList<MediaWrapper> mVideos = new ArrayList<>();
 
     private VideoFragment mVideoFragment;
+    private TaskFragment  mTaskFragment;
 
     private AsyncTask<String, Integer, String> mTask;
 
@@ -57,15 +58,14 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        mVideoPathEdit = (EditText) findViewById(R.id.video_path_edit);
-//        mPlayBtn = (Button) findViewById(R.id.play_btn);
-//        mVideoPathEdit.setText("/sdcard/tmp/BigBuckBunny_320x180.mp4");
-
 //        mFragments.add(new HomeFragment());
         mVideoFragment = new VideoFragment();
         mFragments.add(mVideoFragment);
+
         mFragments.add(new MyMp3Fragment());
-        mFragments.add(new TaskFragment());
+
+        mTaskFragment = new TaskFragment();
+        mFragments.add(mTaskFragment);
 
         mAdpter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -131,19 +131,6 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    public void onClickPlay(View v) {
-//        String videoPath = mVideoPathEdit.getText().toString();
-//        if (!TextUtils.isEmpty(videoPath)) {
-//            jumpToPlayerActivity(videoPath);
-//        }
-    }
-
-    private void jumpToPlayerActivity(String videoPath) {
-        Intent intent = new Intent(this, VideoPlayerActivity.class);
-        intent.putExtra("videoPath", videoPath);
-        startActivityForResult(intent, 1);
-    }
-
     @Override
     protected int getContentViewId() {
         return 0;
@@ -155,8 +142,27 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    private void jumpToPlayerActivity(String videoPath) {
+        Intent intent = new Intent(this, VideoPlayerActivity.class);
+        intent.putExtra("videoPath", videoPath);
+        startActivityForResult(intent, 1);
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String format = data.getExtras().getString("Format");
-        String bits = data.getExtras().getString("Bits");
+        super.onActivityResult(requestCode, resultCode, data);
+
+        String videopath = data.getExtras().getString("videoPath");
+        String vbr = data.getExtras().getString("vbr");
+        String type = data.getExtras().getString("type");
+        String bits = data.getExtras().getString("bits");
+        String duraion = data.getExtras().getString("duraion");
+
+        if (requestCode == 1 && resultCode == 2) {
+            this.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.task_list_item_view, mTaskFragment, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }

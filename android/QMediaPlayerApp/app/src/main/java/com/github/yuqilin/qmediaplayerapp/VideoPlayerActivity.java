@@ -676,6 +676,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
             intent.putExtra("vbr", mVBR);
             intent.putExtra("type", mTypeSelected);
             intent.putExtra("bits", mBitrateSelected);
+            intent.putExtra("duraion", mDuration);
 
             setResult(RESULT_OK, intent);
             finish();
