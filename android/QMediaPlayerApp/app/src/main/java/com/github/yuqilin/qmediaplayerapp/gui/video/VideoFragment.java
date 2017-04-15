@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,9 @@ import com.github.yuqilin.qmediaplayerapp.BaseFragment;
 import com.github.yuqilin.qmediaplayerapp.IEventsHandler;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
+import com.github.yuqilin.qmediaplayerapp.gui.tasks.TaskFragment;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
+import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
 import com.github.yuqilin.qmediaplayerapp.media.VideoLoader;
 
@@ -40,6 +43,12 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
     private VideoListAdapter mVideoAdapter;
 
     private VideoLoader mVideoLoader;
+    private TaskFragment taskFragment = null;
+
+    public void setTaskFragment(TaskFragment taskFragment) {
+        this.taskFragment = taskFragment;
+    }
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -180,10 +189,15 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
         String bits = data.getExtras().getString("bits");
         long duration = data.getExtras().getLong("duration");
 
-//        if (requestCode == 1 && resultCode == 2) {
-//            this.getSupportFragmentManager()
+//        TaskFragment taskFragment =(TaskFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.task_grid);
+        if(taskFragment != null) {
+            taskFragment.addTask(new MediaTask(videopath, vbr, type, bits,duration));
+        }
+
+//        if (requestCode == 1 && resultCode == -1) {
+//            getActivity().getSupportFragmentManager()
 //                    .beginTransaction()
-//                    .replace(R.id.task_list_item_view, mTaskFragment, null)
+//                    .replace(R.id.task_grid, taskFragment, null)
 //                    .addToBackStack(null)
 //                    .commit();
 //        }

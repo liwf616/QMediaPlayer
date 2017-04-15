@@ -6,11 +6,60 @@ package com.github.yuqilin.qmediaplayerapp.media;
 
 public class MediaTask {
 
-    public String videoPath; //绝对路径
-    public Boolean vbr;
-    public String  type;
-    public String  bits;
-    public int     duration;
+    private String videoPath; //绝对路径
+    private boolean vbr;
+    private String  type;
+    private String  bits;
+    private long     duration;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isVbr() {
+        return vbr;
+    }
+
+    public void setVbr(boolean vbr) {
+        this.vbr = vbr;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public String getVideoPath() {
+        return videoPath;
+    }
+
+    public void setVideoPath(String videoPath) {
+        this.videoPath = videoPath;
+    }
+
+    public String getBits() {
+        return bits;
+    }
+
+    public void setBits(String bits) {
+        this.bits = bits;
+    }
+
+
+    public MediaTask(String videoPath, boolean vbr, String type, String bits, long duration) {
+        this.videoPath = videoPath;
+        this.vbr = vbr;
+        this.type = type;
+        this.bits = bits;
+        this.duration = duration;
+    }
 
     public static final String[] MEDIA_AUDIO_FORMAT = {
             "mp3",

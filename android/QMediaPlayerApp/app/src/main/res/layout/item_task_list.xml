@@ -11,7 +11,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_thumbnail"/>
+        android:src="@drawable/ic_task"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="@color/text_black"
-                android:text="00:11:11/00:22:22" />
+                android:text="00:00:00/00:22:22" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,7 +51,7 @@
             <ProgressBar
                 android:id="@+id/bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="2dp"
                 android:max="100"
                 android:secondaryProgress="60"
                 style="@android:style/Widget.ProgressBar.Horizontal"/>
@@ -60,12 +60,12 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/item_video_cut_2_audio"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
-        android:src="@drawable/icon_cut"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/item_video_cut_2_audio"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:src="@drawable/icon_cut"/>-->
 
 </LinearLayout>

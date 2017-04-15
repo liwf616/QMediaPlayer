@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 
 import com.github.yuqilin.qmediaplayerapp.R;
+import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.util.ITaskEventHandler;
 
@@ -64,12 +65,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         }
 
 //        holder.mTaskStatusPic.setImageIcon("");
-
-        holder.mFileName.setText(media.videoPath.substring(media.videoPath.lastIndexOf('/') + 1));
+        holder.mFileName.setText(media.getVideoPath().substring(media.getVideoPath().lastIndexOf('/') + 1));
+        holder.mProcessText.setText(String.format("%s/%s","00:00:00", VideoPlayerActivity.generateTime(media.getDuration())));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
 
-        Log.d(TAG, "position[" + position + "]: " + media.videoPath);
+        Log.d(TAG, "position[" + position + "]: " + media.getVideoPath());
     }
 
     @Override
@@ -91,9 +92,18 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         mTasks = tasks;
         notifyDataSetChanged();
     }
+
     public void addVideo(int position, MediaTask task) {
         mTasks.add(position, task);
         notifyItemInserted(position);
+
+        Log.d(TAG, "addVideo position " + position);
+    }
+
+    public void addVideo(MediaTask task) {
+        int position = getItemCount();
+
+        addVideo(position, task);
 
         Log.d(TAG, "addVideo position " + position);
     }

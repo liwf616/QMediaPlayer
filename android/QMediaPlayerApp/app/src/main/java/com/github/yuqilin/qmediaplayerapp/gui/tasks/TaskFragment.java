@@ -3,6 +3,8 @@ package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -12,7 +14,10 @@ import com.github.yuqilin.qmediaplayerapp.BaseFragment;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
+import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
 import com.github.yuqilin.qmediaplayerapp.util.ITaskEventHandler;
+
+import java.util.ArrayList;
 
 /**
  * Created by liwenfeng on 17/3/26.
@@ -24,6 +29,33 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
 
     protected AutoFitRecyclerView mGridView;
     private TaskListAdapter mTaskListAdapter;
+
+    public static final int SCAN_START = 1;
+    public static final int SCAN_FINISH = 2;
+    public static final int SCAN_CANCEL = 3;
+    public static final int SCAN_ADD_ITEM = 4;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SCAN_START:
+//                    mVideoLoader.scanStart();
+                    break;
+                case SCAN_FINISH:
+//                    mVideoAdapter.updateVideos(mVideoLoader.getVideos());
+                    break;
+                case SCAN_CANCEL:
+                    break;
+                case SCAN_ADD_ITEM:
+                    mTaskListAdapter.addVideo((MediaTask) msg.obj);
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    };
+
 
     @Override
     protected int getLayoutId() {
@@ -120,5 +152,12 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
 //        if (mVideoAdapter.isListMode() != listMode) {
 //            mVideoAdapter.setListMode(listMode);
 //        }
+    }
+
+    public void addTask(MediaTask task) {
+        Message message = Message.obtain();
+        message.obj = task;
+        message.what = SCAN_ADD_ITEM;
+        mHandler.sendMessage(message);
     }
 }

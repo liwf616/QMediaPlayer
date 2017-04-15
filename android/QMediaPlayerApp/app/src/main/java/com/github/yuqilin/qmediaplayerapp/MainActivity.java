@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity {
     private ArrayList<MediaWrapper> mVideos = new ArrayList<>();
 
     private VideoFragment mVideoFragment;
+
     private TaskFragment  mTaskFragment;
 
     private AsyncTask<String, Integer, String> mTask;
@@ -66,6 +67,8 @@ public class MainActivity extends BaseActivity {
 
         mTaskFragment = new TaskFragment();
         mFragments.add(mTaskFragment);
+
+        mVideoFragment.setTaskFragment(mTaskFragment);
 
         mAdpter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -92,7 +95,6 @@ public class MainActivity extends BaseActivity {
         mViewPagerTab.setCustomTabView(R.layout.custom_tab, R.id.custom_text);
         mViewPagerTab.setDividerColors(getResources().getColor(R.color.transparent));
         mViewPagerTab.setViewPager(mViewPager);
-
     }
 
     // Menu icons are inflated just as they were with actionbar

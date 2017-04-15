@@ -752,7 +752,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         return position;
     }
 
-    private static String generateTime(long position) {
+    public static String generateTime(long position) {
         int totalSeconds = (int) (position / 1000);
 
         int seconds = totalSeconds % 60;
