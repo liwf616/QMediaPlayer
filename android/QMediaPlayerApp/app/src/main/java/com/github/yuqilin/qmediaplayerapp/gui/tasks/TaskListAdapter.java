@@ -5,6 +5,7 @@
 package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.MainThread;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
+import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.util.ITaskEventHandler;
 
@@ -24,6 +26,7 @@ import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> implements TaskRunner.TaskRunnerListener{
 
+    private AutoFitRecyclerView mAutoFitRecyclerView;
     private ITaskEventHandler mTaskEventsHandler;
     private ArrayList<MediaTask> mTasks = new ArrayList<>();
 
@@ -32,17 +35,26 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     public final static String TAG = "TaskListAdapter";
 
-    public TaskListAdapter(ITaskEventHandler eventHandler) {
+    public TaskListAdapter(ITaskEventHandler eventHandler,AutoFitRecyclerView autoFitRecyclerView) {
         super();
+
+        mAutoFitRecyclerView = autoFitRecyclerView;
         mTaskEventsHandler = eventHandler;
     }
 
     public void onProcess(int seconds){
-
+        Log.w(TAG, "onProcess : " + seconds );
     };
 
     public  void onCompleted() {
         taskIsRunning = false;
+
+//        ViewHolder holder =(ViewHolder) mAutoFitRecyclerView.findViewHolderForLayoutPosition(taskIndex);
+        MediaTask media = mTasks.get(taskIndex);
+        if (media == null) {
+            return;
+        }
+
         nextTask(++taskIndex);
     };
 
@@ -57,7 +69,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         Log.d(TAG, "onCreateViewHolder viewType " + viewType);
 
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -84,7 +95,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         }
 
         holder.mFileName.setText(media.getVideoPath().substring(media.getVideoPath().lastIndexOf('/') + 1));
-        holder.mProcessText.setText(String.format("%s/%s","00:00:00", VideoPlayerActivity.generateTime(media.getDuration())));
+        holder.setmProcessText(String.format("%s/%s","00:00:00", VideoPlayerActivity.generateTime(media.getDuration())));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
 
@@ -148,12 +159,20 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
         public ViewHolder(View v) {
             super(v);
+            if(v == null) {
+                return;
+            }
+
             v.setOnFocusChangeListener(this);
 
             mListItem = v.findViewById(R.id.task_list_item_view);
             mTaskStatusPic = (ImageView) v.findViewById(R.id.item_task_list_status);
             mFileName = (TextView) v.findViewById(R.id.item_task_list_filename);
             mProcessText = (TextView) v.findViewById(R.id.item_video_task_process_text);
+        }
+
+        public void setmProcessText(String processText) {
+            mProcessText.setText(processText);
         }
 
         public void onClick(View v) {

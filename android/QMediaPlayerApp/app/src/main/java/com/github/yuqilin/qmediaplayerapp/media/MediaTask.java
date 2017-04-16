@@ -97,9 +97,14 @@ public class MediaTask {
         command.addCommand("-i", videoPath);
         command.addCommand("-c:a","libfdk_aac");
         command.addCommand("-vn");
-        command.addCommand("/sdcard/Download/ss_audio.aac");
+        command.addCommand("/sdcard/Download/ss_audio.mp4");
 
-        List<String> com =  command.getCommand();
-        return (String[]) com.toArray(new String[0]);
+        List<String> comList =  command.getCommand();
+
+        String[] commandStr = new String[comList.size()];
+
+        commandStr =  comList.toArray(commandStr);
+
+        return  commandStr;
     }
 }

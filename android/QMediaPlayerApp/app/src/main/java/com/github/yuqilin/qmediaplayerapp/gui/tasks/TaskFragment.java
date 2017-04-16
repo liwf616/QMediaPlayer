@@ -40,7 +40,6 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SCAN_START:
-//                    mVideoLoader.scanStart();
                     break;
                 case SCAN_FINISH:
 //                    mVideoAdapter.updateVideos(mVideoLoader.getVideos());
@@ -69,7 +68,7 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
 
     protected void initView(View view, Bundle savedInstanceState) {
         mGridView = (AutoFitRecyclerView) view.findViewById(R.id.task_grid);
-        mTaskListAdapter = new TaskListAdapter(this);
+        mTaskListAdapter = new TaskListAdapter(this, mGridView);
         mGridView.setAdapter(mTaskListAdapter);
     }
 
@@ -148,10 +147,6 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
         }
 
         mGridView.setNumColumns(listMode ? 1 : -1);
-
-//        if (mVideoAdapter.isListMode() != listMode) {
-//            mVideoAdapter.setListMode(listMode);
-//        }
     }
 
     public void addTask(MediaTask task) {
