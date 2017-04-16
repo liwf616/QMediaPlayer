@@ -16,18 +16,15 @@ public class MediaTask {
     private boolean vbr;
     private String  type;
     private String  bits;
-    private long    duration;
-    private long    process;
+    private int    duration;
 
-    private boolean isTranscoded;
-
-    public boolean isTranscoded() {
-        return isTranscoded;
+    public static String[] getMediaAudioFormat() {
+        return MEDIA_AUDIO_FORMAT;
     }
 
-    public void setTranscoded(boolean transcoded) {
-        isTranscoded = transcoded;
-    }
+    private int    process;
+
+    private int     taskIndex;
 
     public int getTaskIndex() {
         return taskIndex;
@@ -37,15 +34,12 @@ public class MediaTask {
         this.taskIndex = taskIndex;
     }
 
-    private int     taskIndex;
-
-
-    public long getProcess() {
-        return process;
+    public void setProcess(int process) {
+        this.process = process;
     }
 
-    public void setProcess(long process) {
-        this.process = process;
+    public int getProcess() {
+        return  process;
     }
 
     public String getType() {
@@ -68,7 +62,7 @@ public class MediaTask {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -88,7 +82,7 @@ public class MediaTask {
         this.bits = bits;
     }
 
-    public MediaTask(String videoPath, boolean vbr, String type, String bits, long duration) {
+    public MediaTask(String videoPath, boolean vbr, String type, String bits, int duration) {
         this.videoPath = videoPath;
         this.vbr = vbr;
         this.type = type;
@@ -140,14 +134,14 @@ public class MediaTask {
         return  commandStr;
     }
 
-    public String getProcessText()
-    {
+    public String getProcessText() {
         String process = VideoPlayerActivity.generateTime(getProcess());
         String duration = VideoPlayerActivity.generateTime(getDuration());
-        if (isTranscoded) {
-            return String.format("%s/%s", process, duration);
-        } else {
-            return String.format("%s/%s", duration, duration);
-        }
+
+        return String.format("%s/%s", process, duration);
+    }
+
+    public int getProcessInt() {
+        return (int) (process * 100 / duration);
     }
 }

@@ -5,7 +5,7 @@
 package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.widget.ProgressBar;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -55,9 +55,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                 case UPDATE_PROCESS:
                     updateProcessText((MediaTask)message.obj);
                     break;
-                case TASK_FINISHED:
-                    updateProcessText((MediaTask)message.obj);
-                    break;
             }
             return true;
         }
@@ -65,8 +62,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     private void updateProcessText(MediaTask task) {
         ViewHolder holder =(ViewHolder) mAutoFitRecyclerView.findViewHolderForLayoutPosition(task.getTaskIndex());
+
         if (holder != null) {
             holder.setmProcessText(task.getProcessText());
+            holder.setmProcessBar(task.getProcessInt());
         }
     }
 
@@ -96,11 +95,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         if (media == null) {
             return;
         }
-        media.setTranscoded(true);
+        media.setProcess((int)media.getDuration());
 
         Message message = Message.obtain();
         message.obj = media;
-        message.what = TASK_FINISHED;
+        message.what = UPDATE_PROCESS;
 
         mHandler.sendMessage(message);
 
@@ -204,6 +203,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         private ImageView mTaskStatusPic;
         private TextView mFileName;
         private TextView mProcessText;
+        private ProgressBar mProgressBar;
 
         public ViewHolder(View v) {
             super(v);
@@ -217,10 +217,15 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             mTaskStatusPic = (ImageView) v.findViewById(R.id.item_task_list_status);
             mFileName = (TextView) v.findViewById(R.id.item_task_list_filename);
             mProcessText = (TextView) v.findViewById(R.id.item_video_task_process_text);
+            mProgressBar = (ProgressBar) v.findViewById(R.id.bar);
         }
 
         public void setmProcessText(String processText) {
             mProcessText.setText(processText);
+        }
+
+        public void setmProcessBar(int process) {
+            mProgressBar.setProgress(process);
         }
 
         public void onClick(View v) {

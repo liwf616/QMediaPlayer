@@ -53,7 +53,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:max="100"
-                android:secondaryProgress="60"
                 style="@android:style/Widget.ProgressBar.Horizontal"/>
         </LinearLayout>
 

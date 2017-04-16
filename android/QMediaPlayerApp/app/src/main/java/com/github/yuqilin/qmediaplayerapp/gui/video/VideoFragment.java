@@ -188,7 +188,7 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
 
 //        TaskFragment taskFragment =(TaskFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.task_grid);
         if(taskFragment != null) {
-            taskFragment.addTask(new MediaTask(videopath, vbr, type, bits,duration));
+            taskFragment.addTask(new MediaTask(videopath, vbr, type, bits,(int) duration));
         }
 
 //        if (requestCode == 1 && resultCode == -1) {
