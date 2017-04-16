@@ -12,11 +12,17 @@ public final class FFmpegInvoke {
         System.loadLibrary("ffmpeg_invoke");
     }
 
-    private String mVideoPath;
-    private String mVideoDestPath;
-    private String mBits;
-    private String mType;
-    private String mVbr;
+    public interface FFmpegInvokeListener {
+        void onRunProcess(int seconds);
+    }
+
+    private FFmpegInvokeListener mFFmpegInvokeListener;
+
+    public FFmpegInvoke() {}
+
+    public  FFmpegInvoke(FFmpegInvokeListener ffmpegInvokeListener) {
+        mFFmpegInvokeListener = ffmpegInvokeListener;
+    }
 
     public static void help() {
         FFmpegInvoke ffmpeg = new FFmpegInvoke();
@@ -27,6 +33,10 @@ public final class FFmpegInvoke {
 
     public void updateProcess(int seconds) {
         Log.w(TAG, "process= " + seconds);
+
+        if (mFFmpegInvokeListener != null) {
+            mFFmpegInvokeListener.onRunProcess(seconds);
+        }
     }
 
     public native void run(String[] args);

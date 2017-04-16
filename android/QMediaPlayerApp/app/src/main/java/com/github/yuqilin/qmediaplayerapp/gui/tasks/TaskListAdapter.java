@@ -14,17 +14,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.util.ITaskEventHandler;
+import com.github.yuqilin.qmediaplayerapp.media.TaskRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder>{
+public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> implements TaskRunner.TaskRunnerListener{
 
     private ITaskEventHandler mTaskEventsHandler;
     private ArrayList<MediaTask> mTasks = new ArrayList<>();
@@ -35,6 +34,16 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         super();
         mTaskEventsHandler = eventHandler;
     }
+
+    // task process
+    public  void onProcess(int seconds){
+
+    };
+
+    // task is finished
+    public  void onCompleted() {
+
+    };
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -64,7 +73,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             return;
         }
 
-//        holder.mTaskStatusPic.setImageIcon("");
         holder.mFileName.setText(media.getVideoPath().substring(media.getVideoPath().lastIndexOf('/') + 1));
         holder.mProcessText.setText(String.format("%s/%s","00:00:00", VideoPlayerActivity.generateTime(media.getDuration())));
         holder.mListItem.setTag(media);
@@ -88,10 +96,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         super.onViewRecycled(holder);
     }
 
-    public void updateVideos(ArrayList<MediaTask> tasks) {
-        mTasks = tasks;
-        notifyDataSetChanged();
-    }
+//    public void updateVideos(ArrayList<MediaTask> tasks) {
+//        mTasks = tasks;
+//        notifyDataSetChanged();
+//    }
 
     public void addVideo(int position, MediaTask task) {
         mTasks.add(position, task);
@@ -118,10 +126,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         mTasks.clear();
     }
 
-//    void setGridCardWidth(int gridCardWidth) {
-//        mGridCardWidth = gridCardWidth;
-//    }
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
         private View mListItem;
         private ImageView mTaskStatusPic;
@@ -144,7 +148,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         }
 
         public void onMoreClick(View v){
-//            mTaskEventsHandler.onCtxClick(v, getLayoutPosition(), null);
         }
 
         public boolean onLongClick(View v) {
@@ -156,5 +159,4 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         public void onFocusChange(View v, boolean hasFocus) {
         }
     }
-
 }
