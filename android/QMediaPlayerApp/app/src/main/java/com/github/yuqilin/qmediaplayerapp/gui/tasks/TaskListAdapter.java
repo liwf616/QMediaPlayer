@@ -6,6 +6,9 @@ package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.MainThread;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,6 +38,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     public final static String TAG = "TaskListAdapter";
 
+    private static final int UPDATE_PROCESS = 1;
+    private static final int TASK_FINISHED = 2;
+
     public TaskListAdapter(ITaskEventHandler eventHandler,AutoFitRecyclerView autoFitRecyclerView) {
         super();
 
@@ -42,28 +48,70 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         mTaskEventsHandler = eventHandler;
     }
 
+    private Handler mHandler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
+                case UPDATE_PROCESS:
+                    updateProcessText((MediaTask)message.obj);
+                    break;
+                case TASK_FINISHED:
+                    updateProcessText((MediaTask)message.obj);
+                    break;
+            }
+            return true;
+        }
+    });
+
+    private void updateProcessText(MediaTask task) {
+        ViewHolder holder =(ViewHolder) mAutoFitRecyclerView.findViewHolderForLayoutPosition(task.getTaskIndex());
+        if (holder != null) {
+            holder.setmProcessText(task.getProcessText());
+        }
+    }
+
     public void onProcess(int seconds){
         Log.w(TAG, "onProcess : " + seconds );
-    };
 
-    public  void onCompleted() {
-        taskIsRunning = false;
-
-//        ViewHolder holder =(ViewHolder) mAutoFitRecyclerView.findViewHolderForLayoutPosition(taskIndex);
         MediaTask media = mTasks.get(taskIndex);
         if (media == null) {
             return;
         }
+        media.setProcess(seconds * 1000);
+        media.setTaskIndex(taskIndex);
+
+        Message message = Message.obtain();
+        message.obj = media;
+        message.what = UPDATE_PROCESS;
+
+        mHandler.sendMessage(message);
+    };
+
+    public  void onCompleted() {
+        Log.w(TAG, "onCompleted");
+
+        taskIsRunning = false;
+
+        MediaTask media = mTasks.get(taskIndex);
+        if (media == null) {
+            return;
+        }
+        media.setTranscoded(true);
+
+        Message message = Message.obtain();
+        message.obj = media;
+        message.what = TASK_FINISHED;
+
+        mHandler.sendMessage(message);
 
         nextTask(++taskIndex);
     };
 
     private void nextTask(int taskIndex) {
-        taskIsRunning = true;
-
         if(taskIndex < mTasks.size()) {
             TaskRunner runner = new TaskRunner(this);
             runner.convertStart(mTasks.get(taskIndex).getCommand());
+            taskIsRunning = true;
         }
     }
 

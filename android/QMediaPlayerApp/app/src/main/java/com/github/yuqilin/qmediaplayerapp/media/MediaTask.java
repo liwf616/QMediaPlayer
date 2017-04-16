@@ -1,6 +1,8 @@
 package com.github.yuqilin.qmediaplayerapp.media;
 
+import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.Command;
+import com.github.yuqilin.qmediaplayerapp.util.Strings;
 
 import java.util.List;
 
@@ -14,7 +16,37 @@ public class MediaTask {
     private boolean vbr;
     private String  type;
     private String  bits;
-    private long     duration;
+    private long    duration;
+    private long    process;
+
+    private boolean isTranscoded;
+
+    public boolean isTranscoded() {
+        return isTranscoded;
+    }
+
+    public void setTranscoded(boolean transcoded) {
+        isTranscoded = transcoded;
+    }
+
+    public int getTaskIndex() {
+        return taskIndex;
+    }
+
+    public void setTaskIndex(int taskIndex) {
+        this.taskIndex = taskIndex;
+    }
+
+    private int     taskIndex;
+
+
+    public long getProcess() {
+        return process;
+    }
+
+    public void setProcess(long process) {
+        this.process = process;
+    }
 
     public String getType() {
         return type;
@@ -106,5 +138,16 @@ public class MediaTask {
         commandStr =  comList.toArray(commandStr);
 
         return  commandStr;
+    }
+
+    public String getProcessText()
+    {
+        String process = VideoPlayerActivity.generateTime(getProcess());
+        String duration = VideoPlayerActivity.generateTime(getDuration());
+        if (isTranscoded) {
+            return String.format("%s/%s", process, duration);
+        } else {
+            return String.format("%s/%s", duration, duration);
+        }
     }
 }
