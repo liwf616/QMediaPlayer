@@ -1,5 +1,9 @@
 package com.github.yuqilin.qmediaplayerapp.media;
 
+import com.github.yuqilin.qmediaplayerapp.gui.tasks.Command;
+
+import java.util.List;
+
 /**
  * Created by liwenfeng on 17/4/7.
  */
@@ -52,7 +56,6 @@ public class MediaTask {
         this.bits = bits;
     }
 
-
     public MediaTask(String videoPath, boolean vbr, String type, String bits, long duration) {
         this.videoPath = videoPath;
         this.vbr = vbr;
@@ -85,5 +88,18 @@ public class MediaTask {
         } else {
             return MEDIA_AUDIO_BITS[i] + " " + "VBR(slow)";
         }
+    }
+
+    public String[] getCommand() {
+        Command command = new Command();
+        command.addCommand("ffmpeg");
+        command.addCommand("-y");
+        command.addCommand("-i", videoPath);
+        command.addCommand("-c:a","libfdk_aac");
+        command.addCommand("-vn");
+        command.addCommand("/sdcard/Download/ss_audio.aac");
+
+        List<String> com =  command.getCommand();
+        return (String[]) com.toArray(new String[0]);
     }
 }

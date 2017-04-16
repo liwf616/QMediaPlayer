@@ -1,4 +1,4 @@
-package com.github.yuqilin.qmediaplayerapp.media;
+package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
 /**
  * Created by liwenfeng on 17/4/7.

@@ -58,9 +58,6 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
                     break;
                 case SCAN_FINISH:
                     mVideoAdapter.updateVideos(mVideoLoader.getVideos());
-//                    if (isVisible()) {
-//                        mVideoAdapter.notifyDataSetChanged();
-//                    }
                     break;
                 case SCAN_CANCEL:
                     break;

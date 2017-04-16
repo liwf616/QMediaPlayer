@@ -1,4 +1,4 @@
-package com.github.yuqilin.qmediaplayerapp.media;
+package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
 import com.github.yuqilin.qmediaplayerapp.QApplication;
 import com.github.yuqilin.qmediaplayer.FFmpegInvoke;
@@ -27,11 +27,11 @@ public class TaskRunner implements FFmpegInvoke.FFmpegInvokeListener {
         }
     }
 
-    public void convertStart() {
+    public void convertStart(final String[] command) {
         QApplication.runBackground(new Runnable() {
             @Override
             public void run() {
-                runTranscodeTask();
+                runTranscodeTask(command);
 
                 if (mTaskRunnerListener != null) {
                     mTaskRunnerListener.onCompleted();
@@ -40,8 +40,8 @@ public class TaskRunner implements FFmpegInvoke.FFmpegInvokeListener {
         });
     }
 
-    private void runTranscodeTask() {
+    private void runTranscodeTask(String[] command) {
         FFmpegInvoke ffmpeg = new FFmpegInvoke(this);
-        ffmpeg.help();
+        ffmpeg.run(command);
     }
 }

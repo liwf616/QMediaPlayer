@@ -18,7 +18,6 @@ import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.util.ITaskEventHandler;
-import com.github.yuqilin.qmediaplayerapp.media.TaskRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     private ITaskEventHandler mTaskEventsHandler;
     private ArrayList<MediaTask> mTasks = new ArrayList<>();
 
+    private boolean taskIsRunning = false;
+    private int taskIndex = 0;
+
     public final static String TAG = "TaskListAdapter";
 
     public TaskListAdapter(ITaskEventHandler eventHandler) {
@@ -35,15 +37,23 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         mTaskEventsHandler = eventHandler;
     }
 
-    // task process
-    public  void onProcess(int seconds){
+    public void onProcess(int seconds){
 
     };
 
-    // task is finished
     public  void onCompleted() {
-
+        taskIsRunning = false;
+        nextTask(++taskIndex);
     };
+
+    private void nextTask(int taskIndex) {
+        taskIsRunning = true;
+
+        if(taskIndex < mTasks.size()) {
+            TaskRunner runner = new TaskRunner(this);
+            runner.convertStart(mTasks.get(taskIndex).getCommand());
+        }
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -112,6 +122,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         int position = getItemCount();
 
         addVideo(position, task);
+
+        if (taskIsRunning == false) {
+            nextTask(taskIndex);
+        }
 
         Log.d(TAG, "addVideo position " + position);
     }
