@@ -230,7 +230,7 @@ public class RangeSeekBar extends View {
 
         lineLeft = DEFAULT_PADDING_LEFT_AND_RIGHT  + getPaddingLeft();
         lineRight = w - lineLeft - getPaddingRight();
-        lineTop = (int)mHintBGHeight + mThumbSize/2 -mSeekBarHeight/2 ;
+        lineTop =  (int)mHintBGHeight + mThumbSize/2 -mSeekBarHeight/2 ;
         lineBottom = lineTop + mSeekBarHeight ;
         lineWidth = lineRight - lineLeft;
         line.set(lineLeft, lineTop, lineRight, lineBottom);
@@ -269,7 +269,7 @@ public class RangeSeekBar extends View {
                     }else {
                         mCursorPaint.setColor(colorLineEdge);
                     }
-                    //按实际比例显示
+                    //按实际比例显
                     x = lineLeft + lineWidth * (num - mMin) / (mMax - mMin)
                             - mCursorPaint.measureText(text2Draw) / 2;
                 }

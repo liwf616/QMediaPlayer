@@ -153,7 +153,7 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
 
     @Override
     public void onClick(View v, int position, MediaWrapper item) {
-        jumpToPlayerActivity(item.filePath);
+        jumpToPlayerActivity(item.filePath, item.duration);
     }
 
     @Override
@@ -171,9 +171,10 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
 
     }
 
-    private void jumpToPlayerActivity(String videoPath) {
+    private void jumpToPlayerActivity(String videoPath, String duration) {
         Intent intent = new Intent(getContext(), VideoPlayerActivity.class);
         intent.putExtra("videoPath", videoPath);
+        intent.putExtra("duration", duration);
         startActivityForResult(intent, 1);
     }
 

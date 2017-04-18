@@ -32,4 +32,9 @@
 
     <color name="gray_background">#4d4d4d</color>
 
+    <color name="colorPrimaryBar">#3F51B5</color>
+    <color name="colorPrimaryDarkBar">#303F9F</color>
+    <color name="colorAccentBar">#2ed184</color>
+    <color name="colorSeekBarDefaultBar">#c3c3c3</color>
+
 </resources>

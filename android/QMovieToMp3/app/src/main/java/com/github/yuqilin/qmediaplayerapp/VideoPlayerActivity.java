@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.github.yuqilin.qmediaplayer.IMediaController;
 import com.github.yuqilin.qmediaplayer.QMediaPlayerVideoView;
+import com.github.yuqilin.qmediaplayerapp.gui.view.RangeSeekBar;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.util.AndroidDevices;
 import com.github.yuqilin.qmediaplayerapp.util.Permissions;
@@ -73,7 +74,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     View mBottomView;
     TextView mCurrentTime;
     TextView mTotalTime;
-    SeekBar mSeekBar;
+    RangeSeekBar mSeekBar;
     ImageView mPlayPause;
 
     // center tools view
@@ -127,6 +128,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     //
     ImageView mConvertButton;
 
+    //
+    private float leftBar = (float) 0.0;
+    private float rightBar = (float) 0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,6 +142,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mSettings = PreferenceManager.getDefaultSharedPreferences(this);
 
         mVideoPath = getIntent().getStringExtra("videoPath");
+        mDuration = Integer.parseInt(getIntent().getStringExtra("duration"));
         mVideoView.setVideoPath(mVideoPath);
         mVideoView.start();
 
@@ -147,6 +153,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
             Log.w(TAG, "File not exitsts or can not read");
         }
 
+        mSeekBar = (RangeSeekBar) findViewById(R.id.view_player_seekbar);
+        mSeekBar.setRange(0, mDuration / 1000);
+        mSeekBar.setOnRangeChangedListener(mSeekListener);
     }
 
     @Override
@@ -237,7 +246,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mBottomView = findViewById(R.id.player_bottom_view);
         mCurrentTime = (TextView) findViewById(R.id.view_player_current_time);
         mTotalTime = (TextView) findViewById(R.id.view_player_total_time);
-        mSeekBar = (SeekBar) findViewById(R.id.view_player_seekbar);
+        mSeekBar = (RangeSeekBar) findViewById(R.id.view_player_seekbar);
         mPlayPause = (ImageView) findViewById(R.id.view_player_play_pause);
 
         // center tools view
@@ -278,15 +287,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mBack.setOnClickListener(mBackListener);
         mShowMore.setOnClickListener(mShowMoreListener);
         mPlayPause.setOnClickListener(mPlayPauseListener);
-        mSeekBar.setOnSeekBarChangeListener(mSeekListener);
         mLockCenter.setOnClickListener(mLockScreenListener);
         mTypeSpinner.setOnItemSelectedListener(mOnSelectTypeListener);
         mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
         mConvertButton.setOnClickListener(mStartConvertListener);
 
-        mSeekBar.setThumbOffset(1);
-        mSeekBar.setMax(1000);
-        mSeekBar.setEnabled(!mDisableProgress);
+//        mSeekBar.setThumbOffset(1);
+//        mSeekBar.setMax(1000);
+//        mSeekBar.setEnabled(!mDisableProgress);
 
         mVideoView.setMediaController(this);
 
@@ -541,13 +549,21 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         }
     });
 
-    private SeekBar.OnSeekBarChangeListener mSeekListener = new SeekBar.OnSeekBarChangeListener() {
+    private RangeSeekBar.OnRangeChangedListener mSeekListener = new RangeSeekBar.OnRangeChangedListener() {
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        public void onRangeChanged(RangeSeekBar view, float min, float max, boolean fromUser) {
             if (!fromUser)
                 return;
 
-            final long newPosition = (long) (mDuration * progress) / 1000;
+            rightBar = max;
+
+            if(leftBar == min) {
+                return;
+            }
+
+            leftBar = min;
+
+            final long newPosition = (long) (mDuration * min) / 1000;
             String time = generateTime(newPosition);
             if (mInstantSeeking) {
                 mHandler.removeCallbacks(mLastSeekBarRunnable);
@@ -563,26 +579,26 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
                 mCurrentTime.setText(time);
         }
 
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
-            mDragging = true;
-            show(3600000);
-            mHandler.removeMessages(SHOW_PROGRESS);
-            if (mInstantSeeking)
-                mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
-        }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            if (!mInstantSeeking)
-                mMediaPlayerControl.seekTo(mDuration * seekBar.getProgress() / 1000);
-
-            show(DEFAULT_TIMEOUT);
-            mHandler.removeMessages(SHOW_PROGRESS);
-            mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-            mDragging = false;
-            mHandler.sendEmptyMessageDelayed(SHOW_PROGRESS, 1000);
-        }
+//        @Override
+//        public void onStartTrackingTouch(SeekBar seekBar) {
+//            mDragging = true;
+//            show(3600000);
+//            mHandler.removeMessages(SHOW_PROGRESS);
+//            if (mInstantSeeking)
+//                mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+//        }
+//
+//        @Override
+//        public void onStopTrackingTouch(SeekBar seekBar) {
+//            if (!mInstantSeeking)
+//                mMediaPlayerControl.seekTo(mDuration * seekBar.getProgress() / 1000);
+//
+//            show(DEFAULT_TIMEOUT);
+//            mHandler.removeMessages(SHOW_PROGRESS);
+//            mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+//            mDragging = false;
+//            mHandler.sendEmptyMessageDelayed(SHOW_PROGRESS, 1000);
+//        }
     };
 
     private View.OnClickListener mRewindListener = new View.OnClickListener() {
@@ -734,10 +750,10 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         if (mSeekBar != null) {
             if (duration > 0) {
                 long pos = 1000L * position / duration;
-                mSeekBar.setProgress((int) pos);
+//                mSeekBar.setProgress((int) pos);
             }
-            int percent = mMediaPlayerControl.getBufferPercentage();
-            mSeekBar.setSecondaryProgress(percent * 10);
+//            int percent = mMediaPlayerControl.getBufferPercentage();
+//            mSeekBar.setSecondaryProgress(percent * 10);
         }
 
         mDuration = duration;
