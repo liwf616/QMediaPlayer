@@ -316,11 +316,7 @@ public class RangeSeekBar extends View {
         //Calculate the height of the text
         Paint.FontMetrics fm = mCursorPaint.getFontMetrics();
         mCursorTextHeight = (int) (Math.ceil(fm.descent - fm.ascent) + 2);
-
-
     }
-
-
 
     /**
      * 初始化进度提示的背景

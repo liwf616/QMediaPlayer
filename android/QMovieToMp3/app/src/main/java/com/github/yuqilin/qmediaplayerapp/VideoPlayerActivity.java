@@ -129,8 +129,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     ImageView mConvertButton;
 
     //
-    private float leftBar = (float) 0.0;
-    private float rightBar = (float) 0.0;
+    private int leftBar = 0;
+    private int rightBar = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -555,16 +555,19 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
             if (!fromUser)
                 return;
 
-            rightBar = max;
+            rightBar = (int) max;
 
-            if(leftBar == min) {
+            if(leftBar == (int) min) {
                 return;
             }
 
-            leftBar = min;
+            Log.i(TAG, "leftBar:" + leftBar + "rightBar:" + rightBar);
 
-            final long newPosition = (long) (mDuration * min) / 1000;
+            leftBar =(int) min;
+
+            final long newPosition = (long) (leftBar * 1000);
             String time = generateTime(newPosition);
+
             if (mInstantSeeking) {
                 mHandler.removeCallbacks(mLastSeekBarRunnable);
                 mLastSeekBarRunnable = new Runnable() {

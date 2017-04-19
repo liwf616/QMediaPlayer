@@ -116,6 +116,7 @@
             app:thumbSize="18dp"
             app:cellMode="other"
             app:seekBarMode="range"
+            app:hideProgressHint="true"
             />
 
         <TextView
