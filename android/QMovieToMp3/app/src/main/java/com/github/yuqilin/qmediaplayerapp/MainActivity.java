@@ -1,33 +1,21 @@
 package com.github.yuqilin.qmediaplayerapp;
 
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
 
-import com.github.yuqilin.qmediaplayerapp.gui.home.HomeFragment;
 import com.github.yuqilin.qmediaplayerapp.gui.mp3.MyMp3Fragment;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.TaskFragment;
 import com.github.yuqilin.qmediaplayerapp.gui.video.VideoFragment;
-import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
+import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends BaseActivity {
 
@@ -43,7 +31,7 @@ public class MainActivity extends BaseActivity {
 
     private List<BaseFragment> mFragments = new ArrayList<>();
 
-    private ArrayList<MediaWrapper> mVideos = new ArrayList<>();
+    private ArrayList<VideoWrapper> mVideos = new ArrayList<>();
 
     private VideoFragment mVideoFragment;
 

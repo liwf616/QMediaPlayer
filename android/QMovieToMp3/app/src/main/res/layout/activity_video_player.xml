@@ -93,7 +93,38 @@
             android:text="00:00:00"
             android:textSize="12sp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="30dp"/>
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/view_player_center_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00:00"
+            android:textSize="12sp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/view_player_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00:00"
+            android:textSize="12sp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="00dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
 
         <com.github.yuqilin.qmediaplayerapp.gui.view.RangeSeekBar
             android:id="@+id/view_player_seekbar"
@@ -105,12 +136,10 @@
 
             app:lineColorSelected="@color/colorAccentBar"
             app:lineColorEdge="@color/colorSeekBarDefaultBar"
-            app:textPadding="10dp"
-            app:textSize="12sp"
             app:min="0"
             app:max="200"
             app:reserve="10"
-            app:hintBGHeight="30dp"
+            app:hintBGHeight="25dp"
             app:seekBarHeight="2dp"
             app:hintBGWith="40dp"
             app:thumbSize="18dp"
@@ -118,15 +147,6 @@
             app:seekBarMode="range"
             app:hideProgressHint="true"
             />
-
-        <TextView
-            android:id="@+id/view_player_total_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00:00"
-            android:textSize="12sp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="30dp"/>
 
     </LinearLayout>
 

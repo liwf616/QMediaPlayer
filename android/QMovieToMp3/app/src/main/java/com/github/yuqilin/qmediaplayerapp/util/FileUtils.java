@@ -234,7 +234,7 @@ public class FileUtils {
 //        });
     }
 
-//    public static boolean canSave(MediaWrapper mw){
+//    public static boolean canSave(VideoWrapper mw){
 //        if (mw == null || mw.getUri() == null)
 //            return false;
 //        String scheme = mw.getUri().getScheme();

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/video_item_list_view"
+    android:id="@+id/audio_item_list_view"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/item_video_list_thumbnail"
+        android:id="@+id/item_audio_list_thumbnail"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
@@ -22,12 +22,12 @@
         android:layout_marginLeft="16dp">
 
         <TextView
-            android:id="@+id/item_video_list_filename"
+            android:id="@+id/item_audio_list_filename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/text_black"
-            android:text="mdamfdafdomfodfopafodmfopamfomodf.mp4"
+            android:text="test.aac"
             android:maxLines="1"
             android:ellipsize="end"/>
 
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/item_video_list_duration"
+                android:id="@+id/item_audio_list_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
@@ -44,7 +44,7 @@
                 android:text="01:23:33" />
 
             <TextView
-                android:id="@+id/item_video_list_filesize"
+                android:id="@+id/item_audio_list_filesize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -54,9 +54,8 @@
         </LinearLayout>
     </LinearLayout>
 
-
     <ImageView
-        android:id="@+id/item_video_cut_2_audio"
+        android:id="@+id/item_audio_info"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="center_vertical"

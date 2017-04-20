@@ -1,18 +1,15 @@
 package com.github.yuqilin.qmediaplayerapp.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.yuqilin.qmediaplayerapp.QApplication;
-import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
+import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 
 /**
  * Created by yuqilin on 17/3/10.
@@ -30,7 +27,7 @@ public class AsyncImageLoader {
 
 //    public static final BitmapDrawable DEFAULT_COVER_VIDEO = new BitmapDrawable(VLCApplication.getAppResources(), BitmapCache.getFromResource(VLCApplication.getAppResources(), R.drawable.icon));
 
-    public static void loadPicture(View view, MediaWrapper media) {
+    public static void loadPicture(View view, VideoWrapper media) {
         AsyncImageLoader.LoadImage(new MediaCoverFetcher(media), view);
     }
 
@@ -61,9 +58,9 @@ public class AsyncImageLoader {
     }
 
     private static class MediaCoverFetcher extends AsyncImageLoader.CoverFetcher {
-        final MediaWrapper media;
+        final VideoWrapper media;
 
-        MediaCoverFetcher(MediaWrapper media) {
+        MediaCoverFetcher(VideoWrapper media) {
             this.media = media;
         }
 

@@ -9,48 +9,38 @@ import com.github.yuqilin.qmediaplayerapp.QApplication;
 import java.util.ArrayList;
 
 /**
- * Created by yuqilin on 17/3/16.
+ * Created by liwenfeng on 17/4/20.
  */
 
-public class VideoLoader {
+public class AudioLoader {
+    public static final String TAG = "AudioLoader";
 
-    public static final String TAG = "VideoLoader";
-
-    public interface VideoLoaderListener {
-        void onLoadItem(int position, VideoWrapper video);
-        void onLoadCompleted(ArrayList<VideoWrapper> videos);
+    public interface AudioLoaderListener {
+        void onLoadItem(int position, AudioWrapter video);
+        void onLoadCompleted(ArrayList<AudioWrapter> videos);
     }
 
-    private ArrayList<VideoWrapper> mVideos = new ArrayList<>();
+    private ArrayList<AudioWrapter> mAudios = new ArrayList<>();
 
-    private VideoLoaderListener mVideoLoaderListener;
+    private AudioLoader.AudioLoaderListener mAduioLoaderListener;
 
-    public VideoLoader(VideoLoaderListener videoLoaderListener) {
-        mVideoLoaderListener = videoLoaderListener;
+    public AudioLoader(AudioLoader.AudioLoaderListener audioLoaderListener) {
+        mAduioLoaderListener = audioLoaderListener;
     }
 
     public void scanStart() {
         QApplication.runBackground(new Runnable() {
             @Override
             public void run() {
-                loadVideos();
-                if (mVideoLoaderListener != null) {
-                    mVideoLoaderListener.onLoadCompleted(mVideos);
+                loadAduios();
+                if (mAduioLoaderListener != null) {
+                    mAduioLoaderListener.onLoadCompleted(mAudios);
                 }
             }
         });
     }
 
-    public ArrayList<VideoWrapper> getVideos() {
-        return mVideos;
-    }
-
-    public void loadVideos() {
-        String[] thumbColumns = new String[]{
-                MediaStore.Video.Thumbnails.DATA,
-                MediaStore.Video.Thumbnails.VIDEO_ID
-        };
-
+    public void loadAduios() {
         String[] mediaColumns = new String[]{
                 MediaStore.Video.Media.DATA,
                 MediaStore.Video.Media._ID,
@@ -65,7 +55,7 @@ public class VideoLoader {
 
         if(cursor.moveToFirst()){
             do{
-                VideoWrapper media = new VideoWrapper();
+                AudioWrapter media = new AudioWrapter();
 
                 media.filePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
                 media.mimeType = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
@@ -79,25 +69,22 @@ public class VideoLoader {
                 String[] selectionArgs = new String[]{
                         id+""
                 };
-//                Cursor thumbCursor = getContentResolver().query(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, selection, selectionArgs, null);
-//
-//                if(thumbCursor != null && thumbCursor.moveToFirst()){
-//                    info.thumbPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Thumbnails.DATA));
-//                }
-                media.videoId = id;
 
-                Log.d(TAG, "====Scanned : [" + mVideos.size() + "] " + media.filePath + " " + media.title + " " + media.videoId);
+                media.audioId = id;
 
-                //然后将其加入到videoList
-                mVideos.add(media);
+                Log.d(TAG, "====Scanned : [" + mAudios.size() + "] " + media.filePath + " " + media.title + " " + media.audioId);
 
-                if (mVideoLoaderListener != null) {
-                    mVideoLoaderListener.onLoadItem(mVideos.size() - 1, media);
+                mAudios.add(media);
+
+                if (mAduioLoaderListener != null) {
+                    mAduioLoaderListener.onLoadItem(mAudios.size() - 1, media);
                 }
-
-//                mVideoFragment.notifyDataChanged();
 
             } while(cursor.moveToNext());
         }
+    }
+
+    public ArrayList<AudioWrapter> getAudios() {
+            return mAudios;
     }
 }

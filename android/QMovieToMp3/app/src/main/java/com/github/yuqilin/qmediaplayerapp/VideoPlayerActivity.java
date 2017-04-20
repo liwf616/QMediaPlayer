@@ -73,6 +73,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     // bottom view
     View mBottomView;
     TextView mCurrentTime;
+    TextView mCenterTime;
     TextView mTotalTime;
     RangeSeekBar mSeekBar;
     ImageView mPlayPause;
@@ -245,6 +246,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         // bottom view
         mBottomView = findViewById(R.id.player_bottom_view);
         mCurrentTime = (TextView) findViewById(R.id.view_player_current_time);
+        mCenterTime = (TextView) findViewById(R.id.view_player_center_time);
         mTotalTime = (TextView) findViewById(R.id.view_player_total_time);
         mSeekBar = (RangeSeekBar) findViewById(R.id.view_player_seekbar);
         mPlayPause = (ImageView) findViewById(R.id.view_player_play_pause);
@@ -556,6 +558,12 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
                 return;
 
             rightBar = (int) max;
+
+            final long newCenterPosition = (long) (rightBar * 1000);
+            String centertime = generateTime(newCenterPosition);
+            if(mCenterTime != null) {
+                mCenterTime.setText(centertime);
+            }
 
             if(leftBar == (int) min) {
                 return;

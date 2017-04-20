@@ -22,7 +22,7 @@ import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
-import com.github.yuqilin.qmediaplayerapp.util.ITaskEventHandler;
+import com.github.yuqilin.qmediaplayerapp.ITaskEventHandler;
 
 import java.util.ArrayList;
 import java.util.List;

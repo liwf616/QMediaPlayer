@@ -14,10 +14,7 @@ import com.github.yuqilin.qmediaplayerapp.BaseFragment;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
-import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
-import com.github.yuqilin.qmediaplayerapp.util.ITaskEventHandler;
-
-import java.util.ArrayList;
+import com.github.yuqilin.qmediaplayerapp.ITaskEventHandler;
 
 /**
  * Created by liwenfeng on 17/3/26.

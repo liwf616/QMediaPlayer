@@ -151,15 +151,15 @@ public class AndroidDevices {
         return list;
     }
 
-//    public static List<MediaWrapper> getMediaDirectoriesList() {
+//    public static List<VideoWrapper> getMediaDirectoriesList() {
 //        String storages[] = AndroidDevices.getMediaDirectories();
-//        LinkedList<MediaWrapper> list = new LinkedList<>();
-//        MediaWrapper directory;
+//        LinkedList<VideoWrapper> list = new LinkedList<>();
+//        VideoWrapper directory;
 //        for (String mediaDirLocation : storages) {
 //            if (!(new File(mediaDirLocation).exists()))
 //                continue;
-//            directory = new MediaWrapper(AndroidUtil.PathToUri(mediaDirLocation));
-//            directory.setType(MediaWrapper.TYPE_DIR);
+//            directory = new VideoWrapper(AndroidUtil.PathToUri(mediaDirLocation));
+//            directory.setType(VideoWrapper.TYPE_DIR);
 //            if (TextUtils.equals(AndroidDevices.EXTERNAL_PUBLIC_DIRECTORY, mediaDirLocation))
 //                directory.setDisplayTitle(VLCApplication.getAppResources().getString(R.string.internal_memory));
 //            list.add(directory);

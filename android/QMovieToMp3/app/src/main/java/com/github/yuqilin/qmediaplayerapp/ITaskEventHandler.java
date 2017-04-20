@@ -1,4 +1,4 @@
-package com.github.yuqilin.qmediaplayerapp.util;
+package com.github.yuqilin.qmediaplayerapp;
 
 import android.view.View;
 

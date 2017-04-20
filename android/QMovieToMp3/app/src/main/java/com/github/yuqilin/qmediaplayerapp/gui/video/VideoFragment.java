@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -20,7 +19,7 @@ import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.TaskFragment;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
-import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
+import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 import com.github.yuqilin.qmediaplayerapp.media.VideoLoader;
 
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
                 case SCAN_CANCEL:
                     break;
                 case SCAN_ADD_ITEM:
-                    mVideoAdapter.addVideo(msg.arg1, (MediaWrapper)msg.obj);
+                    mVideoAdapter.addVideo(msg.arg1, (VideoWrapper)msg.obj);
                     break;
                 default:
                     super.handleMessage(msg);
@@ -152,17 +151,17 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
     }
 
     @Override
-    public void onClick(View v, int position, MediaWrapper item) {
+    public void onClick(View v, int position, VideoWrapper item) {
         jumpToPlayerActivity(item.filePath, item.duration);
     }
 
     @Override
-    public boolean onLongClick(View v, int position, MediaWrapper item) {
+    public boolean onLongClick(View v, int position, VideoWrapper item) {
         return false;
     }
 
     @Override
-    public void onCtxClick(View v, int position, MediaWrapper item) {
+    public void onCtxClick(View v, int position, VideoWrapper item) {
 
     }
 
@@ -231,12 +230,12 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
     }
 
     @Override
-    public void onLoadItem(int position, MediaWrapper video) {
+    public void onLoadItem(int position, VideoWrapper video) {
 //        mHandler.sendMessage(Message.obtain(mHandler, SCAN_ADD_ITEM, position, 0, video));
     }
 
     @Override
-    public void onLoadCompleted(ArrayList<MediaWrapper> videos) {
+    public void onLoadCompleted(ArrayList<VideoWrapper> videos) {
         mHandler.sendEmptyMessage(SCAN_FINISH);
     }
 

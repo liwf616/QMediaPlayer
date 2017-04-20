@@ -10,7 +10,7 @@ import android.os.Build;
 import android.provider.MediaStore;
 
 import com.github.yuqilin.qmediaplayerapp.QApplication;
-import com.github.yuqilin.qmediaplayerapp.media.MediaWrapper;
+import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 
 /**
  * Created by yuqilin on 17/3/13.
@@ -68,7 +68,7 @@ public class BitmapUtil {
         return bitmap;
     }
 
-    public static Bitmap getPictureFromCache(MediaWrapper media) {
+    public static Bitmap getPictureFromCache(VideoWrapper media) {
         // mPicture is not null only if passed through
         // the ctor which is deprecated by now.
 //        Bitmap b = media.getPicture();
@@ -81,7 +81,7 @@ public class BitmapUtil {
         return null;
     }
 
-    public static Bitmap fetchPicture(MediaWrapper media) {
+    public static Bitmap fetchPicture(VideoWrapper media) {
 //        final BitmapCache cache = BitmapCache.getInstance();
 //
 //        Bitmap picture = readCoverBitmap(media.getArtworkURL());
@@ -98,7 +98,7 @@ public class BitmapUtil {
         return picture;
     }
 
-    public static Bitmap getPicture(MediaWrapper media) {
+    public static Bitmap getPicture(VideoWrapper media) {
         final Bitmap picture = getPictureFromCache(media);
         if (picture != null)
             return picture;
