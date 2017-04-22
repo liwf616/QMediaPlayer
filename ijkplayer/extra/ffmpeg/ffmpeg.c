@@ -1722,6 +1722,13 @@ static void print_report(int is_last_report, int64_t timer_start,
     }
 
     secs = FFABS(pts) / AV_TIME_BASE;
+    
+    //callback
+
+    if (cb) {
+        cb(env, obj, secs);
+    }
+
     us = FFABS(pts) % AV_TIME_BASE;
     mins = secs / 60;
     secs %= 60;
@@ -1740,12 +1747,6 @@ static void print_report(int is_last_report, int64_t timer_start,
     snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf),
              "%02d:%02d:%02d.%02d ", hours, mins, secs,
              (100 * us) / AV_TIME_BASE);
-
-    //callback
-
-    if (cb) {
-        cb(env, obj, secs);
-    }
 
     if (bitrate < 0) {
         snprintf(buf + strlen(buf), sizeof(buf) - strlen(buf),"bitrate=N/A");
