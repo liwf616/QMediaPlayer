@@ -179,6 +179,9 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode != 1 || data == null) {
+            return;
+        }
 
         String videopath = data.getExtras().getString("videoPath");
         boolean vbr = data.getExtras().getBoolean("vbr",false);
