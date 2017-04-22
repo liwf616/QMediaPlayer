@@ -11,7 +11,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_thumbnail"/>
+        android:src="@drawable/icon_music"/>
 
     <LinearLayout
         android:orientation="vertical"
