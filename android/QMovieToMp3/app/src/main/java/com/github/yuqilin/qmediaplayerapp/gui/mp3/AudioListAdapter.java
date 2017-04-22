@@ -13,10 +13,8 @@ import android.widget.TextView;
 
 import com.github.yuqilin.qmediaplayerapp.IAudioEventHandler;
 import com.github.yuqilin.qmediaplayerapp.R;
-import com.github.yuqilin.qmediaplayerapp.gui.video.VideoListAdapter;
+import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.media.AudioWrapter;
-import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
-import com.github.yuqilin.qmediaplayerapp.util.AsyncImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +58,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         @Override
         public void onClick(View view) {
             AudioWrapter media = (AudioWrapter) view.getTag();
-            mEventsHandler.onClick(view, 0, media);
+            mEventsHandler.onClick(view, media.postion, media);
         }
     };
 
@@ -68,14 +66,18 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         Log.d(TAG, "onBindViewHolder position " + position);
 
         AudioWrapter media = mAudios.get(position);
+
         if (media == null) {
             return;
         }
+
+        media.postion = position;
+        media.holder = holder;
+
         Log.d(TAG, "position[" + position + "]: " + media.filePath);
-//        AsyncImageLoader.loadPicture(holder.mThumbnail, media);
         holder.mFileName.setText(media.filePath.substring(media.filePath.lastIndexOf('/') + 1));
-        holder.mFileSize.setText(media.fileSize);
-        holder.mDuration.setText(media.duration);
+        holder.mArtlist.setText(media.artlist);
+        holder.mDuration.setText(VideoPlayerActivity.generateTime(Integer.parseInt(media.duration)));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
     }
@@ -134,6 +136,16 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         return mAudios.size();
     }
 
+    public void setPlayStatus(int pos,final int resId){
+        if (pos > mAudios.size()) {
+            return;
+        }
+        AudioWrapter audioWrapter = mAudios.get(pos);
+        if (audioWrapter != null) {
+            audioWrapter.holder.mPlayStatus.setImageResource(resId);
+        }
+    }
+
     @MainThread
     public void clear() {
         mAudios.clear();
@@ -141,29 +153,19 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
         private View mListItem;
-        private ImageView mThumbnail;
+        private ImageView mPlayStatus;
         private TextView mDuration;
         private TextView mFileName;
-        private TextView mFileSize;
+        private TextView mArtlist;
 
         public ViewHolder(View v) {
             super(v);
             v.setOnFocusChangeListener(this);
             mListItem = v.findViewById(R.id.audio_item_list_view);
-            mThumbnail = (ImageView) v.findViewById(R.id.item_audio_list_thumbnail);
+            mPlayStatus = (ImageView) v.findViewById(R.id.item_audio_play_status);
             mFileName = (TextView) v.findViewById(R.id.item_audio_list_filename);
-            mFileSize = (TextView) v.findViewById(R.id.item_audio_list_duration);
-            mDuration = (TextView) v.findViewById(R.id.item_audio_list_filesize);
-        }
-
-        public void onClick(View v) {
-            int position = getLayoutPosition();
-            mEventsHandler.onClick(v, position, mAudios.get(position));
-        }
-
-        public boolean onLongClick(View v) {
-            int position = getLayoutPosition();
-            return mEventsHandler.onLongClick(v, position, mAudios.get(position));
+            mDuration = (TextView) v.findViewById(R.id.item_audio_list_duration);
+            mArtlist = (TextView) v.findViewById(R.id.item_audio_artlist);
         }
 
         @Override

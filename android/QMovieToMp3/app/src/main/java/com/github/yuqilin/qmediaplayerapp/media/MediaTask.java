@@ -123,6 +123,12 @@ public class MediaTask {
         command.addCommand("-i", videoPath);
         command.addCommand("-c:a","libfdk_aac");
         command.addCommand("-vn");
+        command.addCommand("-ab");
+        command.addCommand("32000");
+        command.addCommand("-ar");
+        command.addCommand("44100");
+        command.addCommand("-ac");
+        command.addCommand("2");
         command.addCommand("/sdcard/Download/ss_audio.mp4");
 
         List<String> comList =  command.getCommand();

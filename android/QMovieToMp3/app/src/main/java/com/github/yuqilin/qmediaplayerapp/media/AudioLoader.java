@@ -47,7 +47,8 @@ public class AudioLoader {
                 MediaStore.Audio.Media.TITLE,
                 MediaStore.Audio.Media.MIME_TYPE,
                 MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.SIZE
+                MediaStore.Audio.Media.SIZE,
+                MediaStore.Audio.Media.ARTIST
         };
 
         //首先检索SDcard上所有的audio
@@ -62,6 +63,7 @@ public class AudioLoader {
                 media.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
                 media.duration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
                 media.fileSize = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
+                media.artlist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.ARTIST));
 
                 //获取当前Video对应的Id，然后根据该ID获取其Thumb
                 long id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));

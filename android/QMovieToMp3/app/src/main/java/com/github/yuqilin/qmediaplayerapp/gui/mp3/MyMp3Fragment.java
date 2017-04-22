@@ -19,7 +19,11 @@ import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.AudioLoader;
 import com.github.yuqilin.qmediaplayerapp.media.AudioWrapter;
 import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
+import android.media.MediaPlayer;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -38,6 +42,10 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
     public static final int SCAN_FINISH = 2;
     public static final int SCAN_CANCEL = 3;
     public static final int SCAN_ADD_ITEM = 4;
+
+
+    MediaPlayer mediaPlayer;
+    int pos = 0;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -78,6 +86,8 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
         mGridView.setAdapter(mAudioAdapter);
 
         mHandler.sendEmptyMessage(SCAN_START);
+
+        mediaPlayer = new MediaPlayer();
     }
 
     @Override
@@ -131,7 +141,45 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
 
     @Override
     public void onClick(View v, int position, AudioWrapter item) {
+        ImageView mCurrentPlayStatus ;
 
+        mCurrentPlayStatus = (ImageView) v.findViewById(R.id.item_audio_play_status);
+
+        if (pos == position) {
+            if (mediaPlayer != null) {
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                    mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
+                } else {
+                    mediaPlayer.start();
+                    mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
+                }
+
+                return;
+            }
+        } else {
+            mediaPlayer.reset();
+            mAudioAdapter.setPlayStatus(pos, R.drawable.icon_music);
+        }
+
+        try {
+            mediaPlayer.setDataSource(item.filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        mediaPlayer.start();
+
+        pos = position;
+        mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
     }
 
     @Override

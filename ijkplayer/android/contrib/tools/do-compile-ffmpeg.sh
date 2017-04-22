@@ -273,7 +273,7 @@ if [ -f "${FF_DEP_FDKAAC_LIB}/libfdkaac.a" ]; then
     echo ${FF_DEP_FDKAAC_INC}
     echo ${FF_DEP_FDKAAC_LIB}
 
-    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-libfdk-aac "
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-libfdk-aac"
     FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-gpl"
     FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-nonfree"
 
@@ -321,9 +321,9 @@ echo "--------------------"
 echo "[*] configure ffmpeg"
 echo "--------------------"
 cd $FF_SOURCE
-if [ -f "./config.h" ]; then
-    echo 'reuse configure'
-else
+# if [ -f "./config.h" ]; then
+#     echo 'reuse configure'
+# else
     echo $FF_CFG_FLAGS \
         --extra-cflags="$FF_CFLAGS $FF_EXTRA_CFLAGS" \
         --extra-ldflags="$FF_DEP_LIBS $FF_EXTRA_LDFLAGS"
@@ -333,7 +333,7 @@ else
         --extra-cflags="$FF_CFLAGS $FF_EXTRA_CFLAGS" \
         --extra-ldflags="$FF_DEP_LIBS $FF_EXTRA_LDFLAGS"
     make clean
-fi
+# fi
 
 #--------------------
 echo ""

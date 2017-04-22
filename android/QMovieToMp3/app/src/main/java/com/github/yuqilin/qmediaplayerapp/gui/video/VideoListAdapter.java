@@ -192,8 +192,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
             mListItem = v.findViewById(R.id.video_item_list_view);
             mThumbnail = (ImageView) v.findViewById(R.id.item_video_list_thumbnail);
             mFileName = (TextView) v.findViewById(R.id.item_video_list_filename);
-            mFileSize = (TextView) v.findViewById(R.id.item_video_list_filesize);
             mDuration = (TextView) v.findViewById(R.id.item_video_list_duration);
+            mFileSize = (TextView) v.findViewById(R.id.item_video_list_filesize);
         }
 
         public void onClick(View v) {

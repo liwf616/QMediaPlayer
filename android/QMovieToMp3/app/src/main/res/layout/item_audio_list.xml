@@ -7,7 +7,7 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/item_audio_list_thumbnail"
+        android:id="@+id/item_audio_play_status"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"
@@ -44,7 +44,7 @@
                 android:text="01:23:33" />
 
             <TextView
-                android:id="@+id/item_audio_list_filesize"
+                android:id="@+id/item_audio_artlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -54,12 +54,12 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/item_audio_info"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="16dp"
-        android:src="@drawable/icon_cut"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/item_audio_info"-->
+        <!--android:layout_width="24dp"-->
+        <!--android:layout_height="24dp"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:src="@drawable/icon_cut"/>-->
 
 </LinearLayout>
