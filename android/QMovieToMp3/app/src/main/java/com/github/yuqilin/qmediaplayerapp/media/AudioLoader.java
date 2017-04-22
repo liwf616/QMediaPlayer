@@ -42,16 +42,16 @@ public class AudioLoader {
 
     public void loadAduios() {
         String[] mediaColumns = new String[]{
-                MediaStore.Video.Media.DATA,
-                MediaStore.Video.Media._ID,
-                MediaStore.Video.Media.TITLE,
-                MediaStore.Video.Media.MIME_TYPE,
-                MediaStore.Video.Media.DURATION,
-                MediaStore.Video.Media.SIZE
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.MIME_TYPE,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.SIZE
         };
 
-        //首先检索SDcard上所有的video
-        Cursor cursor = QApplication.getAppContext().getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, mediaColumns, null, null, null);
+        //首先检索SDcard上所有的audio
+        Cursor cursor = QApplication.getAppContext().getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mediaColumns, null, null, null);
 
         if(cursor.moveToFirst()){
             do{
