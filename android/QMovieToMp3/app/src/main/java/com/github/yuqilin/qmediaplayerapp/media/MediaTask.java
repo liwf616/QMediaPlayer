@@ -21,7 +21,8 @@ import java.util.Random;
 public class MediaTask {
 
     private String  videoPath; //绝对路径
-    private boolean vbr;
+
+    private int vbr;
     private String  type;
     private String  bits;
     private int     duration;
@@ -35,6 +36,14 @@ public class MediaTask {
     private int     taskIndex;
 
     private String  videoDstPath;
+
+    public int getVbr() {
+        return vbr;
+    }
+
+    public void setVbr(int vbr) {
+        this.vbr = vbr;
+    }
 
     public static String[] getMediaAudioFormat() {
         return MEDIA_AUDIO_FORMAT;
@@ -62,14 +71,6 @@ public class MediaTask {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public boolean isVbr() {
-        return vbr;
-    }
-
-    public void setVbr(boolean vbr) {
-        this.vbr = vbr;
     }
 
     public long getDuration() {
@@ -120,7 +121,7 @@ public class MediaTask {
         this.endTime = endTime;
     }
 
-    public MediaTask(String videoPath, boolean vbr, String type, String bits, int duration,int startTime, int endTime) {
+    public MediaTask(String videoPath, int vbr, String type, String bits, int duration,int startTime, int endTime) {
         this.videoPath = videoPath;
         this.vbr = vbr;
         this.type = type;
@@ -219,7 +220,13 @@ public class MediaTask {
         command.addCommand("-i", videoPath);
         command.addCommand("-c:a","aac");
         command.addCommand("-vn");
-        command.addCommand("-b:a",bits);
+
+        if (vbr == 0){
+            command.addCommand("-b:a",bits);
+        } else {
+            command.addCommand("-vbr", String.valueOf(vbr));
+        }
+
         command.addCommand(this.videoDstPath);
 
         List<String> comList =  command.getCommand();

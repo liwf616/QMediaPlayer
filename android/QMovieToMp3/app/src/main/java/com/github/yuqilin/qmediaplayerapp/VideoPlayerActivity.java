@@ -121,7 +121,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private ArrayList<String> mBitsArray;
     private Spinner mBitsSpinner;
 
-    private boolean mVBR = false;
+    private int mVBR = 0;
     private String mBitrateSelected;
     private String mTypeSelected;
 
@@ -727,7 +727,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
             mBitrateSelected = MediaTask.MEDIA_AUDIO_BITS[position];
             if( 7 >= position  && position >= 5) {
-                mVBR = true;
+                mVBR = position - 2;
             }
         }
 

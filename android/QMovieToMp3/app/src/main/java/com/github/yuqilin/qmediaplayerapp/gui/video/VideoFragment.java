@@ -184,7 +184,7 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
         }
 
         String videopath = data.getExtras().getString("videoPath");
-        boolean vbr = data.getExtras().getBoolean("vbr",false);
+        int vbr = data.getExtras().getInt("vbr",0);
         String type = data.getExtras().getString("type");
         String bits = data.getExtras().getString("bits");
         long duration = data.getExtras().getLong("duration");
