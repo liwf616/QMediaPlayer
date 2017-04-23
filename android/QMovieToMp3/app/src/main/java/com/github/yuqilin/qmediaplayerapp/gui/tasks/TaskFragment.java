@@ -18,7 +18,9 @@ import com.github.yuqilin.qmediaplayerapp.BaseFragment;
 import com.github.yuqilin.qmediaplayerapp.MainActivity;
 import com.github.yuqilin.qmediaplayerapp.QApplication;
 import com.github.yuqilin.qmediaplayerapp.R;
+import com.github.yuqilin.qmediaplayerapp.gui.mp3.MyMp3Fragment;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
+import com.github.yuqilin.qmediaplayerapp.media.AudioWrapter;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.ITaskEventHandler;
 
@@ -32,11 +34,17 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
 
     protected AutoFitRecyclerView mGridView;
     private TaskListAdapter mTaskListAdapter;
+    private MainActivity mainActivity;
 
     public static final int SCAN_START = 1;
     public static final int SCAN_FINISH = 2;
     public static final int SCAN_CANCEL = 3;
     public static final int SCAN_ADD_ITEM = 4;
+
+    public TaskFragment(MainActivity mainActivity) {
+        super();
+        this.mainActivity = mainActivity;
+    }
 
     private Handler mHandler = new Handler() {
         @Override
@@ -127,15 +135,17 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
 
     @Override
     public boolean onTaskFinished(MediaTask task) {
-//        ContentValues values = new ContentValues();
-//        values.put(MediaStore.Audio.Media.TITLE, "My Audios");
-//        values.put(MediaStore.Audio.Media.ARTIST, "QMediaToMp3");
-//        values.put(MediaStore.Audio.Media.MIME_TYPE, "audio/aac");
-//        values.put(MediaStore.Audio.Media.DATA, task.getVideoDstPath());
-//        values.put(MediaStore.Audio.Media.DURATION, String.valueOf(task.getDuration()));
-//        QApplication.getAppContext().getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
-
         MediaScannerConnection.scanFile(mActivity, new String[] { task.getVideoDstPath() }, null, null);
+        if (mainActivity!=null) {
+            MyMp3Fragment myMp3Fragment = mainActivity.getmMyMp3Fragment();
+            if (myMp3Fragment!=null) {
+                AudioWrapter media = new AudioWrapter();
+                media.artlist = "<unknown>";
+                media.duration = String.valueOf(task.getDuration());
+                media.filePath = task.getVideoDstPath();
+                myMp3Fragment.addAudio(media);
+            }
+        }
         return  true;
     }
 

@@ -222,4 +222,12 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
     public void onLoadCompleted(ArrayList<AudioWrapter> audios) {
         mHandler.sendEmptyMessage(SCAN_FINISH);
     }
+
+    public void addAudio(AudioWrapter  audio) {
+        Message message = Message.obtain();
+        message.obj = audio;
+        message.what = SCAN_ADD_ITEM;
+
+        mHandler.sendMessage(message);
+    }
 }

@@ -1,5 +1,6 @@
 package com.github.yuqilin.qmediaplayerapp;
 
+import android.media.AudioFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,6 +38,16 @@ public class MainActivity extends BaseActivity {
 
     private TaskFragment  mTaskFragment;
 
+    public MyMp3Fragment getmMyMp3Fragment() {
+        return mMyMp3Fragment;
+    }
+
+    public void setmMyMp3Fragment(MyMp3Fragment mMyMp3Fragment) {
+        this.mMyMp3Fragment = mMyMp3Fragment;
+    }
+
+    private MyMp3Fragment mMyMp3Fragment;
+
     private AsyncTask<String, Integer, String> mTask;
 
     @Override
@@ -51,9 +62,10 @@ public class MainActivity extends BaseActivity {
         mVideoFragment = new VideoFragment();
         mFragments.add(mVideoFragment);
 
-        mFragments.add(new MyMp3Fragment());
+        mMyMp3Fragment= new MyMp3Fragment();
+        mFragments.add(mMyMp3Fragment);
 
-        mTaskFragment = new TaskFragment();
+        mTaskFragment = new TaskFragment(this);
         mFragments.add(mTaskFragment);
 
         mVideoFragment.setTaskFragment(mTaskFragment);
