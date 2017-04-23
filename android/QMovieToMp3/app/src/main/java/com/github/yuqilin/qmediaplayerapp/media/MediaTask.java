@@ -109,29 +109,30 @@ public class MediaTask {
         this.startTime = startTime;
         this.endTime = endTime;
 
+        Date now = new Date();
+        SimpleDateFormat simpleDate =  new SimpleDateFormat("yyyyMMddHHmmss");
+
+        String time = simpleDate.format(now);
+
+        String destPath = null;
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+        {
+            destPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "MovieToMp3s" + "/";
+            if (destPath == null) {
+                return;
+            }
+        }
+
         String filename = getFileName(videoPath);
         String destName = null;
         if(filename != null) {
             Random random = new Random(100);
 
-            destName  = filename + random.nextInt(100) + "_" + this.startTime+ "_" + this.endTime+"." + type;
+            destName  = filename + time + "." + type;
         } else {
             return;
         }
 
-        Date now = new Date();
-        SimpleDateFormat simpleDate =  new SimpleDateFormat("yyyyMMdd");
-
-        String date = simpleDate.format(now);
-
-        String destPath = null;
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
-        {
-            destPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + date + "/";
-            if (destPath == null) {
-                return;
-            }
-        }
 
         if (FileUtils.isFolderExists(destPath) == false) {
             return;

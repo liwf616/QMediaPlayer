@@ -1,16 +1,20 @@
 package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
+import android.content.ContentValues;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
 import com.github.yuqilin.qmediaplayerapp.BaseFragment;
+import com.github.yuqilin.qmediaplayerapp.QApplication;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
@@ -119,6 +123,18 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
         return false;
     }
 
+    @Override
+    public boolean onTaskFinished(MediaTask task) {
+//        ContentValues values = new ContentValues();
+//        values.put(MediaStore.Audio.Media.TITLE, "My Audios");
+//        values.put(MediaStore.Audio.Media.ARTIST, "QMediaToMp3");
+//        values.put(MediaStore.Audio.Media.MIME_TYPE, "audio/aac");
+//        values.put(MediaStore.Audio.Media.DATA, task.getVideoDstPath());
+//        values.put(MediaStore.Audio.Media.DURATION, String.valueOf(task.getDuration()));
+//        QApplication.getAppContext().getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+
+        return  true;
+    }
 
     private void updateViewMode() {
         if (getView() == null || getActivity() == null) {

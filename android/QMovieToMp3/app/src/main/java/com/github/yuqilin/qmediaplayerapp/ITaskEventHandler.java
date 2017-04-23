@@ -11,4 +11,5 @@ import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 public interface ITaskEventHandler {
         void onClick(View v, int position, MediaTask item);
         boolean onLongClick(View v, int position, MediaTask item);
+        boolean onTaskFinished(MediaTask task);
 }

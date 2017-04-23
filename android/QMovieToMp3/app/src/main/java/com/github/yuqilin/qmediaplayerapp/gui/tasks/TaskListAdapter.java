@@ -4,7 +4,10 @@
 
 package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.widget.ProgressBar;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.yuqilin.qmediaplayerapp.QApplication;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
@@ -86,6 +90,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         mHandler.sendMessage(message);
     };
 
+
     public  void onCompleted() {
         Log.w(TAG, "onCompleted");
 
@@ -102,6 +107,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         message.what = UPDATE_PROCESS;
 
         mHandler.sendMessage(message);
+
+        mTaskEventsHandler.onTaskFinished(media);
 
         nextTask(++taskIndex);
     };

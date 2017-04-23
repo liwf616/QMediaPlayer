@@ -60,7 +60,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
                 case SCAN_CANCEL:
                     break;
                 case SCAN_ADD_ITEM:
-                    mAudioAdapter.addAudio(msg.arg1, (AudioWrapter)msg.obj);
+                    mAudioAdapter.addAudio((AudioWrapter)msg.obj);
                     break;
                 default:
                     super.handleMessage(msg);

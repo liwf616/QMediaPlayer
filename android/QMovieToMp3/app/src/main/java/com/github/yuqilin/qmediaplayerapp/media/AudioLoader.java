@@ -74,14 +74,14 @@ public class AudioLoader {
 
                 media.audioId = id;
 
-                Log.d(TAG, "====Scanned : [" + mAudios.size() + "] " + media.filePath + " " + media.title + " " + media.audioId);
+                Log.d(TAG, "====Scanned : [" + mAudios.size() + "] " + media.filePath + " " + media.title + " " + media.audioId + " " + media.artlist);
+                if(media.artlist.equals("QMediaToMp3")) {
+                    mAudios.add(media);
 
-                mAudios.add(media);
-
-                if (mAduioLoaderListener != null) {
-                    mAduioLoaderListener.onLoadItem(mAudios.size() - 1, media);
+                    if (mAduioLoaderListener != null) {
+                        mAduioLoaderListener.onLoadItem(mAudios.size() - 1, media);
+                    }
                 }
-
             } while(cursor.moveToNext());
         }
     }

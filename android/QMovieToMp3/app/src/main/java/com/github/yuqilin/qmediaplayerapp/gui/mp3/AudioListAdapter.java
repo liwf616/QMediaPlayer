@@ -77,7 +77,12 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         Log.d(TAG, "position[" + position + "]: " + media.filePath);
         holder.mFileName.setText(media.filePath.substring(media.filePath.lastIndexOf('/') + 1));
         holder.mArtlist.setText(media.artlist);
-        holder.mDuration.setText(VideoPlayerActivity.generateTime(Integer.parseInt(media.duration)));
+        try {
+            holder.mDuration.setText(VideoPlayerActivity.generateTime(Integer.parseInt(media.duration)));
+        } catch (NumberFormatException e) {
+
+        }
+
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
     }
@@ -113,8 +118,11 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         notifyDataSetChanged();
     }
 
-    public void addAudio(int position, AudioWrapter audio) {
+    public void addAudio(AudioWrapter audio) {
+        int position = getItemCount();
+
         Log.d(TAG, "addVideo position " + position);
+
         mAudios.add(position, audio);
         notifyItemInserted(position);
     }
