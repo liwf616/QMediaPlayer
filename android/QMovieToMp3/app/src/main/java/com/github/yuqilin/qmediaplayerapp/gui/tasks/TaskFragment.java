@@ -3,6 +3,7 @@ package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 import android.content.ContentValues;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.github.yuqilin.qmediaplayerapp.BaseFragment;
+import com.github.yuqilin.qmediaplayerapp.MainActivity;
 import com.github.yuqilin.qmediaplayerapp.QApplication;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
@@ -133,6 +135,7 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
 //        values.put(MediaStore.Audio.Media.DURATION, String.valueOf(task.getDuration()));
 //        QApplication.getAppContext().getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
 
+        MediaScannerConnection.scanFile(mActivity, new String[] { task.getVideoDstPath() }, null, null);
         return  true;
     }
 
