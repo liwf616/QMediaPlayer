@@ -2,6 +2,7 @@ package com.github.yuqilin.qmediaplayerapp.media;
 
 import android.os.Environment;
 
+import com.github.yuqilin.qmediaplayerapp.MainActivity;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.Command;
 import com.github.yuqilin.qmediaplayerapp.util.FileUtils;
@@ -10,6 +11,7 @@ import com.github.yuqilin.qmediaplayerapp.util.Strings;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -22,19 +24,21 @@ public class MediaTask {
     private boolean vbr;
     private String  type;
     private String  bits;
-    private int    duration;
+    private int     duration;
+
     private int     startTime;
+
     private int     endTime;
+
+    private int    process;
+
+    private int     taskIndex;
 
     private String  videoDstPath;
 
     public static String[] getMediaAudioFormat() {
         return MEDIA_AUDIO_FORMAT;
     }
-
-    private int    process;
-
-    private int     taskIndex;
 
     public int getTaskIndex() {
         return taskIndex;
@@ -98,6 +102,22 @@ public class MediaTask {
 
     public void setVideoDstPath(String videoDstPath) {
         this.videoDstPath = videoDstPath;
+    }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
     }
 
     public MediaTask(String videoPath, boolean vbr, String type, String bits, int duration,int startTime, int endTime) {
@@ -178,19 +198,28 @@ public class MediaTask {
         }
     }
 
+    public static String generateTime(long position) {
+        int totalSeconds = (int) (position / 1000);
+
+        int seconds = totalSeconds % 60;
+        int minutes = (totalSeconds / 60) % 60;
+        int hours = totalSeconds / 3600;
+
+        return String.format(Locale.US, "%02d:%02d:%02d", hours, minutes,
+                    seconds).toString();
+    }
+
+
     public String[] getCommand() {
         Command command = new Command();
         command.addCommand("ffmpeg");
         command.addCommand("-y");
+        command.addCommand("-ss", generateTime(startTime));
+        command.addCommand("-t", generateTime(endTime - startTime));
         command.addCommand("-i", videoPath);
         command.addCommand("-c:a","aac");
         command.addCommand("-vn");
-        command.addCommand("-ab");
-        command.addCommand("32000");
-        command.addCommand("-ar");
-        command.addCommand("44100");
-        command.addCommand("-ac");
-        command.addCommand("2");
+        command.addCommand("-b:a",bits);
         command.addCommand(this.videoDstPath);
 
         List<String> comList =  command.getCommand();
@@ -204,12 +233,16 @@ public class MediaTask {
 
     public String getProcessText() {
         String process = VideoPlayerActivity.generateTime(getProcess());
-        String duration = VideoPlayerActivity.generateTime(getDuration());
+        String duration = VideoPlayerActivity.generateTime(getEndTime() - getStartTime());
 
         return String.format("%s/%s", process, duration);
     }
 
     public int getProcessInt() {
-        return (int) (process * 100 / duration);
+        if(endTime - startTime <=0 ){
+            return 100;
+        }else {
+            return (int) (process * 100 / (endTime - startTime));
+        }
     }
 }

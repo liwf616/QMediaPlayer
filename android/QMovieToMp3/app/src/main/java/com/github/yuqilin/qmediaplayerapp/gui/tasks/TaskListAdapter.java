@@ -100,7 +100,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         if (media == null) {
             return;
         }
-        media.setProcess((int)media.getDuration());
+        media.setProcess(media.getEndTime() - media.getStartTime());
 
         Message message = Message.obtain();
         message.obj = media;
@@ -149,7 +149,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         }
 
         holder.mFileName.setText(media.getVideoDstPath().substring(media.getVideoDstPath().lastIndexOf('/') + 1));
-        holder.setmProcessText(String.format("%s/%s","00:00:00", VideoPlayerActivity.generateTime(media.getDuration())));
+        holder.setmProcessText(String.format("%s/%s","00:00:00", VideoPlayerActivity.generateTime(media.getEndTime() - media.getStartTime())));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
 
