@@ -316,4 +316,18 @@ public class FileUtils {
             hash += longBuffer.get();
         return hash;
     }
+
+    public static boolean isFolderExists(String strFolder) {
+        File file = new File(strFolder);
+        if (!file.exists()) {
+            if (file.mkdirs()) {
+                return true;
+            } else {
+                return false;
+
+            }
+        }
+        return true;
+
+    }
 }

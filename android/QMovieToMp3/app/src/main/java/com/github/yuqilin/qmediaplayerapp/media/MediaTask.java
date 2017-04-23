@@ -4,11 +4,13 @@ import android.os.Environment;
 
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.Command;
+import com.github.yuqilin.qmediaplayerapp.util.FileUtils;
 import com.github.yuqilin.qmediaplayerapp.util.Strings;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by liwenfeng on 17/4/7.
@@ -110,24 +112,32 @@ public class MediaTask {
         String filename = getFileName(videoPath);
         String destName = null;
         if(filename != null) {
-            destName  = filename + "_" + this.startTime+ "_" + this.endTime+"."+type;
+            Random random = new Random(100);
+
+            destName  = filename + random.nextInt(100) + "_" + this.startTime+ "_" + this.endTime+"." + type;
+        } else {
+            return;
         }
 
         Date now = new Date();
         SimpleDateFormat simpleDate =  new SimpleDateFormat("yyyyMMdd");
 
-        String strDt = simpleDate.format(now);
+        String date = simpleDate.format(now);
 
         String destPath = null;
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
         {
-            destPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            destPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + date + "/";
             if (destPath == null) {
                 return;
             }
         }
 
-        this.videoDstPath = destPath +"/"+ strDt + "/"+ destName;
+        if (FileUtils.isFolderExists(destPath) == false) {
+            return;
+        }
+
+        this.videoDstPath =  destPath + destName;
     }
 
     public static final String[] MEDIA_AUDIO_FORMAT = {
@@ -181,7 +191,6 @@ public class MediaTask {
         command.addCommand("-ac");
         command.addCommand("2");
         command.addCommand(this.videoDstPath);
-//        command.addCommand("/sdcard/Download/ss_audio.aac");
 
         List<String> comList =  command.getCommand();
 
