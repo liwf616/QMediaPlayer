@@ -1,9 +1,13 @@
 package com.github.yuqilin.qmediaplayerapp.media;
 
+import android.os.Environment;
+
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.Command;
 import com.github.yuqilin.qmediaplayerapp.util.Strings;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,11 +16,15 @@ import java.util.List;
 
 public class MediaTask {
 
-    private String videoPath; //绝对路径
+    private String  videoPath; //绝对路径
     private boolean vbr;
     private String  type;
     private String  bits;
     private int    duration;
+    private int     startTime;
+    private int     endTime;
+
+    private String  videoDstPath;
 
     public static String[] getMediaAudioFormat() {
         return MEDIA_AUDIO_FORMAT;
@@ -82,16 +90,48 @@ public class MediaTask {
         this.bits = bits;
     }
 
-    public MediaTask(String videoPath, boolean vbr, String type, String bits, int duration) {
+    public String getVideoDstPath() {
+        return videoDstPath;
+    }
+
+    public void setVideoDstPath(String videoDstPath) {
+        this.videoDstPath = videoDstPath;
+    }
+
+    public MediaTask(String videoPath, boolean vbr, String type, String bits, int duration,int startTime, int endTime) {
         this.videoPath = videoPath;
         this.vbr = vbr;
         this.type = type;
         this.bits = bits;
         this.duration = duration;
+        this.startTime = startTime;
+        this.endTime = endTime;
+
+        String filename = getFileName(videoPath);
+        String destName = null;
+        if(filename != null) {
+            destName  = filename + "_" + this.startTime+ "_" + this.endTime+"."+type;
+        }
+
+        Date now = new Date();
+        SimpleDateFormat simpleDate =  new SimpleDateFormat("yyyyMMdd");
+
+        String strDt = simpleDate.format(now);
+
+        String destPath = null;
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+        {
+            destPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            if (destPath == null) {
+                return;
+            }
+        }
+
+        this.videoDstPath = destPath +"/"+ strDt + "/"+ destName;
     }
 
     public static final String[] MEDIA_AUDIO_FORMAT = {
-            "mp3",
+//            "mp3",
             "aac"
     };
 
@@ -116,12 +156,23 @@ public class MediaTask {
         }
     }
 
+    public String getFileName(String pathandname){
+        int start=pathandname.lastIndexOf("/");
+        int end=pathandname.lastIndexOf(".");
+        if (start!=-1 && end!=-1) {
+            return pathandname.substring(start+1, end);
+        }
+        else {
+            return null;
+        }
+    }
+
     public String[] getCommand() {
         Command command = new Command();
         command.addCommand("ffmpeg");
         command.addCommand("-y");
         command.addCommand("-i", videoPath);
-        command.addCommand("-c:a","libfdk_aac");
+        command.addCommand("-c:a","aac");
         command.addCommand("-vn");
         command.addCommand("-ab");
         command.addCommand("32000");
@@ -129,7 +180,8 @@ public class MediaTask {
         command.addCommand("44100");
         command.addCommand("-ac");
         command.addCommand("2");
-        command.addCommand("/sdcard/Download/ss_audio.mp4");
+        command.addCommand(this.videoDstPath);
+//        command.addCommand("/sdcard/Download/ss_audio.aac");
 
         List<String> comList =  command.getCommand();
 

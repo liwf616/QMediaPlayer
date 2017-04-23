@@ -141,7 +141,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
             return;
         }
 
-        holder.mFileName.setText(media.getVideoPath().substring(media.getVideoPath().lastIndexOf('/') + 1));
+        holder.mFileName.setText(media.getVideoDstPath().substring(media.getVideoDstPath().lastIndexOf('/') + 1));
         holder.setmProcessText(String.format("%s/%s","00:00:00", VideoPlayerActivity.generateTime(media.getDuration())));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);

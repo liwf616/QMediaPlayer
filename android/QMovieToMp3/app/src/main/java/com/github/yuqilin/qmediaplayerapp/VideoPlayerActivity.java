@@ -24,7 +24,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -130,8 +129,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     ImageView mConvertButton;
 
     //
-    private int leftBar = 0;
-    private int rightBar = 0;
+    private int mStartPos;
+    private int mEndPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +156,9 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mSeekBar = (RangeSeekBar) findViewById(R.id.view_player_seekbar);
         mSeekBar.setRange(0, mDuration / 1000);
         mSeekBar.setOnRangeChangedListener(mSeekListener);
+
+        mStartPos = 0;
+        mEndPos = (int) mDuration;
     }
 
     @Override
@@ -557,23 +559,23 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
             if (!fromUser)
                 return;
 
-            rightBar = (int) max;
+            mEndPos = (int) max;
 
-            final long newCenterPosition = (long) (rightBar * 1000);
+            final long newCenterPosition = (long) (mEndPos * 1000);
             String centertime = generateTime(newCenterPosition);
             if(mCenterTime != null) {
                 mCenterTime.setText(centertime);
             }
 
-            if(leftBar == (int) min) {
+            if(mStartPos == (int) min) {
                 return;
             }
 
-            Log.i(TAG, "leftBar:" + leftBar + "rightBar:" + rightBar);
+            Log.i(TAG, "mStartPos:" + mStartPos + "mEndPos:" + mEndPos);
 
-            leftBar =(int) min;
+            mStartPos =(int) min;
 
-            final long newPosition = (long) (leftBar * 1000);
+            final long newPosition = (long) (mStartPos * 1000);
             String time = generateTime(newPosition);
 
             if (mInstantSeeking) {
@@ -701,6 +703,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
             intent.putExtra("type", mTypeSelected);
             intent.putExtra("bits", mBitrateSelected);
             intent.putExtra("duration", mDuration);
+            intent.putExtra("startTime", mStartPos);
+            intent.putExtra("endTime", mEndPos);
 
             setResult(RESULT_OK, intent);
             finish();

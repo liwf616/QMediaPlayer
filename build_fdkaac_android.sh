@@ -38,6 +38,6 @@ cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/
 cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/include/fdk-aac
 cp -a $HEADER_FILES $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-arm64/output/include/fdk-aac
 
-cp -a $FDKAAC_ROOT/obj/local/armeabi/libfdkaac.a $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/output/lib
-cp -a $FDKAAC_ROOT/obj/local/armeabi-v7a/libfdkaac.a $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/lib
-cp -a $FDKAAC_ROOT/obj/local/arm64-v8a/libfdkaac.a $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-arm64/output/lib
+cp -a $FDKAAC_ROOT/obj/local/armeabi/libfdkaac.a $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv5/output/lib/libfdk-aac.a
+cp -a $FDKAAC_ROOT/obj/local/armeabi-v7a/libfdkaac.a $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-armv7a/output/lib/libfdk-aac.a
+cp -a $FDKAAC_ROOT/obj/local/arm64-v8a/libfdkaac.a $BUILD_ROOT/../ijkplayer/android/contrib/build/fdkaac-arm64/output/lib/libfdk-aac.a

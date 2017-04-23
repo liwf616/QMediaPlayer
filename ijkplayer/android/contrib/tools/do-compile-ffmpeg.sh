@@ -268,7 +268,7 @@ if [ -f "${FF_DEP_LIBSOXR_LIB}/libsoxr.a" ]; then
     FF_DEP_LIBS="$FF_DEP_LIBS -L${FF_DEP_LIBSOXR_LIB} -lsoxr"
 fi
 
-if [ -f "${FF_DEP_FDKAAC_LIB}/libfdkaac.a" ]; then
+if [ -f "${FF_DEP_FDKAAC_LIB}/libfdk-aac.a" ]; then
     echo "libfdkaac detected"
     echo ${FF_DEP_FDKAAC_INC}
     echo ${FF_DEP_FDKAAC_LIB}
@@ -278,7 +278,7 @@ if [ -f "${FF_DEP_FDKAAC_LIB}/libfdkaac.a" ]; then
     FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-nonfree"
 
     FF_CFLAGS="$FF_CFLAGS -I${FF_DEP_FDKAAC_INC}"
-    FF_DEP_LIBS="$FF_DEP_LIBS -L${FF_DEP_FDKAAC_LIB} -lfdk-aac -lm"
+    FF_DEP_LIBS="$FF_DEP_LIBS -L${FF_DEP_FDKAAC_LIB} -lm -lfdk-aac"
 fi
 
 FF_CFG_FLAGS="$FF_CFG_FLAGS $COMMON_FF_CFG_FLAGS"

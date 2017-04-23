@@ -188,10 +188,12 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
         String type = data.getExtras().getString("type");
         String bits = data.getExtras().getString("bits");
         long duration = data.getExtras().getLong("duration");
+        int starttime = data.getExtras().getInt("startTime");
+        int endTime = data.getExtras().getInt("endTime");
 
 //        TaskFragment taskFragment =(TaskFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.task_grid);
         if(taskFragment != null) {
-            taskFragment.addTask(new MediaTask(videopath, vbr, type, bits,(int) duration));
+            taskFragment.addTask(new MediaTask(videopath, vbr, type, bits,(int) duration,starttime,endTime));
         }
 
 //        if (requestCode == 1 && resultCode == -1) {
