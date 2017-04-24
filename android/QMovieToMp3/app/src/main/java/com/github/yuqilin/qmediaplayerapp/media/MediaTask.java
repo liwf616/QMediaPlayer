@@ -135,13 +135,9 @@ public class MediaTask {
 
         String time = simpleDate.format(now);
 
-        String destPath = null;
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
-        {
-            destPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "MovieToMp3s" + "/";
-            if (destPath == null) {
-                return;
-            }
+        String destPath = FileUtils.getStoragePath();
+        if (destPath == null) {
+            return;
         }
 
         String filename = getFileName(videoPath);
@@ -151,11 +147,6 @@ public class MediaTask {
 
             destName  = filename + time + "." + type;
         } else {
-            return;
-        }
-
-
-        if (FileUtils.isFolderExists(destPath) == false) {
             return;
         }
 

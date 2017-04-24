@@ -29,6 +29,7 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
@@ -328,6 +329,19 @@ public class FileUtils {
             }
         }
         return true;
+    }
 
+    public  static String getStoragePath() {
+        String destPath = null;
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+        {
+            destPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "MovieToMp3s" + "/";
+
+            if (FileUtils.isFolderExists(destPath) == false) {
+                return null;
+            }
+        }
+
+        return destPath;
     }
 }
