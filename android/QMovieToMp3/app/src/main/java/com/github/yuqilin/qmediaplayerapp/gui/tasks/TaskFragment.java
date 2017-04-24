@@ -138,10 +138,10 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
         MediaScannerConnection.scanFile(mActivity, new String[] { task.getVideoDstPath() }, null, null);
         if (mainActivity!=null) {
             MyMp3Fragment myMp3Fragment = mainActivity.getmMyMp3Fragment();
-            if (myMp3Fragment!=null) {
+            if (myMp3Fragment != null) {
                 AudioWrapter media = new AudioWrapter();
                 media.artlist = "<unknown>";
-                media.duration = String.valueOf(task.getDuration());
+                media.duration = String.valueOf(task.getEndTime() - task.getStartTime());
                 media.filePath = task.getVideoDstPath();
                 myMp3Fragment.addAudio(media);
             }

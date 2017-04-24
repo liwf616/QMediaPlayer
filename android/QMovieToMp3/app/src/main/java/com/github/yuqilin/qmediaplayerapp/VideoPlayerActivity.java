@@ -756,12 +756,29 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
             mMediaPlayerControl.start();
     }
 
+    private void doPause() {
+        if (mPlayPause == null)
+            return;
+
+        if (mMediaPlayerControl.isPlaying()) {
+            mPlayPause.setImageResource(R.drawable.ic_pause);
+        }
+
+        if (mMediaPlayerControl.isPlaying())
+            mMediaPlayerControl.pause();
+    }
+
     private long setProgress() {
         if (mMediaPlayerControl == null || mDragging)
             return 0;
 
         long position = mMediaPlayerControl.getCurrentPosition();
         long duration = mMediaPlayerControl.getDuration();
+
+        if(position > mEndPos * 1000) {
+            doPause();
+        }
+
         if (mSeekBar != null) {
             if (duration > 0) {
                 long pos = 1000L * position / duration;
