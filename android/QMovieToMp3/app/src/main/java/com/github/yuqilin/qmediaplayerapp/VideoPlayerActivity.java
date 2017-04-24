@@ -176,7 +176,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     @Override
     protected void onStop() {
         super.onStop();
-        mVideoView.stopPlayback();
+//        mVideoView.stopPlayback();
+        mVideoView.pause();
     }
 
     @Override
