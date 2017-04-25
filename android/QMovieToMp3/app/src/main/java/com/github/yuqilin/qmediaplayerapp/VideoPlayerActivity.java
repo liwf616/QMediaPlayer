@@ -158,7 +158,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         mSeekBar.setOnRangeChangedListener(mSeekListener);
 
         mStartPos = 0;
-        mEndPos = (int) mDuration;
+        mEndPos = (int) mDuration / 1000;
     }
 
     @Override
