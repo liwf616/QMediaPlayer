@@ -782,8 +782,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
         if (mSeekBar != null) {
             if (duration > 0) {
-                long pos = 1000L * position / duration;
-//                mSeekBar.setProgress((int) pos);
+                float pos = (float) position / (float) duration;
+                mSeekBar.setProgress( pos);
             }
 //            int percent = mMediaPlayerControl.getBufferPercentage();
 //            mSeekBar.setSecondaryProgress(percent * 10);

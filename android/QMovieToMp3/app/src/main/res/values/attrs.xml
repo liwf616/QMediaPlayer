@@ -90,6 +90,6 @@
             <enum name="single" value="1"/>
             <enum name="range" value="2"/>
         </attr>
-
+        <attr name="progressResId" format="reference"/>
     </declare-styleable>
 </resources>

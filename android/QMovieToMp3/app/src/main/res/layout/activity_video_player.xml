@@ -147,6 +147,9 @@
             app:cellMode="other"
             app:seekBarMode="range"
             app:hideProgressHint="true"
+            app:progressResId="@drawable/block"
+            app:thumbPrimaryColor="@color/colorSeekBarDefault"
+            app:thumbSecondaryColor="@color/colorAccent"
             />
 
     </LinearLayout>
