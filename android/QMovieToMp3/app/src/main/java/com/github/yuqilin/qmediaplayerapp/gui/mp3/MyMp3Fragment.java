@@ -46,6 +46,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
 
     MediaPlayer mediaPlayer;
     int pos = 0;
+    boolean isFirstPlay = true;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -150,12 +151,12 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
                     mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
-                } else {
+                    return;
+                } else if (!isFirstPlay){
                     mediaPlayer.start();
                     mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
+                    return;
                 }
-
-                return;
             }
         } else {
             mediaPlayer.reset();
@@ -179,6 +180,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
         mediaPlayer.start();
 
         pos = position;
+        isFirstPlay = false;
         mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
     }
 
@@ -207,6 +209,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
             mGridView.setColumnWidth(mGridView.getPerfectColumnWidth(thumbnailWidth, res.getDimensionPixelSize(R.dimen.default_margin)));
             mAudioAdapter.setGridCardWidth(mGridView.getColumnWidth());
         }
+
         mGridView.setNumColumns(listMode ? 1 : -1);
         if (mAudioAdapter.isListMode() != listMode) {
             mAudioAdapter.setListMode(listMode);
