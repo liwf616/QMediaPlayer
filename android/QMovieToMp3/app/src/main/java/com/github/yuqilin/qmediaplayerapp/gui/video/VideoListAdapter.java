@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import com.github.yuqilin.qmediaplayerapp.IEventsHandler;
 import com.github.yuqilin.qmediaplayerapp.R;
+import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 import com.github.yuqilin.qmediaplayerapp.util.AsyncImageLoader;
 
@@ -99,8 +100,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
         Log.d(TAG, "position[" + position + "]: " + media.filePath);
         AsyncImageLoader.loadPicture(holder.mThumbnail, media);
         holder.mFileName.setText(media.filePath.substring(media.filePath.lastIndexOf('/') + 1));
-        holder.mFileSize.setText(media.fileSize);
-        holder.mDuration.setText(media.duration);
+        holder.mFileSize.setText(String.format("%d KB", Integer.parseInt(media.fileSize) / 1000));
+        holder.mDuration.setText(VideoPlayerActivity.generateTime(Long.parseLong(media.duration)));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
     }

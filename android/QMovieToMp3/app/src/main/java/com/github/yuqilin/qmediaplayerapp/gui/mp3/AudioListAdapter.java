@@ -76,7 +76,8 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
 
         Log.d(TAG, "position[" + position + "]: " + media.filePath);
         holder.mFileName.setText(media.filePath.substring(media.filePath.lastIndexOf('/') + 1));
-        holder.mArtlist.setText(media.artlist);
+//        holder.mArtlist.setText(media.artlist);
+        holder.mArtlist.setText("My Mp3");
         try {
             holder.mDuration.setText(VideoPlayerActivity.generateTime(Integer.parseInt(media.duration)));
         } catch (NumberFormatException e) {
