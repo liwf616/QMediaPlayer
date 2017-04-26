@@ -150,11 +150,11 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
             if (mediaPlayer != null) {
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
-                    mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
+                    mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
                     return;
                 } else if (!isFirstPlay){
                     mediaPlayer.start();
-                    mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
+                    mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
                     return;
                 }
             }
@@ -181,7 +181,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
 
         pos = position;
         isFirstPlay = false;
-        mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
+        mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
     }
 
     @Override
