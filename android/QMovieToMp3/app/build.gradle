@@ -29,4 +29,5 @@ dependencies {
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1@aar'
     compile project(path: ':qmediaplayer')
     testCompile 'junit:junit:4.12'
+    compile project(path: ':k4l-video-trimmer')
 }

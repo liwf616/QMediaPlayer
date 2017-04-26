@@ -25,4 +25,8 @@
     <string name="type_alarm">Alarm</string>
     <string name="type_notification">Notification</string>
     <string name="type_ringtone">Ringtone</string>
-</resources>
+
+    <string name="video_saved_at">Video saves at : $%1s</string>
+    <string name="trimming_progress">Trimming your video...</string>
+    <string name="extra_audio_path">EXTRA_VIDEO_PATH</string>
+    </resources>
