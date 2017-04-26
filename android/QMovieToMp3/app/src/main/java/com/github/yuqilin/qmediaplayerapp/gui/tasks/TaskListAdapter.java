@@ -4,10 +4,7 @@
 
 package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.widget.ProgressBar;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,8 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.github.yuqilin.qmediaplayerapp.QApplication;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
@@ -31,7 +26,7 @@ import com.github.yuqilin.qmediaplayerapp.ITaskEventHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> implements TaskRunner.TaskRunnerListener{
+public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder> implements TaskRunner.TaskRunnerListener{
 
     private AutoFitRecyclerView mAutoFitRecyclerView;
     private ITaskEventHandler mTaskEventsHandler;
@@ -43,9 +38,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     public final static String TAG = "TaskListAdapter";
 
     private static final int UPDATE_PROCESS = 1;
-    private static final int TASK_FINISHED = 2;
+//    private static final int TASK_FINISHED = 2;
 
-    public TaskListAdapter(ITaskEventHandler eventHandler,AutoFitRecyclerView autoFitRecyclerView) {
+    public TaskListAdapter(ITaskEventHandler eventHandler, AutoFitRecyclerView autoFitRecyclerView) {
         super();
 
         mAutoFitRecyclerView = autoFitRecyclerView;
@@ -65,7 +60,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     });
 
     private void updateProcessText(MediaTask task) {
-        ViewHolder holder =(ViewHolder) mAutoFitRecyclerView.findViewHolderForLayoutPosition(task.getTaskIndex());
+        TaskViewHolder holder =(TaskViewHolder) mAutoFitRecyclerView.findViewHolderForLayoutPosition(task.getTaskIndex());
 
         if (holder != null) {
             holder.setmProcessText(task.getProcessText());
@@ -100,6 +95,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         if (media == null) {
             return;
         }
+
         media.setProcess(media.getEndTime() - media.getStartTime());
 
         Message message = Message.obtain();
@@ -122,13 +118,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder viewType " + viewType);
 
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate( R.layout.item_task_list, parent, false);
 
-        return new TaskListAdapter.ViewHolder(v);
+        return new TaskViewHolder(v);
     }
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -140,7 +136,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     };
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(TaskViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder position " + position);
 
         MediaTask media = mTasks.get(position);
@@ -157,7 +153,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(TaskListAdapter.ViewHolder holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(TaskViewHolder holder, int position, List<Object> payloads) {
         if (payloads.isEmpty()) {
             onBindViewHolder(holder, position);
         } else {
@@ -166,7 +162,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         }
     }
 
-    public void onViewRecycled(TaskListAdapter.ViewHolder holder) {
+    public void onViewRecycled(TaskViewHolder holder) {
         Log.d(TAG, "onViewRecycled");
         super.onViewRecycled(holder);
     }
@@ -205,14 +201,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         mTasks.clear();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
+    public class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener {
         private View mListItem;
         private ImageView mTaskStatusPic;
         private TextView mFileName;
         private TextView mProcessText;
         private ProgressBar mProgressBar;
 
-        public ViewHolder(View v) {
+        public TaskViewHolder(View v) {
             super(v);
             if(v == null) {
                 return;
