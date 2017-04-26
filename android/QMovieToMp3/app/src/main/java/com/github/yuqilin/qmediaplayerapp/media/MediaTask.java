@@ -33,8 +33,6 @@ public class MediaTask {
 
     private int    process;
 
-    private int     taskIndex;
-
     private String  videoDstPath;
 
     public int getVbr() {
@@ -47,14 +45,6 @@ public class MediaTask {
 
     public static String[] getMediaAudioFormat() {
         return MEDIA_AUDIO_FORMAT;
-    }
-
-    public int getTaskIndex() {
-        return taskIndex;
-    }
-
-    public void setTaskIndex(int taskIndex) {
-        this.taskIndex = taskIndex;
     }
 
     public void setProcess(int process) {

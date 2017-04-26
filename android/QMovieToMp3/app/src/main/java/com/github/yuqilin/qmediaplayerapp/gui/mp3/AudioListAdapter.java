@@ -122,7 +122,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
     public void addAudio(AudioWrapter audio) {
         int position = getItemCount();
 
-        Log.d(TAG, "addVideo position " + position);
+        Log.d(TAG, "addTask position " + position);
 
         mAudios.add(position, audio);
         notifyItemInserted(position);
@@ -149,6 +149,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         if (pos > mAudios.size()) {
             return;
         }
+
         AudioWrapter audioWrapter = mAudios.get(pos);
         if (audioWrapter != null) {
             audioWrapter.holder.mPlayStatus.setImageResource(resId);

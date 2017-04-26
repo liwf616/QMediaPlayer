@@ -158,7 +158,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
     }
 
     public void addVideo(int position, VideoWrapper video) {
-        Log.d(TAG, "addVideo position " + position);
+        Log.d(TAG, "addTask position " + position);
         mVideos.add(position, video);
         notifyItemInserted(position);
     }

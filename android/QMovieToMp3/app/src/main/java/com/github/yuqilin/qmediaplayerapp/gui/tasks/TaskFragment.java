@@ -1,22 +1,18 @@
 package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
-import android.content.ContentValues;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
 import com.github.yuqilin.qmediaplayerapp.BaseFragment;
 import com.github.yuqilin.qmediaplayerapp.MainActivity;
-import com.github.yuqilin.qmediaplayerapp.QApplication;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.gui.mp3.MyMp3Fragment;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
@@ -58,7 +54,7 @@ public class TaskFragment extends BaseFragment implements ITaskEventHandler {
                 case SCAN_CANCEL:
                     break;
                 case SCAN_ADD_ITEM:
-                    mTaskListAdapter.addVideo((MediaTask) msg.obj);
+                    mTaskListAdapter.addTask((MediaTask) msg.obj);
                     break;
                 default:
                     super.handleMessage(msg);

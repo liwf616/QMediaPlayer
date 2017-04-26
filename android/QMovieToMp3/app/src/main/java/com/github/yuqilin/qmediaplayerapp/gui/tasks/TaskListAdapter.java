@@ -33,12 +33,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     private ArrayList<MediaTask> mTasks = new ArrayList<>();
 
     private boolean taskIsRunning = false;
-    private int taskIndex = 0;
 
     public final static String TAG = "TaskListAdapter";
 
     private static final int UPDATE_PROCESS = 1;
-//    private static final int TASK_FINISHED = 2;
+    private static final int TASK_FINISHED = 2;
 
     public TaskListAdapter(ITaskEventHandler eventHandler, AutoFitRecyclerView autoFitRecyclerView) {
         super();
@@ -54,13 +53,17 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
                 case UPDATE_PROCESS:
                     updateProcessText((MediaTask)message.obj);
                     break;
+                case TASK_FINISHED:
+                    removeTask((MediaTask)message.obj);
+                    nextTask();
+                    break;
             }
             return true;
         }
     });
 
     private void updateProcessText(MediaTask task) {
-        TaskViewHolder holder =(TaskViewHolder) mAutoFitRecyclerView.findViewHolderForLayoutPosition(task.getTaskIndex());
+        TaskViewHolder holder =(TaskViewHolder) mAutoFitRecyclerView.findViewHolderForLayoutPosition(mTasks.indexOf(task));
 
         if (holder != null) {
             holder.setmProcessText(task.getProcessText());
@@ -71,12 +74,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     public void onProcess(int seconds){
         Log.w(TAG, "onProcess : " + seconds );
 
-        MediaTask media = mTasks.get(taskIndex);
+        MediaTask media = mTasks.get(0);
         if (media == null) {
             return;
         }
+
         media.setProcess(seconds * 1000);
-        media.setTaskIndex(taskIndex);
 
         Message message = Message.obtain();
         message.obj = media;
@@ -91,29 +94,28 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
 
         taskIsRunning = false;
 
-        MediaTask media = mTasks.get(taskIndex);
+        MediaTask media = mTasks.get(0);
         if (media == null) {
             return;
         }
 
-        media.setProcess(media.getEndTime() - media.getStartTime());
+        mTaskEventsHandler.onTaskFinished(media);
 
         Message message = Message.obtain();
         message.obj = media;
-        message.what = UPDATE_PROCESS;
+        message.what = TASK_FINISHED;
 
         mHandler.sendMessage(message);
-
-        mTaskEventsHandler.onTaskFinished(media);
-
-        nextTask(++taskIndex);
     };
 
-    private void nextTask(int taskIndex) {
-        if(taskIndex < mTasks.size()) {
-            TaskRunner runner = new TaskRunner(this);
-            runner.convertStart(mTasks.get(taskIndex).getCommand());
-            taskIsRunning = true;
+    private void nextTask() {
+        if (mTasks.size() > 0) {
+            MediaTask mediaTask = mTasks.get(0);
+            if(mediaTask != null) {
+                TaskRunner runner = new TaskRunner(this);
+                runner.convertStart(mediaTask.getCommand());
+                taskIsRunning = true;
+            }
         }
     }
 
@@ -167,28 +169,27 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         super.onViewRecycled(holder);
     }
 
-//    public void updateVideos(ArrayList<MediaTask> tasks) {
-//        mTasks = tasks;
-//        notifyDataSetChanged();
-//    }
-
-    public void addVideo(int position, MediaTask task) {
-        mTasks.add(position, task);
-        notifyItemInserted(position);
-
-        Log.d(TAG, "addVideo position " + position);
-    }
-
-    public void addVideo(MediaTask task) {
+    public void addTask(MediaTask task) {
         int position = getItemCount();
 
-        addVideo(position, task);
+        mTasks.add(position, task);
+
+        notifyItemInserted(position);
+
+        Log.d(TAG, "addTask position " + position);
 
         if (taskIsRunning == false) {
-            nextTask(taskIndex);
+            nextTask();
         }
 
-        Log.d(TAG, "addVideo position " + position);
+        Log.d(TAG, "addTask position " + position);
+    }
+
+    public void removeTask(MediaTask task) {
+        int position = mTasks.indexOf(task);
+
+        mTasks.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override
