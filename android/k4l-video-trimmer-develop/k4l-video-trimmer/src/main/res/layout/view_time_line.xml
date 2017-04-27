@@ -110,7 +110,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:background="?android:attr/colorButtonNormal"
+                android:background="@android:color/white"
                 android:popupBackground="@android:color/background_light" />
 
             <Spinner
@@ -122,7 +122,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:background="?android:attr/colorButtonNormal"
+                android:background="@android:color/white"
                 android:popupBackground="@android:color/background_light" />
 
         </RelativeLayout>

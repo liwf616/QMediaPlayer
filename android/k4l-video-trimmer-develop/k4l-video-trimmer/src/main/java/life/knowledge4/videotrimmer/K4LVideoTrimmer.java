@@ -38,10 +38,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -81,6 +83,12 @@ public class K4LVideoTrimmer extends FrameLayout {
     private TextView mTextTime;
     private TimeLineView mTimeLineView;
 
+    //spinner
+    private ArrayList<String> mTypeArray;
+    private Spinner mTypeSpinner;
+    private ArrayList<String> mBitsArray;
+    private Spinner mBitsSpinner;
+
     private ProgressBarView mVideoProgressIndicator;
     private Uri mSrc;
     private String mFinalPath;
@@ -99,6 +107,22 @@ public class K4LVideoTrimmer extends FrameLayout {
     private long mOriginSizeFile;
     private boolean mResetSeekBar = true;
     private final MessageHandler mMessageHandler = new MessageHandler(this);
+
+    public static final String[] MEDIA_AUDIO_FORMAT = {
+//            "mp3",
+            "aac"
+    };
+
+    public static final String[] MEDIA_AUDIO_BITS= {
+            "copy",
+            "128k",
+            "192k",
+            "256k",
+            "320k",
+            "130k",
+            "190k",
+            "245k"
+    };
 
     public K4LVideoTrimmer(@NonNull Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -124,8 +148,49 @@ public class K4LVideoTrimmer extends FrameLayout {
         mTextTime = ((TextView) findViewById(R.id.textTime));
         mTimeLineView = ((TimeLineView) findViewById(R.id.timeLineView));
 
+        initSpinner(context);
         setUpListeners();
         setUpMargins();
+    }
+
+    public  String getComment(int i) {
+        if(i == 0) {
+            return "copy (32kb/s)";
+        } else  if (i <= 4) {
+            return MEDIA_AUDIO_BITS[i] + " " + "CBR";
+        } else {
+            return MEDIA_AUDIO_BITS[i] + " " + "VBR(slow)";
+        }
+    }
+
+    private  void initSpinner(Context context) {
+        mTypeArray = new ArrayList<String>();
+
+        for (String format: MEDIA_AUDIO_FORMAT) {
+            mTypeArray.add(format.toUpperCase());
+        }
+
+        mBitsArray = new ArrayList<String>();
+
+        for (int i = 0; i < MEDIA_AUDIO_BITS.length; i++) {
+            mBitsArray.add(getComment(i));
+        }
+
+        ArrayAdapter<String> typeAdapter =
+                new ArrayAdapter<String>(context, R.layout.spinner_item, mTypeArray);
+        typeAdapter.setDropDownViewResource(R.layout.spinner_item);
+
+        mTypeSpinner = (Spinner) findViewById(R.id.view_choose_format);
+        mTypeSpinner.setAdapter(typeAdapter);
+        mTypeSpinner.setSelection(0);
+
+        ArrayAdapter<String> bitsAdapter =
+                new ArrayAdapter<String>(context, R.layout.spinner_item, mBitsArray);
+        bitsAdapter.setDropDownViewResource(R.layout.spinner_item);
+
+        mBitsSpinner = (Spinner) findViewById(R.id.view_choose_bit);
+        mBitsSpinner.setAdapter(bitsAdapter);
+        mBitsSpinner.setSelection(1);
     }
 
     private void setUpListeners() {
