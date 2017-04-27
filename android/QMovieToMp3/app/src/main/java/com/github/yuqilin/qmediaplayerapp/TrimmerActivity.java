@@ -1,11 +1,9 @@
-package com.github.yuqilin.qmediaplayerapp.gui.videoeditor;
+package com.github.yuqilin.qmediaplayerapp;
 
 /**
  * Created by liwenfeng on 17/4/26.
  */
 
-import com.github.yuqilin.qmediaplayerapp.MainActivity;
-import com.github.yuqilin.qmediaplayerapp.R;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -31,7 +29,7 @@ public class TrimmerActivity extends AppCompatActivity implements OnTrimVideoLis
         String path = "";
 
         if (extraIntent != null) {
-            path = extraIntent.getStringExtra(getString(R.string.extra_audio_path));
+            path = extraIntent.getStringExtra("videoPath");
         }
 
         //setting progressbar
@@ -51,22 +49,23 @@ public class TrimmerActivity extends AppCompatActivity implements OnTrimVideoLis
 
     @Override
     public void onTrimStarted() {
-        mProgressDialog.show();
+//        mProgressDialog.show();
     }
 
     @Override
     public void getResult(final Uri uri) {
-        mProgressDialog.cancel();
+//        mProgressDialog.cancel();
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(TrimmerActivity.this, getString(R.string.video_saved_at, uri.getPath()), Toast.LENGTH_SHORT).show();
-            }
-        });
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        intent.setDataAndType(uri, "video/mp4");
-        startActivity(intent);
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Toast.makeText(TrimmerActivity.this, getString(R.string.video_saved_at, uri.getPath()), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//        intent.setDataAndType(uri, "video/mp4");
+//        startActivity(intent);
         finish();
     }
 
