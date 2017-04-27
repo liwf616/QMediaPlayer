@@ -183,7 +183,7 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
     private void startTrimActivity(String videoPath, String duration) {
         Intent intent = new Intent(getContext(), TrimmerActivity.class);
         intent.putExtra("videoPath", videoPath);
-        intent.putExtra("duration", duration);
+        intent.putExtra("duration", Integer.parseInt(duration));
         startActivityForResult(intent, 1);
     }
 
@@ -202,7 +202,8 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
         int endTime = data.getExtras().getInt("endTime");
 
         if(taskFragment != null) {
-            taskFragment.addTask(new MediaTask(videopath, vbr, type, bits,(int) duration,starttime,endTime));
+            taskFragment.addTask(new MediaTask(videopath, vbr, type, bits,
+                                (int) duration, starttime, endTime));
         }
     }
 

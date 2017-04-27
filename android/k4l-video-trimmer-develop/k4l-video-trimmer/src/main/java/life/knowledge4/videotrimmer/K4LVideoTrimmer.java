@@ -38,6 +38,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -103,6 +104,9 @@ public class K4LVideoTrimmer extends FrameLayout {
     private int mTimeVideo = 0;
     private int mStartPosition = 0;
     private int mEndPosition = 0;
+    private String mBitrateSelected;
+    private String mTypeSelected;
+    private int mVBR = 0;
 
     private long mOriginSizeFile;
     private boolean mResetSeekBar = true;
@@ -191,7 +195,36 @@ public class K4LVideoTrimmer extends FrameLayout {
         mBitsSpinner = (Spinner) findViewById(R.id.view_choose_bit);
         mBitsSpinner.setAdapter(bitsAdapter);
         mBitsSpinner.setSelection(1);
+
+        mTypeSpinner.setOnItemSelectedListener(mOnSelectTypeListener);
+        mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
+
     }
+
+    private AdapterView.OnItemSelectedListener mOnSelectTypeListener = new AdapterView.OnItemSelectedListener () {
+        @Override
+        public void onItemSelected(AdapterView parent, View v, int position, long id) {
+            mTypeSelected = MEDIA_AUDIO_FORMAT[position];
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView parent) {
+        }
+    };
+
+    private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
+        @Override
+        public void onItemSelected(AdapterView parent, View v, int position, long id) {
+            mBitrateSelected = MEDIA_AUDIO_BITS[position];
+            if( 7 >= position  && position >= 5) {
+                mVBR = position - 2;
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView parent) {
+        }
+    };
 
     private void setUpListeners() {
         mListeners = new ArrayList<>();
@@ -324,45 +357,52 @@ public class K4LVideoTrimmer extends FrameLayout {
     }
 
     private void onSaveClicked() {
-        if (mStartPosition <= 0 && mEndPosition >= mDuration) {
-            if (mOnTrimVideoListener != null)
-                mOnTrimVideoListener.getResult(mSrc);
-        } else {
-            mPlayView.setVisibility(View.VISIBLE);
-            mVideoView.pause();
-
-            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-            mediaMetadataRetriever.setDataSource(getContext(), mSrc);
-            long METADATA_KEY_DURATION = Long.parseLong(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
-
-            final File file = new File(mSrc.getPath());
-
-            if (mTimeVideo < MIN_TIME_FRAME) {
-
-                if ((METADATA_KEY_DURATION - mEndPosition) > (MIN_TIME_FRAME - mTimeVideo)) {
-                    mEndPosition += (MIN_TIME_FRAME - mTimeVideo);
-                } else if (mStartPosition > (MIN_TIME_FRAME - mTimeVideo)) {
-                    mStartPosition -= (MIN_TIME_FRAME - mTimeVideo);
-                }
-            }
-
-            //notify that video trimming started
-            if (mOnTrimVideoListener != null)
-                mOnTrimVideoListener.onTrimStarted();
-
-            BackgroundExecutor.execute(
-                    new BackgroundExecutor.Task("", 0L, "") {
-                        @Override
-                        public void execute() {
-                            try {
-                                TrimVideoUtils.startTrim(file, getDestinationPath(), mStartPosition, mEndPosition, mOnTrimVideoListener);
-                            } catch (final Throwable e) {
-                                Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
-                            }
-                        }
-                    }
-            );
+        if (mOnTrimVideoListener != null) {
+            mOnTrimVideoListener.getTranscodeResult(mSrc, mDuration, mStartPosition,
+                    mEndPosition, mBitrateSelected, mTypeSelected, mVBR);
         }
+
+        return;
+
+//        if (mStartPosition <= 0 && mEndPosition >= mDuration) {
+//            if (mOnTrimVideoListener != null)
+//                mOnTrimVideoListener.getResult(mSrc);
+//        } else {
+//            mPlayView.setVisibility(View.VISIBLE);
+//            mVideoView.pause();
+//
+//            MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+//            mediaMetadataRetriever.setDataSource(getContext(), mSrc);
+//            long METADATA_KEY_DURATION = Long.parseLong(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION));
+//
+//            final File file = new File(mSrc.getPath());
+//
+//            if (mTimeVideo < MIN_TIME_FRAME) {
+//
+//                if ((METADATA_KEY_DURATION - mEndPosition) > (MIN_TIME_FRAME - mTimeVideo)) {
+//                    mEndPosition += (MIN_TIME_FRAME - mTimeVideo);
+//                } else if (mStartPosition > (MIN_TIME_FRAME - mTimeVideo)) {
+//                    mStartPosition -= (MIN_TIME_FRAME - mTimeVideo);
+//                }
+//            }
+//
+//            //notify that video trimming started
+//            if (mOnTrimVideoListener != null)
+//                mOnTrimVideoListener.onTrimStarted();
+//
+//            BackgroundExecutor.execute(
+//                    new BackgroundExecutor.Task("", 0L, "") {
+//                        @Override
+//                        public void execute() {
+//                            try {
+//                                TrimVideoUtils.startTrim(file, getDestinationPath(), mStartPosition, mEndPosition, mOnTrimVideoListener);
+//                            } catch (final Throwable e) {
+//                                Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+//                            }
+//                        }
+//                    }
+//            );
+//        }
     }
 
     private void onClickVideoPlayPause() {
@@ -489,7 +529,7 @@ public class K4LVideoTrimmer extends FrameLayout {
 
     private void setTimeFrames() {
         String seconds = getContext().getString(R.string.short_seconds);
-        mTextTimeFrame.setText(String.format("%s %s - %s %s", stringForTime(mStartPosition), seconds, stringForTime(mEndPosition), seconds));
+        mTextTimeFrame.setText(String.format("%s %s  -  %s %s", stringForTime(mStartPosition), seconds, stringForTime(mEndPosition), seconds));
     }
 
     private void setTimeVideo(int position) {

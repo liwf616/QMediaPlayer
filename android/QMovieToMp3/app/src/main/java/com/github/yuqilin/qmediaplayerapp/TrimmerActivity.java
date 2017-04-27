@@ -27,9 +27,11 @@ public class TrimmerActivity extends AppCompatActivity implements OnTrimVideoLis
 
         Intent extraIntent = getIntent();
         String path = "";
+        int duration = 100;
 
         if (extraIntent != null) {
             path = extraIntent.getStringExtra("videoPath");
+            duration = extraIntent.getIntExtra("duration", 100);
         }
 
         //setting progressbar
@@ -39,7 +41,7 @@ public class TrimmerActivity extends AppCompatActivity implements OnTrimVideoLis
 
         mVideoTrimmer = ((K4LVideoTrimmer) findViewById(R.id.timeLine));
         if (mVideoTrimmer != null) {
-            mVideoTrimmer.setMaxDuration(100);
+            mVideoTrimmer.setMaxDuration(duration);
             mVideoTrimmer.setOnTrimVideoListener(this);
             mVideoTrimmer.setOnK4LVideoListener(this);
             mVideoTrimmer.setVideoURI(Uri.parse(path));
@@ -66,6 +68,23 @@ public class TrimmerActivity extends AppCompatActivity implements OnTrimVideoLis
 //        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 //        intent.setDataAndType(uri, "video/mp4");
 //        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void getTranscodeResult(final Uri uri, int duration, int startPosition,
+                                   int endPositon, String bitrate, String type, int vbr) {
+
+        Intent intent = new Intent();
+        intent.putExtra("videoPath", uri.getPath());
+        intent.putExtra("vbr", vbr);
+        intent.putExtra("type", type);
+        intent.putExtra("bits", bitrate);
+        intent.putExtra("duration", duration);
+        intent.putExtra("startTime", startPosition );
+        intent.putExtra("endTime", endPositon );
+
+        setResult(RESULT_OK, intent);
         finish();
     }
 

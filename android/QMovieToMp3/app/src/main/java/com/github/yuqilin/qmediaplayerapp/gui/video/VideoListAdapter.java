@@ -45,14 +45,6 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.View
 
     public final static String TAG = "VideoListAdapter";
 
-    public final static int SORT_BY_TITLE = 0;
-    public final static int SORT_BY_LENGTH = 1;
-    public final static int SORT_BY_DATE = 2;
-
-    final static int UPDATE_SELECTION = 0;
-    final static int UPDATE_THUMB = 1;
-    final static int UPDATE_TIME = 2;
-
     private boolean mListMode = true;
     private IEventsHandler mEventsHandler;
 

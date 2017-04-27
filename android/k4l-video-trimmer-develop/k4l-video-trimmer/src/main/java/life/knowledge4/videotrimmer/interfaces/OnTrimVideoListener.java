@@ -34,4 +34,7 @@ public interface OnTrimVideoListener {
     void cancelAction();
 
     void onError(final String message);
+
+    void getTranscodeResult(final Uri uri, int duration, int startPosition, int endPositon, String bitrate, String type, int vbr);
+
 }
