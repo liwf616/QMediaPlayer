@@ -17,12 +17,14 @@ import com.github.yuqilin.qmediaplayerapp.IEventsHandler;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.TaskFragment;
+import com.github.yuqilin.qmediaplayerapp.TrimmerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 import com.github.yuqilin.qmediaplayerapp.media.VideoLoader;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by yuqilin on 17/2/11.
@@ -152,7 +154,8 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
 
     @Override
     public void onClick(View v, int position, VideoWrapper item) {
-        jumpToPlayerActivity(item.filePath, item.duration);
+//        jumpToPlayerActivity(item.filePath, item.duration);
+        startTrimActivity(item.filePath, item.duration);
     }
 
     @Override
@@ -177,6 +180,13 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
         startActivityForResult(intent, 1);
     }
 
+    private void startTrimActivity(String videoPath, String duration) {
+        Intent intent = new Intent(getContext(), TrimmerActivity.class);
+        intent.putExtra("videoPath", videoPath);
+        intent.putExtra("duration", duration);
+        startActivityForResult(intent, 1);
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode != 1 || data == null) {
@@ -191,18 +201,9 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
         int starttime = data.getExtras().getInt("startTime");
         int endTime = data.getExtras().getInt("endTime");
 
-//        TaskFragment taskFragment =(TaskFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.task_grid);
         if(taskFragment != null) {
             taskFragment.addTask(new MediaTask(videopath, vbr, type, bits,(int) duration,starttime,endTime));
         }
-
-//        if (requestCode == 1 && resultCode == -1) {
-//            getActivity().getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.task_grid, taskFragment, null)
-//                    .addToBackStack(null)
-//                    .commit();
-//        }
     }
 
     private void updateViewMode() {

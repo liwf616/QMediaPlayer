@@ -3,6 +3,8 @@
     package="com.github.yuqilin.qmediaplayerapp">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".QApplication"
@@ -18,11 +20,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+mf
         <activity android:name=".VideoPlayerActivity"
             android:theme="@style/AppThemeFullscreen"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize"
+            />
+
+        <activity
+            android:name=".TrimmerActivity"
             />
 
         <service
