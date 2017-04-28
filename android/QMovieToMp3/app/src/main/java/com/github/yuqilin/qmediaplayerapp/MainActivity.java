@@ -42,10 +42,6 @@ public class MainActivity extends BaseActivity {
         return mMyMp3Fragment;
     }
 
-    public void setmMyMp3Fragment(MyMp3Fragment mMyMp3Fragment) {
-        this.mMyMp3Fragment = mMyMp3Fragment;
-    }
-
     private MyMp3Fragment mMyMp3Fragment;
 
     private AsyncTask<String, Integer, String> mTask;
@@ -62,7 +58,7 @@ public class MainActivity extends BaseActivity {
         mVideoFragment = new VideoFragment();
         mFragments.add(mVideoFragment);
 
-        mMyMp3Fragment= new MyMp3Fragment();
+        mMyMp3Fragment= new MyMp3Fragment(this);
         mFragments.add(mMyMp3Fragment);
 
         mTaskFragment = new TaskFragment(this);

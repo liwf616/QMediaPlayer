@@ -1,5 +1,6 @@
 package com.github.yuqilin.qmediaplayerapp.gui.mp3;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.github.yuqilin.qmediaplayerapp.BaseFragment;
 import com.github.yuqilin.qmediaplayerapp.IAudioEventHandler;
 import com.github.yuqilin.qmediaplayerapp.IEventsHandler;
 import com.github.yuqilin.qmediaplayerapp.R;
+import com.github.yuqilin.qmediaplayerapp.TrimmerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.video.VideoListAdapter;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.AudioLoader;
@@ -22,6 +24,7 @@ import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 import android.media.MediaPlayer;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,11 +40,16 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
     protected AutoFitRecyclerView mGridView;
     private AudioListAdapter mAudioAdapter;
     private AudioLoader mAudioLoader;
+    Context context;
 
     public static final int SCAN_START = 1;
     public static final int SCAN_FINISH = 2;
     public static final int SCAN_CANCEL = 3;
     public static final int SCAN_ADD_ITEM = 4;
+
+    public MyMp3Fragment(Context ctx) {
+        context = ctx;
+    }
 
 
     MediaPlayer mediaPlayer;
@@ -155,6 +163,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
                 } else if (!isFirstPlay){
                     mediaPlayer.start();
                     mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
+                    Toast.makeText(context, "sorry, play audio error!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -167,6 +176,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
             mediaPlayer.setDataSource(item.filePath);
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(context, "sorry, play audio error!", Toast.LENGTH_SHORT).show();
             return;
         }
 

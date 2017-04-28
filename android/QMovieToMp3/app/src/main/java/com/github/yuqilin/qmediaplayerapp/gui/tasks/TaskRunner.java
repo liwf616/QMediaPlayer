@@ -1,7 +1,12 @@
 package com.github.yuqilin.qmediaplayerapp.gui.tasks;
 
+import android.util.Log;
+
 import com.github.yuqilin.qmediaplayerapp.QApplication;
 import com.github.yuqilin.qmediaplayer.FFmpegInvoke;
+import com.googlecode.mp4parser.util.Logger;
+
+import java.util.Arrays;
 
 /**
  * Created by liwenfeng on 17/4/15.
@@ -41,6 +46,8 @@ public class TaskRunner implements FFmpegInvoke.FFmpegInvokeListener {
     }
 
     private void runTranscodeTask(String[] command) {
+        Log.w(TAG, Arrays.toString(command));
+
         FFmpegInvoke ffmpeg = new FFmpegInvoke(this);
         ffmpeg.run(command);
     }
