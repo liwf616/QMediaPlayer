@@ -4,8 +4,8 @@ layer2.lo: layer2.c ../config.h common.h mpg123.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/cdefs_elf.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/android/api-level.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/types.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stddef.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stdint.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/stdint.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/_types.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/machine/_types.h \
@@ -18,12 +18,12 @@ layer2.lo: layer2.c ../config.h common.h mpg123.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/linux/types.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/machine/kernel.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/sysmacros.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stdarg.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/string.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/malloc.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/signal.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include-fixed/limits.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include-fixed/syslimits.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/limits.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/limits.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/linux/limits.h \
@@ -58,9 +58,9 @@ mpg123.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/types.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stddef.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stdint.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/stdint.h:
 
@@ -86,7 +86,7 @@ mpg123.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/sysmacros.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stdarg.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/string.h:
 
@@ -94,9 +94,9 @@ mpg123.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/signal.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include-fixed/limits.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include-fixed/syslimits.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/limits.h:
 

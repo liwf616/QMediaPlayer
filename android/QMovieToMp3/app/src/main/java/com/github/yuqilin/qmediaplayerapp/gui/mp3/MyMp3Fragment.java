@@ -138,13 +138,10 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
         mAudioAdapter.clear();
     }
 
-    public void notifyDataChanged() {
-        if (!isVisible()) {
-            Log.d(TAG, "notifyDataChanged but not visible");
-            return;
-        }
-        if (mAudioAdapter != null) {
-            mAudioAdapter.notifyDataSetChanged();
+    public void stopPlaying() {
+        if (mediaPlayer!=null && mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+            mediaPlayer.reset();
         }
     }
 

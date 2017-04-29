@@ -71,6 +71,11 @@ public class VideoLoader {
                 media.mimeType = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
                 media.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
                 media.duration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+
+                if (Integer.parseInt(media.duration) == 0) {
+                    media.duration = String.valueOf(10 * 3600) ;
+                }
+
                 media.fileSize = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
 
                 //获取当前Video对应的Id，然后根据该ID获取其Thumb
@@ -79,11 +84,7 @@ public class VideoLoader {
                 String[] selectionArgs = new String[]{
                         id+""
                 };
-//                Cursor thumbCursor = getContentResolver().query(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, selection, selectionArgs, null);
-//
-//                if(thumbCursor != null && thumbCursor.moveToFirst()){
-//                    info.thumbPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Thumbnails.DATA));
-//                }
+
                 media.videoId = id;
 
                 Log.d(TAG, "====Scanned : [" + mVideos.size() + "] " + media.filePath + " " + media.title + " " + media.videoId);

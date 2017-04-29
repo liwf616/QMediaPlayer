@@ -6,8 +6,8 @@ timestatus.o: timestatus.c ../config.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/time.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/time.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/types.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stddef.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stdint.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/stdint.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/_types.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/machine/_types.h \
@@ -30,11 +30,11 @@ timestatus.o: timestatus.c ../config.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/strings.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/memory.h \
  ../include/lame.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stdarg.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/stdio.h \
  main.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h \
- /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include-fixed/limits.h \
+ /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include-fixed/syslimits.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/limits.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/limits.h \
  /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/linux/limits.h \
@@ -60,9 +60,9 @@ timestatus.o: timestatus.c ../config.h \
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/sys/types.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stddef.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stdint.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/stdint.h:
 
@@ -108,15 +108,15 @@ timestatus.o: timestatus.c ../config.h \
 
 ../include/lame.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include/stdarg.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include/stdarg.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/stdio.h:
 
 main.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include-fixed/limits.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include-fixed/limits.h:
 
-/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8/include-fixed/syslimits.h:
+/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x/include-fixed/syslimits.h:
 
 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/include/limits.h:
 

@@ -205,7 +205,7 @@ runpath_var=LD_RUN_PATH
 shlibpath_var=LD_LIBRARY_PATH
 
 # Is shlibpath searched before the hard-coded library search path?
-shlibpath_overrides_runpath=yes
+shlibpath_overrides_runpath=no
 
 # Format of library name prefix.
 libname_spec="lib\$name"
@@ -237,7 +237,7 @@ finish_eval=""
 hardcode_into_libs=yes
 
 # Compile-time system search path for libraries.
-sys_lib_search_path_spec="/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.8 /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/arm-linux-androideabi/lib /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/lib "
+sys_lib_search_path_spec="/Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc/arm-linux-androideabi/4.9.x /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/lib/gcc /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/arm-linux-androideabi/lib /Users/liwenfeng/kingsoft/android/ffmpeg-android/toolchain-android/sysroot/usr/lib "
 
 # Run-time system search path for libraries.
 sys_lib_dlsearch_path_spec="/lib /usr/lib"

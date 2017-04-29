@@ -115,6 +115,14 @@ public class MainActivity extends BaseActivity {
         return false;
     }
 
+    void quitActivity() {
+        if(mMyMp3Fragment != null) {
+            mMyMp3Fragment.stopPlaying();
+
+        }
+
+        finish();
+    }
 
     DialogInterface.OnClickListener diaListener=new DialogInterface.OnClickListener() {
 
@@ -123,12 +131,13 @@ public class MainActivity extends BaseActivity {
             // TODO Auto-generated method stub
             switch (buttonId) {
                 case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
-                    finish();
+                    quitActivity();
                     break;
                 case AlertDialog.BUTTON_NEGATIVE:// "确认"按钮退出程序
                     //什么都不做
                     break;
                 default:
+                    finish();
                     break;
             }
         }
