@@ -9,7 +9,7 @@
     <application
         android:name=".QApplication"
         android:allowBackup="true"
-        android:icon="@drawable/group_2"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Base">
@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-mf
+
         <activity android:name=".VideoPlayerActivity"
             android:theme="@style/AppThemeFullscreen"
             android:launchMode="singleTop"

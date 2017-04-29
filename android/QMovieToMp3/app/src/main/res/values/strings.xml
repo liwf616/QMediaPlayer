@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QMediaToMp3</string>
+    <string name="app_name">Video2Audio</string>
     <string name="allow_storage_access_title">Allow VLC to access video and audio files</string>
     <string name="allow_storage_access_description">VLC needs you to grant this permission to access the media files on this device.</string>
     <string name="allow_settings_access_ringtone_title">Allow VLC to set the ringtone</string>
