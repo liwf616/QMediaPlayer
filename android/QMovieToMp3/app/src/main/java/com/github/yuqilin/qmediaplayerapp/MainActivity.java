@@ -1,12 +1,15 @@
 package com.github.yuqilin.qmediaplayerapp;
 
+import android.content.DialogInterface;
 import android.media.AudioFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 
 import com.github.yuqilin.qmediaplayerapp.gui.mp3.MyMp3Fragment;
@@ -92,6 +95,44 @@ public class MainActivity extends BaseActivity {
         mViewPagerTab.setDividerColors(getResources().getColor(R.color.transparent));
         mViewPagerTab.setViewPager(mViewPager);
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode,KeyEvent event){
+        if (keyCode==KeyEvent.KEYCODE_BACK) {
+            //back key Constant Value: 4 (0x00000004)
+            //创建退出对话框
+            AlertDialog.Builder isExit=new AlertDialog.Builder(this);
+            //设置对话框标题
+            isExit.setTitle("Message Alert");
+            //设置对话框消息
+            isExit.setMessage("Do you want to quit ?");
+            // 添加选择按钮并注册监听
+            isExit.setPositiveButton("YES",diaListener);
+            isExit.setNegativeButton("NO",diaListener);
+            //对话框显示
+            isExit.show();
+        }
+        return false;
+    }
+
+
+    DialogInterface.OnClickListener diaListener=new DialogInterface.OnClickListener() {
+
+        @Override
+        public void onClick(DialogInterface dialog, int buttonId) {
+            // TODO Auto-generated method stub
+            switch (buttonId) {
+                case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
+                    finish();
+                    break;
+                case AlertDialog.BUTTON_NEGATIVE:// "确认"按钮退出程序
+                    //什么都不做
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     // Menu icons are inflated just as they were with actionbar
     @Override
