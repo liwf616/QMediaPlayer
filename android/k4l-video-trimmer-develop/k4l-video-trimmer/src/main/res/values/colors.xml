@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#3f52b5</color>
     <color name="colorPrimaryDark">#242a4c</color>
     <color name="colorAccent">#FF4081</color>
 
@@ -13,4 +13,5 @@
     <color name="line_button">#565758</color>
     <color name="black_translucent">#50000000</color>
     <color name="colorPrimaryBack">#673ab7</color>
+
 </resources>

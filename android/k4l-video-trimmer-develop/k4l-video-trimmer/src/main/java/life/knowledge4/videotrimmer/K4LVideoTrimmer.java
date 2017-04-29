@@ -677,6 +677,10 @@ public class K4LVideoTrimmer extends FrameLayout {
 
         if (mOriginSizeFile == 0) {
             File file = new File(mSrc.getPath());
+            if(!file.exists()) {
+                if (mOnTrimVideoListener != null)
+                    mOnTrimVideoListener.onError("Open file failed, error description: file not exit");
+            }
 
             mOriginSizeFile = file.length();
             long fileSizeInKB = mOriginSizeFile / 1024;
