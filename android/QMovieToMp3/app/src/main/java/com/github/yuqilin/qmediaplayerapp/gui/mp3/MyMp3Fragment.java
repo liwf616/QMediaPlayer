@@ -163,7 +163,6 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
                 } else if (!isFirstPlay){
                     mediaPlayer.start();
                     mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
-                    Toast.makeText(context, "sorry, play audio error!", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -176,13 +175,14 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
             mediaPlayer.setDataSource(item.filePath);
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(context, "sorry, play audio error!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "sorry, play audio failed, my friend!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         try {
             mediaPlayer.prepare();
         } catch (IOException e) {
+            Toast.makeText(context, "sorry, play audio failed, my friend!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             return;
         }

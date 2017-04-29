@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+import android.view.MenuItem;
 
 import life.knowledge4.videotrimmer.K4LVideoTrimmer;
 import life.knowledge4.videotrimmer.interfaces.OnK4LVideoListener;
@@ -47,6 +48,22 @@ public class TrimmerActivity extends AppCompatActivity implements OnTrimVideoLis
             mVideoTrimmer.setVideoURI(Uri.parse(path));
             mVideoTrimmer.setVideoInformationVisibility(true);
         }
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish(); // back button
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -112,7 +129,7 @@ public class TrimmerActivity extends AppCompatActivity implements OnTrimVideoLis
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(TrimmerActivity.this, "onVideoPrepared", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TrimmerActivity.this, "video is prepared, please waiting, my friend", Toast.LENGTH_SHORT).show();
             }
         });
     }

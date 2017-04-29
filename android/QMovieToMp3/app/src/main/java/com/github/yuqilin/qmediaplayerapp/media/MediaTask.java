@@ -199,13 +199,17 @@ public class MediaTask {
         command.addCommand("-ss", generateTime(startTime));
         command.addCommand("-t", generateTime(endTime - startTime));
         command.addCommand("-i", videoPath);
-        command.addCommand("-c:a","aac");
         command.addCommand("-vn");
 
-        if (vbr == 0){
-            command.addCommand("-b:a",bits);
+        if(bits.equals("copy")) {
+            command.addCommand("-c:a", bits);
         } else {
-            command.addCommand("-vbr", String.valueOf(vbr));
+            command.addCommand("-c:a","aac");
+            if (vbr == 0){
+                command.addCommand("-b:a",bits);
+            } else {
+                command.addCommand("-vbr", String.valueOf(vbr));
+            }
         }
 
         command.addCommand(this.videoDstPath);
