@@ -35,3 +35,8 @@ cp $THIS_SCRIPT_PATH/ffmpeg-invoke/libs/arm64-v8a/*.so $JNILIBS_PATH/arm64-v8a/
 cp $THIS_SCRIPT_PATH/ijkplayer/android/contrib/build/fdkaac-armv5/output/lib/libfdk-aac.so /Users/liwenfeng/kingsoft/android/QMovieToMp3/android/QMediaPlayer/qmediaplayer/src/main/jniLibs/armeabi/libfdkaac.so
 cp $THIS_SCRIPT_PATH/ijkplayer/android/contrib/build/fdkaac-armv7a/output/lib/libfdk-aac.so /Users/liwenfeng/kingsoft/android/QMovieToMp3/android/QMediaPlayer/qmediaplayer/src/main/jniLibs/armeabi-v7a/libfdkaac.so
 cp $THIS_SCRIPT_PATH/ijkplayer/android/contrib/build/fdkaac-arm64/output/lib/libfdk-aac.so /Users/liwenfeng/kingsoft/android/QMovieToMp3/android/QMediaPlayer/qmediaplayer/src/main/jniLibs/arm64-v8a/libfdkaac.so
+
+
+cp $THIS_SCRIPT_PATH/ijkplayer/android/contrib/build/lame-armv5/output/lib/libmp3lame.so /Users/liwenfeng/kingsoft/android/QMovieToMp3/android/QMediaPlayer/qmediaplayer/src/main/jniLibs/armeabi/libmp3lame.so
+cp $THIS_SCRIPT_PATH/ijkplayer/android/contrib/build/lame-armv7a/output/lib/libmp3lame.so /Users/liwenfeng/kingsoft/android/QMovieToMp3/android/QMediaPlayer/qmediaplayer/src/main/jniLibs/armeabi-v7a/libmp3lame.so
+cp $THIS_SCRIPT_PATH/ijkplayer/android/contrib/build/lame-arm64/output/lib/libmp3lame.so /Users/liwenfeng/kingsoft/android/QMovieToMp3/android/QMediaPlayer/qmediaplayer/src/main/jniLibs/arm64-v8a/libmp3lame.so

@@ -35,6 +35,8 @@ import com.github.yuqilin.qmediaplayerapp.util.AndroidDevices;
 import com.github.yuqilin.qmediaplayerapp.util.Permissions;
 import com.github.yuqilin.qmediaplayerapp.util.Util;
 
+import life.knowledge4.videotrimmer.utils.MediaInfo;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -263,14 +265,14 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
         //spinner
         mTypeArray = new ArrayList<String>();
 
-        for (String format: MediaTask.MEDIA_AUDIO_FORMAT) {
+        for (String format: MediaInfo.MEDIA_AUDIO_FORMAT) {
             mTypeArray.add(format.toUpperCase());
         }
 
         mBitsArray = new ArrayList<String>();
 
-        for (int i = 0; i < MediaTask.MEDIA_AUDIO_BITS.length; i++) {
-            mBitsArray.add(MediaTask.getComment(i));
+        for (int i = 0; i < MediaInfo.MEDIA_AUDIO_BITS.length; i++) {
+            mBitsArray.add(MediaInfo.getComment(i));
         }
 
         ArrayAdapter<String> typeAdapter =
@@ -715,7 +717,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private AdapterView.OnItemSelectedListener mOnSelectTypeListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mTypeSelected = MediaTask.MEDIA_AUDIO_FORMAT[position];
+            mTypeSelected = MediaInfo.MEDIA_AUDIO_FORMAT[position];
         }
 
         @Override
@@ -726,7 +728,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mBitrateSelected = MediaTask.MEDIA_AUDIO_BITS[position];
+            mBitrateSelected = MediaInfo.MEDIA_AUDIO_BITS[position];
             if( 7 >= position  && position >= 5) {
                 mVBR = position - 2;
             }

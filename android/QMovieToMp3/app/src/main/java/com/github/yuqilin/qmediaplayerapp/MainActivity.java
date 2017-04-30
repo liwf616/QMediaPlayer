@@ -118,7 +118,6 @@ public class MainActivity extends BaseActivity {
     void quitActivity() {
         if(mMyMp3Fragment != null) {
             mMyMp3Fragment.stopPlaying();
-
         }
 
         finish();

@@ -43,10 +43,6 @@ public class MediaTask {
         this.vbr = vbr;
     }
 
-    public static String[] getMediaAudioFormat() {
-        return MEDIA_AUDIO_FORMAT;
-    }
-
     public void setProcess(int process) {
         this.process = process;
     }
@@ -143,32 +139,6 @@ public class MediaTask {
         this.videoDstPath =  destPath + destName;
     }
 
-    public static final String[] MEDIA_AUDIO_FORMAT = {
-//            "mp3",
-            "aac"
-    };
-
-    public static final String[] MEDIA_AUDIO_BITS= {
-            "copy",
-            "128k",
-            "192k",
-            "256k",
-            "320k",
-            "130k",
-            "190k",
-            "245k"
-    };
-
-    public static String getComment(int i) {
-        if(i == 0) {
-            return "copy (32kb/s)";
-        } else  if (i <= 4) {
-            return MEDIA_AUDIO_BITS[i] + " " + "CBR";
-        } else {
-            return MEDIA_AUDIO_BITS[i] + " " + "VBR(slow)";
-        }
-    }
-
     public String getFileName(String pathandname){
         int start=pathandname.lastIndexOf("/");
         int end=pathandname.lastIndexOf(".");
@@ -204,7 +174,7 @@ public class MediaTask {
         if(bits.equals("copy")) {
             command.addCommand("-c:a", bits);
         } else {
-            command.addCommand("-c:a","aac");
+            command.addCommand("-c:a",type);
             if (vbr == 0){
                 command.addCommand("-b:a",bits);
             } else {

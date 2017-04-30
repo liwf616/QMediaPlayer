@@ -79,6 +79,7 @@ if [ "$FF_ARCH" = "armv7a" ]; then
     FF_BUILD_NAME=ffmpeg-armv7a
     FF_BUILD_NAME_OPENSSL=openssl-armv7a
     FF_BUILD_NAME_FDKAAC=fdkaac-armv7a
+    FF_BUILD_NAME_LMAE=lame-armv7a
     FF_BUILD_NAME_LIBSOXR=libsoxr-armv7a
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -98,6 +99,7 @@ elif [ "$FF_ARCH" = "armv5" ]; then
     FF_BUILD_NAME=ffmpeg-armv5
     FF_BUILD_NAME_OPENSSL=openssl-armv5
     FF_BUILD_NAME_FDKAAC=fdkaac-armv5
+    FF_BUILD_NAME_LMAE=lame-armv5
     FF_BUILD_NAME_LIBSOXR=libsoxr-armv5
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -115,6 +117,7 @@ elif [ "$FF_ARCH" = "x86" ]; then
     FF_BUILD_NAME=ffmpeg-x86
     FF_BUILD_NAME_OPENSSL=openssl-x86
     FF_BUILD_NAME_FDKAAC=fdkaac-x86
+    FF_BUILD_NAME_LMAE=lame-x86
     FF_BUILD_NAME_LIBSOXR=libsoxr-x86
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -134,6 +137,7 @@ elif [ "$FF_ARCH" = "x86_64" ]; then
     FF_BUILD_NAME=ffmpeg-x86_64
     FF_BUILD_NAME_OPENSSL=openssl-x86_64
     FF_BUILD_NAME_FDKAAC=fdkaac-x86_64
+    FF_BUILD_NAME_LMAE=lame-x86_64
     FF_BUILD_NAME_LIBSOXR=libsoxr-x86_64
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -153,6 +157,7 @@ elif [ "$FF_ARCH" = "arm64" ]; then
     FF_BUILD_NAME=ffmpeg-arm64
     FF_BUILD_NAME_OPENSSL=openssl-arm64
     FF_BUILD_NAME_FDKAAC=fdkaac-arm64
+    FF_BUILD_NAME_LMAE=lame-arm64
     FF_BUILD_NAME_LIBSOXR=libsoxr-arm64
     FF_SOURCE=$FF_BUILD_ROOT/$FF_BUILD_NAME
 
@@ -191,6 +196,9 @@ FF_DEP_OPENSSL_LIB=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_OPENSSL/output/lib
 
 FF_DEP_FDKAAC_INC=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_FDKAAC/output/include
 FF_DEP_FDKAAC_LIB=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_FDKAAC/output/lib
+
+FF_DEP_LAME_INC=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_LMAE/output/include
+FF_DEP_LAME_LIB=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_LMAE/output/lib
 
 FF_DEP_LIBSOXR_INC=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_LIBSOXR/output/include
 FF_DEP_LIBSOXR_LIB=$FF_BUILD_ROOT/build/$FF_BUILD_NAME_LIBSOXR/output/lib
@@ -279,6 +287,17 @@ if [ -f "${FF_DEP_FDKAAC_LIB}/libfdk-aac.a" ]; then
 
     FF_CFLAGS="$FF_CFLAGS -I${FF_DEP_FDKAAC_INC}"
     FF_DEP_LIBS="$FF_DEP_LIBS -L${FF_DEP_FDKAAC_LIB} -lm -lfdk-aac"
+fi
+
+if [ -f "${FF_DEP_LAME_LIB}/libmp3lame.so" ]; then
+    echo "libmp3lame detected"
+    echo ${FF_DEP_LAME_INC}
+    echo ${FF_DEP_LAME_LIB}
+
+    FF_CFG_FLAGS="$FF_CFG_FLAGS --enable-libmp3lame"
+
+    FF_CFLAGS="$FF_CFLAGS -I${FF_DEP_LAME_INC}"
+    FF_DEP_LIBS="$FF_DEP_LIBS -L${FF_DEP_LAME_LIB} -lm -lmp3lame"
 fi
 
 FF_CFG_FLAGS="$FF_CFG_FLAGS $COMMON_FF_CFG_FLAGS"

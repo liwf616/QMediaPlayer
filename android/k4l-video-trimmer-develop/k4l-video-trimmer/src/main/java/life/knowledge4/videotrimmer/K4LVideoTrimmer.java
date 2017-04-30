@@ -24,7 +24,6 @@
 package life.knowledge4.videotrimmer;
 
 import android.content.Context;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
@@ -58,7 +57,7 @@ import life.knowledge4.videotrimmer.interfaces.OnProgressVideoListener;
 import life.knowledge4.videotrimmer.interfaces.OnRangeSeekBarListener;
 import life.knowledge4.videotrimmer.interfaces.OnTrimVideoListener;
 import life.knowledge4.videotrimmer.utils.BackgroundExecutor;
-import life.knowledge4.videotrimmer.utils.TrimVideoUtils;
+import life.knowledge4.videotrimmer.utils.MediaInfo;
 import life.knowledge4.videotrimmer.utils.UiThreadExecutor;
 import life.knowledge4.videotrimmer.view.ProgressBarView;
 import life.knowledge4.videotrimmer.view.RangeSeekBarView;
@@ -112,22 +111,6 @@ public class K4LVideoTrimmer extends FrameLayout {
     private boolean mResetSeekBar = true;
     private final MessageHandler mMessageHandler = new MessageHandler(this);
 
-    public static final String[] MEDIA_AUDIO_FORMAT = {
-//            "mp3",
-            "aac"
-    };
-
-    public static final String[] MEDIA_AUDIO_BITS= {
-            "copy",
-            "128k",
-            "192k",
-            "256k",
-            "320k",
-            "130k",
-            "190k",
-            "245k"
-    };
-
     public K4LVideoTrimmer(@NonNull Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -157,27 +140,17 @@ public class K4LVideoTrimmer extends FrameLayout {
         setUpMargins();
     }
 
-    public  String getComment(int i) {
-        if(i == 0) {
-            return "copy (32kb/s)";
-        } else  if (i <= 4) {
-            return MEDIA_AUDIO_BITS[i] + " " + "CBR";
-        } else {
-            return MEDIA_AUDIO_BITS[i] + " " + "VBR(slow)";
-        }
-    }
-
     private  void initSpinner(Context context) {
         mTypeArray = new ArrayList<String>();
 
-        for (String format: MEDIA_AUDIO_FORMAT) {
+        for (String format: MediaInfo.MEDIA_AUDIO_FORMAT) {
             mTypeArray.add(format.toUpperCase());
         }
 
         mBitsArray = new ArrayList<String>();
 
-        for (int i = 0; i < MEDIA_AUDIO_BITS.length; i++) {
-            mBitsArray.add(getComment(i));
+        for (int i = 0; i < MediaInfo.MEDIA_AUDIO_BITS.length; i++) {
+            mBitsArray.add(MediaInfo.getComment(i));
         }
 
         ArrayAdapter<String> typeAdapter =
@@ -204,7 +177,7 @@ public class K4LVideoTrimmer extends FrameLayout {
     private AdapterView.OnItemSelectedListener mOnSelectTypeListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mTypeSelected = MEDIA_AUDIO_FORMAT[position];
+            mTypeSelected = MediaInfo.MEDIA_AUDIO_FORMAT[position];
         }
 
         @Override
@@ -215,7 +188,7 @@ public class K4LVideoTrimmer extends FrameLayout {
     private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mBitrateSelected = MEDIA_AUDIO_BITS[position];
+            mBitrateSelected = MediaInfo.MEDIA_AUDIO_BITS[position];
             if( 7 >= position  && position >= 5) {
                 mVBR = position - 2;
             }
