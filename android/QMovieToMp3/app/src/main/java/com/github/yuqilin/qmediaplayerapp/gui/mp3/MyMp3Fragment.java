@@ -47,6 +47,10 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
     public static final int SCAN_CANCEL = 3;
     public static final int SCAN_ADD_ITEM = 4;
 
+    public MyMp3Fragment() {
+        super();
+    }
+
     public MyMp3Fragment(Context ctx) {
         context = ctx;
     }
