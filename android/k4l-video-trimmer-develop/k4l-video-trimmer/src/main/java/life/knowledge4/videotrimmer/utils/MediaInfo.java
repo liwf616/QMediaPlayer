@@ -50,4 +50,48 @@ public class MediaInfo {
             return MediaInfo.MEDIA_MP3_BITS[i] + " " + "VBR(slow)";
         }
     }
+
+    public static String getBits(boolean aac, int position) {
+        if(aac) {
+            return MEDIA_AAC_BITS[position];
+        } else {
+            return  MEDIA_MP3_BITS[position];
+        }
+    }
+
+    public static int getVbr(boolean aac, int position) {
+        int vbr = 0;
+
+        if (aac) {
+            switch (position) {
+                case 5:
+                    vbr = 4;
+                    break;
+                case 6:
+                    vbr = 5;
+                    break;
+                case  7:
+                    vbr = 5;
+                    break;
+                default:
+                    vbr = 0;
+            }
+        } else  {
+            switch (position) {
+                case 4:
+                    vbr = 5;
+                    break;
+                case 5:
+                    vbr = 2;
+                    break;
+                case 6:
+                    vbr = 0;
+                    break;
+                default:
+                    vbr = 0;
+            }
+        }
+
+        return vbr;
+    }
 }

@@ -218,9 +218,12 @@ public class K4LVideoTrimmer extends FrameLayout {
     private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mBitrateSelected = MediaInfo.MEDIA_AAC_BITS[position];
-            if( 7 >= position  && position >= 5) {
-                mVBR = position - 2;
+            if (mTypeSelected.equals("aac")) {
+                mBitrateSelected = MediaInfo.getBits(true, position);
+                mVBR = MediaInfo.getVbr(true, position);
+            } else {
+                mBitrateSelected = MediaInfo.getBits(false, position);
+                mVBR = MediaInfo.getVbr(false, position);
             }
         }
 
