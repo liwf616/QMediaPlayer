@@ -12,7 +12,7 @@ public class MediaInfo {
             "aac"
     };
 
-    public static final String[] MEDIA_AUDIO_BITS= {
+    public static final String[] MEDIA_AAC_BITS = {
             "copy",
             "128k",
             "192k",
@@ -23,13 +23,31 @@ public class MediaInfo {
             "245k"
     };
 
-    public  static  String getComment(int i) {
+    public  static  String getAACComment(int i) {
         if(i == 0) {
             return "copy (32kb/s)";
         } else  if (i <= 4) {
-            return MediaInfo.MEDIA_AUDIO_BITS[i] + " " + "CBR";
+            return MediaInfo.MEDIA_AAC_BITS[i] + " " + "CBR";
         } else {
-            return MediaInfo.MEDIA_AUDIO_BITS[i] + " " + "VBR(slow)";
+            return MediaInfo.MEDIA_AAC_BITS[i] + " " + "VBR(slow)";
+        }
+    }
+
+    public static final String[] MEDIA_MP3_BITS = {
+            "128k",
+            "192k",
+            "256k",
+            "320k",
+            "130k",
+            "190k",
+            "245k"
+    };
+
+    public  static  String getMp3Comment(int i) {
+        if (i <= 3) {
+            return MediaInfo.MEDIA_MP3_BITS[i] + " " + "CBR";
+        } else {
+            return MediaInfo.MEDIA_MP3_BITS[i] + " " + "VBR(slow)";
         }
     }
 }

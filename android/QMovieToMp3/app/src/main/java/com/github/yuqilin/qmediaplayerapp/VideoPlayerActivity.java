@@ -30,7 +30,6 @@ import android.widget.TextView;
 import com.github.yuqilin.qmediaplayer.IMediaController;
 import com.github.yuqilin.qmediaplayer.QMediaPlayerVideoView;
 import com.github.yuqilin.qmediaplayerapp.gui.view.RangeSeekBar;
-import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.util.AndroidDevices;
 import com.github.yuqilin.qmediaplayerapp.util.Permissions;
 import com.github.yuqilin.qmediaplayerapp.util.Util;
@@ -271,8 +270,8 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 
         mBitsArray = new ArrayList<String>();
 
-        for (int i = 0; i < MediaInfo.MEDIA_AUDIO_BITS.length; i++) {
-            mBitsArray.add(MediaInfo.getComment(i));
+        for (int i = 0; i < MediaInfo.MEDIA_AAC_BITS.length; i++) {
+            mBitsArray.add(MediaInfo.getAACComment(i));
         }
 
         ArrayAdapter<String> typeAdapter =
@@ -728,7 +727,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
     private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mBitrateSelected = MediaInfo.MEDIA_AUDIO_BITS[position];
+            mBitrateSelected = MediaInfo.MEDIA_AAC_BITS[position];
             if( 7 >= position  && position >= 5) {
                 mVBR = position - 2;
             }

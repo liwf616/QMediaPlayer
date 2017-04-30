@@ -69,9 +69,9 @@ import static life.knowledge4.videotrimmer.utils.TrimVideoUtils.stringForTime;
 public class K4LVideoTrimmer extends FrameLayout {
 
     private static final String TAG = K4LVideoTrimmer.class.getSimpleName();
-    private static final int MIN_TIME_FRAME = 1000;
     private static final int SHOW_PROGRESS = 2;
 
+    private  Context mContext;
     private SeekBar mHolderTopView;
     private RangeSeekBarView mRangeSeekBarView;
     private RelativeLayout mLinearVideo;
@@ -123,6 +123,7 @@ public class K4LVideoTrimmer extends FrameLayout {
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_time_line, this, true);
 
+        mContext = context;
         mHolderTopView = ((SeekBar) findViewById(R.id.handlerTop));
         mVideoProgressIndicator = ((ProgressBarView) findViewById(R.id.timeVideoView));
         mRangeSeekBarView = ((RangeSeekBarView) findViewById(R.id.timeLineBar));
@@ -135,22 +136,56 @@ public class K4LVideoTrimmer extends FrameLayout {
         mTextTime = ((TextView) findViewById(R.id.textTime));
         mTimeLineView = ((TimeLineView) findViewById(R.id.timeLineView));
 
-        initSpinner(context);
+        initTypeSpinner(context);
+        initBitSpinner(context, true);
+
         setUpListeners();
         setUpMargins();
     }
 
-    private  void initSpinner(Context context) {
+    private void initBitSpinner(Context context, boolean aac) {
+        if (aac) {
+            mBitsArray = new ArrayList<String>();
+
+            for (int i = 0; i < MediaInfo.MEDIA_AAC_BITS.length; i++) {
+                mBitsArray.add(MediaInfo.getAACComment(i));
+            }
+
+            ArrayAdapter<String> bitsAdapter =
+                    new ArrayAdapter<String>(context, R.layout.spinner_item, mBitsArray);
+            bitsAdapter.setDropDownViewResource(R.layout.spinner_item);
+
+
+            mBitsSpinner = (Spinner) findViewById(R.id.view_choose_bit);
+            mBitsSpinner.setAdapter(bitsAdapter);
+            mBitsSpinner.setSelection(1);
+
+            mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
+        } else {
+            mBitsArray = new ArrayList<String>();
+
+            for (int i = 0; i < MediaInfo.MEDIA_MP3_BITS.length; i++) {
+                mBitsArray.add(MediaInfo.getMp3Comment(i));
+            }
+
+            ArrayAdapter<String> bitsAdapter =
+                    new ArrayAdapter<String>(context, R.layout.spinner_item, mBitsArray);
+            bitsAdapter.setDropDownViewResource(R.layout.spinner_item);
+
+
+            mBitsSpinner = (Spinner) findViewById(R.id.view_choose_bit);
+            mBitsSpinner.setAdapter(bitsAdapter);
+            mBitsSpinner.setSelection(0);
+
+            mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
+        }
+    }
+
+    private  void initTypeSpinner(Context context) {
         mTypeArray = new ArrayList<String>();
 
         for (String format: MediaInfo.MEDIA_AUDIO_FORMAT) {
             mTypeArray.add(format.toUpperCase());
-        }
-
-        mBitsArray = new ArrayList<String>();
-
-        for (int i = 0; i < MediaInfo.MEDIA_AUDIO_BITS.length; i++) {
-            mBitsArray.add(MediaInfo.getComment(i));
         }
 
         ArrayAdapter<String> typeAdapter =
@@ -159,25 +194,20 @@ public class K4LVideoTrimmer extends FrameLayout {
 
         mTypeSpinner = (Spinner) findViewById(R.id.view_choose_format);
         mTypeSpinner.setAdapter(typeAdapter);
-        mTypeSpinner.setSelection(0);
-
-        ArrayAdapter<String> bitsAdapter =
-                new ArrayAdapter<String>(context, R.layout.spinner_item, mBitsArray);
-        bitsAdapter.setDropDownViewResource(R.layout.spinner_item);
-
-        mBitsSpinner = (Spinner) findViewById(R.id.view_choose_bit);
-        mBitsSpinner.setAdapter(bitsAdapter);
-        mBitsSpinner.setSelection(1);
+        mTypeSpinner.setSelection(1);
 
         mTypeSpinner.setOnItemSelectedListener(mOnSelectTypeListener);
-        mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
-
     }
 
     private AdapterView.OnItemSelectedListener mOnSelectTypeListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
             mTypeSelected = MediaInfo.MEDIA_AUDIO_FORMAT[position];
+            if (mTypeSelected.equals("aac")) {
+                initBitSpinner(mContext, true);
+            } else {
+                initBitSpinner(mContext, false);
+            }
         }
 
         @Override
@@ -188,7 +218,7 @@ public class K4LVideoTrimmer extends FrameLayout {
     private AdapterView.OnItemSelectedListener mOnSelectBitsListener = new AdapterView.OnItemSelectedListener () {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
-            mBitrateSelected = MediaInfo.MEDIA_AUDIO_BITS[position];
+            mBitrateSelected = MediaInfo.MEDIA_AAC_BITS[position];
             if( 7 >= position  && position >= 5) {
                 mVBR = position - 2;
             }
