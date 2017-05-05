@@ -1,12 +1,9 @@
 package com.github.yuqilin.qmediaplayerapp.media;
 
-import android.os.Environment;
 
-import com.github.yuqilin.qmediaplayerapp.MainActivity;
-import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.Command;
 import com.github.yuqilin.qmediaplayerapp.util.FileUtils;
-import com.github.yuqilin.qmediaplayerapp.util.Strings;
+import com.github.yuqilin.qmediaplayerapp.util.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -194,8 +191,8 @@ public class MediaTask {
     }
 
     public String getProcessText() {
-        String process = VideoPlayerActivity.generateTime(getProcess());
-        String duration = VideoPlayerActivity.generateTime(getEndTime() - getStartTime());
+        String process = Util.generateTime(getProcess());
+        String duration = Util.generateTime(getEndTime() - getStartTime());
 
         return String.format("%s/%s", process, duration);
     }

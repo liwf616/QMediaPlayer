@@ -15,7 +15,6 @@ import android.view.View;
 import com.github.yuqilin.qmediaplayerapp.BaseFragment;
 import com.github.yuqilin.qmediaplayerapp.IEventsHandler;
 import com.github.yuqilin.qmediaplayerapp.R;
-import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.TaskFragment;
 import com.github.yuqilin.qmediaplayerapp.TrimmerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
@@ -173,12 +172,12 @@ public class VideoFragment extends BaseFragment implements IEventsHandler, Video
 
     }
 
-    private void jumpToPlayerActivity(String videoPath, String duration) {
-        Intent intent = new Intent(getContext(), VideoPlayerActivity.class);
-        intent.putExtra("videoPath", videoPath);
-        intent.putExtra("duration", duration);
-        startActivityForResult(intent, 1);
-    }
+//    private void jumpToPlayerActivity(String videoPath, String duration) {
+//        Intent intent = new Intent(getContext(), VideoPlayerActivity.class);
+//        intent.putExtra("videoPath", videoPath);
+//        intent.putExtra("duration", duration);
+//        startActivityForResult(intent, 1);
+//    }
 
     private void startTrimActivity(String videoPath, String duration) {
         Intent intent = new Intent(getContext(), TrimmerActivity.class);

@@ -18,10 +18,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.github.yuqilin.qmediaplayerapp.R;
-import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.MediaTask;
 import com.github.yuqilin.qmediaplayerapp.ITaskEventHandler;
+import com.github.yuqilin.qmediaplayerapp.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +147,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         }
 
         holder.mFileName.setText(media.getVideoDstPath().substring(media.getVideoDstPath().lastIndexOf('/') + 1));
-        holder.setmProcessText(String.format("%s/%s","00:00:00", VideoPlayerActivity.generateTime(media.getEndTime() - media.getStartTime())));
+        holder.setmProcessText(String.format("%s/%s","00:00:00", Util.generateTime(media.getEndTime() - media.getStartTime())));
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
 

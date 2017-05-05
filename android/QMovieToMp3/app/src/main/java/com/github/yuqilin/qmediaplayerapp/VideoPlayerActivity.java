@@ -564,7 +564,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
             mEndPos = (int) max;
 
             final long newCenterPosition = (long) (mEndPos * 1000);
-            String centertime = generateTime(newCenterPosition);
+            String centertime = Util.generateTime(newCenterPosition);
             if(mCenterTime != null) {
                 mCenterTime.setText(centertime);
             }
@@ -578,7 +578,7 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
             mStartPos =(int) min;
 
             final long newPosition = (long) (mStartPos * 1000);
-            String time = generateTime(newPosition);
+            String time = Util.generateTime(newPosition);
 
             if (mInstantSeeking) {
                 mHandler.removeCallbacks(mLastSeekBarRunnable);
@@ -795,28 +795,13 @@ public class VideoPlayerActivity extends AppCompatActivity implements IMediaCont
 //        Log.i(TAG, "duration=" + duration + ", position=" + position);
 
         if (mTotalTime != null)
-            mTotalTime.setText(generateTime(mDuration));
+            mTotalTime.setText(Util.generateTime(mDuration));
         if (mCurrentTime != null)
-            mCurrentTime.setText(generateTime(position));
+            mCurrentTime.setText(Util.generateTime(position));
 
         return position;
     }
 
-    public static String generateTime(long position) {
-        int totalSeconds = (int) (position / 1000);
-
-        int seconds = totalSeconds % 60;
-        int minutes = (totalSeconds / 60) % 60;
-        int hours = totalSeconds / 3600;
-
-        if (hours > 0) {
-            return String.format(Locale.US, "%02d:%02d:%02d", hours, minutes,
-                    seconds).toString();
-        } else {
-            return String.format(Locale.US, "%02d:%02d", minutes, seconds)
-                    .toString();
-        }
-    }
 
     private void rotateScreen() {
         int currentOrientation = getRequestedOrientation();

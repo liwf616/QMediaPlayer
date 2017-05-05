@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.github.yuqilin.qmediaplayerapp.IAudioEventHandler;
 import com.github.yuqilin.qmediaplayerapp.R;
-import com.github.yuqilin.qmediaplayerapp.VideoPlayerActivity;
 import com.github.yuqilin.qmediaplayerapp.media.AudioWrapter;
+import com.github.yuqilin.qmediaplayerapp.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +77,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         Log.d(TAG, "position[" + position + "]: " + media.filePath);
         holder.mFileName.setText(media.filePath.substring(media.filePath.lastIndexOf('/') + 1));
         try {
-            holder.mDuration.setText(VideoPlayerActivity.generateTime(Integer.parseInt(media.duration)));
+            holder.mDuration.setText(Util.generateTime(Integer.parseInt(media.duration)));
         } catch (NumberFormatException e) {
 
         }
