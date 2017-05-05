@@ -15,3 +15,29 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#指定压缩级别
+-optimizationpasses 5
+-keepattributes SourceFile,LineNumberTable
+
+-keepattributes Signature
+-keepattributes *Annotation*
+-keepattributes Exceptions,InnerClasses
+
+# ijkplayer
+-dontwarn tv.danmaku.ijk.media.player.**
+-keep public class tv.danmaku.ijk.media.player.** {*;}
+-keep public interface tv.danmaku.ijk.media.player.** {*;}
+
+-keep public class com.github.yuqilin.qmediaplayer.** { *; }
+-keep public class com.github.yuqilin.qmediaplayerapp.gui.** { *; }
+
+#-keep class com.facebook.ads.** { *; }
+-dontwarn com.googlecode.mp4parser.**
+
+#-keep class com.av.ringtone.model.** { *; }
+
+# 第三方包 jl1.0.1.jar
+-dontwarn javazoom.jl.**
+-keep class javazoom.jl.** { *;}
+
