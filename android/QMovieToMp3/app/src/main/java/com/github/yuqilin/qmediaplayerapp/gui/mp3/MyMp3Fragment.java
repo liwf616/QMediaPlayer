@@ -34,7 +34,7 @@ import java.util.ArrayList;
  */
 
 public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, AudioLoader.AudioLoaderListener{
-    private static final String PAGE_TITLE = "MY MP3";
+    private static final String PAGE_TITLE = "My Audios";
     public static final String TAG = "AudioFragment";
 
     protected AutoFitRecyclerView mGridView;

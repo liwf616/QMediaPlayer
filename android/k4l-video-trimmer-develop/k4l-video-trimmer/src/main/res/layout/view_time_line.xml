@@ -103,7 +103,7 @@
 
             <Spinner
                 android:id="@+id/view_choose_format"
-                android:layout_width="160dp"
+                android:layout_width="140dp"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/view_format"
@@ -115,7 +115,7 @@
 
             <Spinner
                 android:id="@+id/view_choose_bit"
-                android:layout_width="160dp"
+                android:layout_width="140dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/view_bits"
@@ -137,11 +137,11 @@
             <Button
                 android:id="@+id/btCancel"
                 android:layout_alignParentLeft="true"
-                android:layout_width="160dp"
+                android:layout_width="140dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
-                android:background="@drawable/black_button_background"
+                android:background="@color/orange500transparent"
                 android:text="@string/cancel"
                 android:textColor="@android:color/white"/>
 
@@ -153,13 +153,13 @@
                 android:background="@color/line_button"/>
 
             <Button
-                android:id="@+id/btSave"
+                android:id="@+id/btConvert"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_width="160dp"
+                android:layout_width="140dp"
                 android:layout_height="40dp"
-                android:background="@drawable/black_button_background"
+                android:background="@color/orange500transparent"
                 android:text="@string/convert"
                 android:textColor="@android:color/white"/>
 

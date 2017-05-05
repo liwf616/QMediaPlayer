@@ -33,7 +33,7 @@ import java.util.ArrayList;
 public class VideoFragment extends BaseFragment implements IEventsHandler, VideoLoader.VideoLoaderListener {
     public static final String TAG = "VideoFragment";
 
-    private static final String PAGE_TITLE = "VIDEOS";
+    private static final String PAGE_TITLE = "Videos";
 
     public static final int SCAN_START = 1;
     public static final int SCAN_FINISH = 2;

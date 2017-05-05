@@ -252,7 +252,7 @@ public class K4LVideoTrimmer extends FrameLayout {
                         }
                 );
 
-        findViewById(R.id.btSave)
+        findViewById(R.id.btConvert)
                 .setOnClickListener(
                         new OnClickListener() {
                             @Override

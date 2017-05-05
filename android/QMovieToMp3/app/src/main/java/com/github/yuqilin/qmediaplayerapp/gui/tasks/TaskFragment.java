@@ -26,7 +26,7 @@ import com.github.yuqilin.qmediaplayerapp.ITaskEventHandler;
 
 public class TaskFragment extends BaseFragment implements ITaskEventHandler {
     public static final String TAG = "TaskFragment";
-    private static final String PAGE_TITLE = "TASKS";
+    private static final String PAGE_TITLE = "Tasks";
 
     protected AutoFitRecyclerView mGridView;
     private TaskListAdapter mTaskListAdapter;
