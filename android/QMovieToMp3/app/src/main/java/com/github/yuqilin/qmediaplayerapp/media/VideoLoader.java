@@ -72,7 +72,7 @@ public class VideoLoader {
                 media.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
                 media.duration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
 
-                if (Integer.parseInt(media.duration) == 0) {
+                if (media.duration == null || Integer.parseInt(media.duration) == 0) {
                     media.duration = String.valueOf(10 * 3600) ;
                 }
 
