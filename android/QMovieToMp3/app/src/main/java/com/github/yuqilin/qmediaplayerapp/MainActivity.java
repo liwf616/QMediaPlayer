@@ -1,6 +1,8 @@
 package com.github.yuqilin.qmediaplayerapp;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.AudioFormat;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -94,6 +96,13 @@ public class MainActivity extends BaseActivity {
         mViewPagerTab.setCustomTabView(R.layout.custom_tab, R.id.custom_text);
         mViewPagerTab.setDividerColors(getResources().getColor(R.color.transparent));
         mViewPagerTab.setViewPager(mViewPager);
+    }
+
+    public static void launch(Context context) {
+        Intent i = new Intent(context, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
     }
 
     @Override
