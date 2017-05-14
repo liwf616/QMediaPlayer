@@ -113,6 +113,15 @@ public class MediaTask {
         this.startTime = startTime;
         this.endTime = endTime;
 
+        this.videoDstPath =  genDstName();
+        if (this.videoDstPath == null) {
+            return;
+        }
+    }
+
+    private String genDstName() {
+        String destName = null;
+
         Date now = new Date();
         SimpleDateFormat simpleDate =  new SimpleDateFormat("yyyyMMddHHmmss");
 
@@ -120,23 +129,24 @@ public class MediaTask {
 
         String destPath = FileUtils.getStoragePath();
         if (destPath == null) {
-            return;
+            return null;
         }
 
         String filename = getFileName(videoPath);
-        String destName = null;
+
         if(filename != null) {
             Random random = new Random(100);
 
-            destName  = filename + time + "." + type;
+            destName  = destPath + filename + time + "." + type;
         } else {
-            return;
+            return null;
         }
 
-        this.videoDstPath =  destPath + destName;
+        return destName;
     }
 
-    public String getFileName(String pathandname){
+
+    private String getFileName(String pathandname){
         int start=pathandname.lastIndexOf("/");
         int end=pathandname.lastIndexOf(".");
         if (start!=-1 && end!=-1) {
@@ -166,16 +176,23 @@ public class MediaTask {
         command.addCommand("-ss", generateTime(startTime));
         command.addCommand("-t", generateTime(endTime - startTime));
         command.addCommand("-i", videoPath);
-        command.addCommand("-vn");
 
-        if(bits.equals("copy")) {
-            command.addCommand("-c:a", bits);
+        if (type.equals("mp4")) {
+            if (bits.equals("copy")) {
+                command.addCommand("-c:v", bits);
+                command.addCommand("-c:a", bits);
+            }
         } else {
-            command.addCommand("-c:a",type);
-            if (vbr == 0){
-                command.addCommand("-b:a",bits);
+            command.addCommand("-vn");
+            if(bits.equals("copy")) {
+                command.addCommand("-c:a", bits);
             } else {
-                command.addCommand("-vbr", String.valueOf(vbr));
+                command.addCommand("-c:a", type);
+                if (vbr == 0){
+                    command.addCommand("-b:a", bits);
+                } else {
+                    command.addCommand("-vbr", String.valueOf(vbr));
+                }
             }
         }
 

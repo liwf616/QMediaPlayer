@@ -137,14 +137,14 @@ public class K4LVideoTrimmer extends FrameLayout {
         mTimeLineView = ((TimeLineView) findViewById(R.id.timeLineView));
 
         initTypeSpinner(context);
-        initBitSpinner(context, true);
+        initBitSpinner(context, "aac");
 
         setUpListeners();
         setUpMargins();
     }
 
-    private void initBitSpinner(Context context, boolean aac) {
-        if (aac) {
+    private void initBitSpinner(Context context, String mTypeSelected) {
+        if (mTypeSelected.equals("aac")) {
             mBitsArray = new ArrayList<String>();
 
             for (int i = 0; i < MediaInfo.MEDIA_AAC_BITS.length; i++) {
@@ -161,11 +161,28 @@ public class K4LVideoTrimmer extends FrameLayout {
             mBitsSpinner.setSelection(1);
 
             mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
-        } else {
+        } else if(mTypeSelected.equals("mp3")){
             mBitsArray = new ArrayList<String>();
 
             for (int i = 0; i < MediaInfo.MEDIA_MP3_BITS.length; i++) {
                 mBitsArray.add(MediaInfo.getMp3Comment(i));
+            }
+
+            ArrayAdapter<String> bitsAdapter =
+                    new ArrayAdapter<String>(context, R.layout.spinner_item, mBitsArray);
+            bitsAdapter.setDropDownViewResource(R.layout.spinner_item);
+
+
+            mBitsSpinner = (Spinner) findViewById(R.id.view_choose_bit);
+            mBitsSpinner.setAdapter(bitsAdapter);
+            mBitsSpinner.setSelection(0);
+
+            mBitsSpinner.setOnItemSelectedListener(mOnSelectBitsListener);
+        } else if(mTypeSelected.equals("mp4")) {
+            mBitsArray = new ArrayList<String>();
+
+            for (int i = 0; i < MediaInfo.MEDIA_MP4_BITS.length; i++) {
+                mBitsArray.add(MediaInfo.getVideoCommnet(i));
             }
 
             ArrayAdapter<String> bitsAdapter =
@@ -203,11 +220,7 @@ public class K4LVideoTrimmer extends FrameLayout {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
             mTypeSelected = MediaInfo.MEDIA_AUDIO_FORMAT[position];
-            if (mTypeSelected.equals("aac")) {
-                initBitSpinner(mContext, true);
-            } else {
-                initBitSpinner(mContext, false);
-            }
+            initBitSpinner(mContext, mTypeSelected);
         }
 
         @Override
@@ -219,11 +232,14 @@ public class K4LVideoTrimmer extends FrameLayout {
         @Override
         public void onItemSelected(AdapterView parent, View v, int position, long id) {
             if (mTypeSelected.equals("aac")) {
-                mBitrateSelected = MediaInfo.getBits(true, position);
+                mBitrateSelected = MediaInfo.getBits(mTypeSelected, position);
                 mVBR = MediaInfo.getVbr(true, position);
-            } else {
-                mBitrateSelected = MediaInfo.getBits(false, position);
+            } else if (mTypeSelected.equals("mp3")) {
+                mBitrateSelected = MediaInfo.getBits(mTypeSelected, position);
                 mVBR = MediaInfo.getVbr(false, position);
+            } else if (mTypeSelected.equals("mp4")) {
+                mBitrateSelected = MediaInfo.getBits(mTypeSelected, position);
+                mVBR = 0;
             }
         }
 

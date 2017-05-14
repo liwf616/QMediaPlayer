@@ -6,10 +6,10 @@ package life.knowledge4.videotrimmer.utils;
 
 public class MediaInfo {
 
-
     public static final String[] MEDIA_AUDIO_FORMAT = {
             "mp3",
-            "aac"
+            "aac",
+            "mp4"
     };
 
     public static final String[] MEDIA_AAC_BITS = {
@@ -23,16 +23,6 @@ public class MediaInfo {
             "245k"
     };
 
-    public  static  String getAACComment(int i) {
-        if(i == 0) {
-            return "copy (32kb/s)";
-        } else  if (i <= 4) {
-            return MediaInfo.MEDIA_AAC_BITS[i] + " " + "CBR";
-        } else {
-            return MediaInfo.MEDIA_AAC_BITS[i] + " " + "VBR(slow)";
-        }
-    }
-
     public static final String[] MEDIA_MP3_BITS = {
             "128k",
             "192k",
@@ -43,6 +33,20 @@ public class MediaInfo {
             "245k"
     };
 
+    public static final String[] MEDIA_MP4_BITS = {
+            "copy"
+    };
+
+    public  static  String getAACComment(int i) {
+        if(i == 0) {
+            return "copy (32kb/s)";
+        } else  if (i <= 4) {
+            return MediaInfo.MEDIA_AAC_BITS[i] + " " + "CBR";
+        } else {
+            return MediaInfo.MEDIA_AAC_BITS[i] + " " + "VBR(slow)";
+        }
+    }
+
     public  static  String getMp3Comment(int i) {
         if (i <= 3) {
             return MediaInfo.MEDIA_MP3_BITS[i] + " " + "CBR";
@@ -51,11 +55,17 @@ public class MediaInfo {
         }
     }
 
-    public static String getBits(boolean aac, int position) {
-        if(aac) {
+    public static String getVideoCommnet(int i ) {
+        return "copy";
+    }
+
+    public static String getBits(String type, int position) {
+        if(type.equals("aac")) {
             return MEDIA_AAC_BITS[position];
-        } else {
+        } else if(type.equals("mp3")) {
             return  MEDIA_MP3_BITS[position];
+        } else {
+            return  MEDIA_MP4_BITS[position];
         }
     }
 
