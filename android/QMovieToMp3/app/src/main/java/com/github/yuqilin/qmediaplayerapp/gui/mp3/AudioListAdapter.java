@@ -78,6 +78,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         holder.mFileName.setText(media.filePath.substring(media.filePath.lastIndexOf('/') + 1));
         try {
             holder.mDuration.setText(Util.generateTime(Integer.parseInt(media.duration)));
+            holder.mMediaType.setText("audio");
         } catch (NumberFormatException e) {
 
         }
@@ -164,7 +165,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         private ImageView mPlayStatus;
         private TextView mDuration;
         private TextView mFileName;
-        private TextView mArtlist;
+        private TextView mMediaType;
 
         public ViewHolder(View v) {
             super(v);
@@ -173,6 +174,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
             mPlayStatus = (ImageView) v.findViewById(R.id.item_audio_play_status);
             mFileName = (TextView) v.findViewById(R.id.item_audio_list_filename);
             mDuration = (TextView) v.findViewById(R.id.item_audio_list_duration);
+            mMediaType = (TextView) v.findViewById(R.id.item_media_type);
         }
 
         @Override
