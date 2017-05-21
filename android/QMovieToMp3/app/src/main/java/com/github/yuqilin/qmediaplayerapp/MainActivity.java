@@ -21,6 +21,7 @@ import com.github.yuqilin.qmediaplayerapp.gui.video.VideoFragment;
 import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.github.yuqilin.qmediaplayerapp.util.NavigationUtils;
+import com.github.yuqilin.qmediaplayerapp.util.ShareUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,16 +114,16 @@ public class MainActivity extends BaseActivity {
                             case R.id.menu_about:
                                 NavigationUtils.goToAbout(MainActivity.this);
                                 break;
-//                            case R.id.menu_rate:
-//                                String appPackageName = getPackageName();
-//                                launchAppDetail(appPackageName, "com.android.vending");
-//                                break;
-//                            case R.id.menu_invite:
-//                                ShareUtils.shareAppText(MainActivity.this);
-//                                break;
-//                            case R.id.menu_help:
-//                                ShareUtils.adviceEmail(MainActivity.this);
-//                                break;
+                            case R.id.menu_rate:
+                                String appPackageName = getPackageName();
+                                launchAppDetail(appPackageName, "com.android.vending");
+                                break;
+                            case R.id.menu_invite:
+                                ShareUtils.shareAppText(MainActivity.this);
+                                break;
+                            case R.id.menu_help:
+                                ShareUtils.adviceEmail(MainActivity.this);
+                                break;
                         }
                         return false;
                     }
