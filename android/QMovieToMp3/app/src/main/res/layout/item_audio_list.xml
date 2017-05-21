@@ -54,12 +54,13 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!--<ImageView-->
-        <!--android:id="@+id/item_audio_info"-->
-        <!--android:layout_width="24dp"-->
-        <!--android:layout_height="24dp"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:src="@drawable/icon_cut"/>-->
+    <ImageView
+        android:id="@+id/popup_menu"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/ic_more"/>
 
 </LinearLayout>

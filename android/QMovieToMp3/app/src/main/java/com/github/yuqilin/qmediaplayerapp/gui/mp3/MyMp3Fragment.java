@@ -14,6 +14,7 @@ import android.view.View;
 import com.github.yuqilin.qmediaplayerapp.BaseFragment;
 import com.github.yuqilin.qmediaplayerapp.IAudioEventHandler;
 import com.github.yuqilin.qmediaplayerapp.IEventsHandler;
+import com.github.yuqilin.qmediaplayerapp.MainActivity;
 import com.github.yuqilin.qmediaplayerapp.R;
 import com.github.yuqilin.qmediaplayerapp.TrimmerActivity;
 import com.github.yuqilin.qmediaplayerapp.gui.video.VideoListAdapter;
@@ -94,7 +95,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
     protected void initView(View view, Bundle savedInstanceState) {
         mAudioLoader = new AudioLoader(this);
         mGridView = (AutoFitRecyclerView) view.findViewById(R.id.audio_grid);
-        mAudioAdapter = new AudioListAdapter(this);
+        mAudioAdapter = new AudioListAdapter((MainActivity) context, this);
 
         mGridView.setAdapter(mAudioAdapter);
 

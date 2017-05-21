@@ -40,4 +40,24 @@
 
     <!--about-->
     <string name="about_version">Version: V %1$s</string>
+
+
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_success"> delete success</string>
+    <string name="delete_content">Are you sure to delete this file?</string>
+    <string name="delete_title">Delete file</string>
+
+
+    <string name="menu_set_default">Set as default ringtone</string>
+    <string name="menu_set_notification">Set as default notification</string>
+    <string name="menu_set_alarm">Set as alarm ringtone</string>
+    <string name="menu_share">Share</string>
+
+
+
+    <string name="file_save_title">Save As:</string>
+    <string name="file_save_button_save">Save</string>
+    <string name="file_save_button_cancel">Cancel</string>
+
     </resources>

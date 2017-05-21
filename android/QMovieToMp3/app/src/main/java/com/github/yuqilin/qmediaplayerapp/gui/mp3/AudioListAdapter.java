@@ -1,21 +1,28 @@
 package com.github.yuqilin.qmediaplayerapp.gui.mp3;
 
 import android.content.Context;
+import android.provider.MediaStore;
 import android.support.annotation.MainThread;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.github.yuqilin.qmediaplayerapp.IAudioEventHandler;
 import com.github.yuqilin.qmediaplayerapp.R;
+import com.github.yuqilin.qmediaplayerapp.gui.view.CommonDialog;
 import com.github.yuqilin.qmediaplayerapp.media.AudioWrapter;
+import com.github.yuqilin.qmediaplayerapp.util.ToastUtils;
 import com.github.yuqilin.qmediaplayerapp.util.Util;
+import com.github.yuqilin.qmediaplayerapp.MainActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +38,13 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
     private boolean mListMode = true;
     private int mGridCardWidth = 0;
 
+    private MainActivity mContext;
 
-    public AudioListAdapter(IAudioEventHandler eventsHandler) {
+
+    public AudioListAdapter(MainActivity context, IAudioEventHandler eventsHandler) {
         super();
         mEventsHandler = eventsHandler;
+        mContext = context;
     }
 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -94,6 +104,8 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
             Log.d(TAG, "onBindViewHolder position " + position + ", payloads size " + payloads.size());
             onBindViewHolder(holder, position);
         }
+
+        setOnPopupMenuListener(holder, position);
     }
 
     public void onViewRecycled(AudioListAdapter.ViewHolder holder) {
@@ -166,6 +178,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         private TextView mDuration;
         private TextView mFileName;
         private TextView mMediaType;
+        private ImageView popupMenu;
 
         public ViewHolder(View v) {
             super(v);
@@ -175,10 +188,96 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
             mFileName = (TextView) v.findViewById(R.id.item_audio_list_filename);
             mDuration = (TextView) v.findViewById(R.id.item_audio_list_duration);
             mMediaType = (TextView) v.findViewById(R.id.item_media_type);
+            popupMenu = (ImageView) v.findViewById(R.id.popup_menu);
         }
 
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
         }
+    }
+
+    private void setOnPopupMenuListener(ViewHolder itemHolder, final int position) {
+        itemHolder.popupMenu.setTag(mAudios.get(position));
+        itemHolder.popupMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AudioWrapter audioWrapter = (AudioWrapter) v.getTag();
+                final PopupMenu menu = new PopupMenu(mContext, v);
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+//                            case R.id.popup_song_edit:
+//                                NavigationUtils.goToCutter(mContext, audioWrapter);
+//                                break;
+                            case R.id.popup_song_delete:
+                                CommonDialog deldialog =
+                                        new CommonDialog(mContext, mContext.getString(R.string.delete_title), mContext.getString(R.string.delete_content),"Delete",new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                File file = new File(audioWrapter.filePath);
+                                                if (file.exists()) {
+                                                    file.delete();
+                                                    String params[] = new String[] { file.getPath() };
+                                                    mContext.getContentResolver().delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                                                            MediaStore.Images.Media.DATA + " LIKE ?", params);
+                                                }
+
+                                                mAudios.remove(audioWrapter);
+                                                notifyItemRemoved(position);
+                                                ToastUtils.makeToastAndShow(mContext,mContext.getString(R.string.delete_success));
+                                            }
+                                        });
+
+                                deldialog.setCancelable(false);
+                                deldialog.show();
+                                break;
+//                            case R.id.popup_song_default:
+//                                CommonDialog dialog =
+//                                        new CommonDialog(mContext, mContext.getString(R.string.set_ringtone_title),mContext.getString(R.string.set_ringtone_content),"",new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_RINGTONE,
+//                                                        Uri.fromFile(new File(audioWrapter.path)));
+//                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_ringtone_success));
+//                                            }
+//                                        });
+//                                dialog.setCancelable(true);
+//                                dialog.show();
+//                                break;
+//                            case R.id.popup_song_notification:
+//                                CommonDialog notidialog =
+//                                        new CommonDialog(mContext, mContext.getString(R.string.set_notification_title), mContext.getString(R.string.set_notification_content),"",new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_NOTIFICATION,
+//                                                        Uri.fromFile(new File(audioWrapter.path)));
+//                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_notification_success));
+//                                            }
+//                                        });
+//                                notidialog.setCancelable(true);
+//                                notidialog.show();
+//                                break;
+//                            case R.id.popup_song_alarm:
+//                                CommonDialog alarmdialog =
+//                                        new CommonDialog(mContext, mContext.getString(R.string.set_alarm_title), mContext.getString(R.string.set_alarm_content),"",new View.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(View v) {
+//                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_ALARM,
+//                                                        Uri.fromFile(new File(audioWrapter.path)));
+//                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_alarm_success));
+//                                            }
+//                                        });
+//                                alarmdialog.setCancelable(true);
+//                                alarmdialog.show();
+//                                break;
+                        }
+                        return false;
+                    }
+                });
+                menu.inflate(R.menu.popup_song);
+                menu.show();
+            }
+        });
     }
 }
