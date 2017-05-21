@@ -3,22 +3,24 @@ package com.github.yuqilin.qmediaplayerapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.AudioFormat;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import com.github.yuqilin.qmediaplayerapp.gui.mp3.MyMp3Fragment;
 import com.github.yuqilin.qmediaplayerapp.gui.tasks.TaskFragment;
 import com.github.yuqilin.qmediaplayerapp.gui.video.VideoFragment;
 import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.github.yuqilin.qmediaplayerapp.util.NavigationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ public class MainActivity extends BaseActivity {
     private VideoFragment mVideoFragment;
 
     private TaskFragment  mTaskFragment;
+    private int mCurrentPage = 0;
 
     public MyMp3Fragment getmMyMp3Fragment() {
         return mMyMp3Fragment;
@@ -49,17 +52,13 @@ public class MainActivity extends BaseActivity {
 
     private MyMp3Fragment mMyMp3Fragment;
 
-    private AsyncTask<String, Integer, String> mTask;
+    private ImageView mMoreMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-//        mFragments.add(new HomeFragment());
         mVideoFragment = new VideoFragment();
         mFragments.add(mVideoFragment);
 
@@ -96,6 +95,57 @@ public class MainActivity extends BaseActivity {
         mViewPagerTab.setCustomTabView(R.layout.custom_tab, R.id.custom_text);
         mViewPagerTab.setDividerColors(getResources().getColor(R.color.transparent));
         mViewPagerTab.setViewPager(mViewPager);
+
+        mMoreMenu = (ImageView) findViewById(R.id.menu);
+
+        initMenu();
+    }
+
+    private void initMenu() {
+        mMoreMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final PopupMenu menu = new PopupMenu(MainActivity.this, v);
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.menu_about:
+                                NavigationUtils.goToAbout(MainActivity.this);
+                                break;
+//                            case R.id.menu_rate:
+//                                String appPackageName = getPackageName();
+//                                launchAppDetail(appPackageName, "com.android.vending");
+//                                break;
+//                            case R.id.menu_invite:
+//                                ShareUtils.shareAppText(MainActivity.this);
+//                                break;
+//                            case R.id.menu_help:
+//                                ShareUtils.adviceEmail(MainActivity.this);
+//                                break;
+                        }
+                        return false;
+                    }
+                });
+//
+                menu.getMenuInflater().inflate(R.menu.popup_main, menu.getMenu());
+                if (mCurrentPage == 0) {
+//                    menu.getMenu().setGroupVisible(R.id.menu_group_sort, false);
+                } else {
+//                    menu.getMenu().setGroupVisible(R.id.menu_group_sort, true);
+                    if (mCurrentPage == 1) {
+                        menu.getMenu().getItem(0).getSubMenu().getItem(2).setVisible(true);
+                        menu.getMenu().getItem(0).getSubMenu().getItem(3).setVisible(true);
+                        menu.getMenu().getItem(0).getSubMenu().getItem(4).setVisible(true);
+                    } else {
+                        menu.getMenu().getItem(0).getSubMenu().getItem(2).setVisible(false);
+                        menu.getMenu().getItem(0).getSubMenu().getItem(3).setVisible(false);
+                        menu.getMenu().getItem(0).getSubMenu().getItem(4).setVisible(false);
+                    }
+                }
+                menu.show();
+            }
+        });
     }
 
     public static void launch(Context context) {

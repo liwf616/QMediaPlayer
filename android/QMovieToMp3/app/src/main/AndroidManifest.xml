@@ -36,6 +36,10 @@
             />
 
         <activity
+            android:name=".AboutActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".TrimmerActivity"
             />
 

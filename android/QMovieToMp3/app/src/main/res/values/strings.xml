@@ -30,4 +30,14 @@
     <string name="video_saved_at">Video saves at : $%1s</string>
     <string name="trimming_progress">Trimming your video...</string>
     <string name="extra_audio_path">EXTRA_VIDEO_PATH</string>
+
+    <string name="title_main">Video To Mp3</string>
+
+    <string name="menu_about">About</string>
+    <string name="menu_rate">Rate us</string>
+    <string name="menu_invite">Invite Friends</string>
+    <string name="menu_help">Help &amp; Feedback</string>
+
+    <!--about-->
+    <string name="about_version">Version: V %1$s</string>
     </resources>
