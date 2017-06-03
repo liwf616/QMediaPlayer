@@ -3,6 +3,7 @@ package com.github.yuqilin.qmediaplayerapp.gui.mp3;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -58,8 +59,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
 
 
     MediaPlayer mediaPlayer;
-    int pos = 0;
-    boolean isFirstPlay = true;
+    AudioWrapter currentItem;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -152,28 +152,18 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
         }
     }
 
-    @Override
-    public void onClick(View v, int position, AudioWrapter item) {
-        ImageView mCurrentPlayStatus ;
-
-        mCurrentPlayStatus = (ImageView) v.findViewById(R.id.item_audio_play_status);
-
-        if (pos == position) {
-            if (mediaPlayer != null) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.pause();
-                    mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
-                    return;
-                } else if (!isFirstPlay) {
-                    mediaPlayer.start();
-                    mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
-                    return;
-                }
-            }
-        } else {
+    public void play (AudioWrapter item) {
+        if (mediaPlayer.isPlaying()){
+            Log.d("progress ", "isPlaying");
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.reset();
-            mAudioAdapter.setPlayStatus(pos, R.drawable.icon_music);
         }
+
+        mediaPlayer.reset();
 
         try {
             mediaPlayer.setDataSource(item.filePath);
@@ -192,10 +182,40 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
         }
 
         mediaPlayer.start();
+    }
 
-        pos = position;
-        isFirstPlay = false;
-        mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
+    public void pause(){
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
+    }
+
+    public void stop() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
+    }
+
+    /*处理歌曲的播放及暂停的逻辑
+    * 1.如果当前歌曲正在播放，则暂停该音乐，并设置图标
+    * 2.如果当前歌曲并不在播放，则更新前一首歌曲的图标，然后开始播放当前歌曲
+    * */
+
+    public void onClick(View v, int position, AudioWrapter item) {
+        if (item.playStatus == 0) {
+            play(item);
+            item.playStatus = 1;
+        } else {
+            pause();
+            item.playStatus = 0;
+        }
+
+        if (currentItem != null && item != currentItem){
+            currentItem.playStatus = 0;
+        }
+
+        currentItem = item;
+        mAudioAdapter.notifyDataSetChanged();
     }
 
     @Override

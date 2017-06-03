@@ -93,6 +93,13 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
 
         }
 
+
+        if (media.playStatus == 0) {
+            holder.mPlayStatus.setImageResource(R.drawable.icon_music);
+        } else  {
+            holder.mPlayStatus.setImageResource(R.drawable.icon_pause);
+        }
+
         holder.mListItem.setTag(media);
         holder.mListItem.setOnClickListener(mOnClickListener);
     }
@@ -228,7 +235,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
                                                 }
 
                                                 mAudios.remove(audioWrapter);
-                                                notifyItemRemoved(position);
+                                                notifyDataSetChanged();
 
                                                 ToastUtils.makeToastAndShow(mContext,mContext.getString(R.string.delete_success));
                                             }

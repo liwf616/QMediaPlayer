@@ -16,4 +16,5 @@ public class AudioWrapter {
     public String artlist;
     public  int postion;
     public AudioListAdapter.ViewHolder holder;
+    public int playStatus;
 }
