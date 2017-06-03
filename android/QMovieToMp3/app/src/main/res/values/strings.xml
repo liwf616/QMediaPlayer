@@ -60,4 +60,18 @@
     <string name="file_save_button_save">Save</string>
     <string name="file_save_button_cancel">Cancel</string>
 
-    </resources>
+    <string name="set_ringtone_title">Set as default ringtone</string>
+    <string name="set_notification_title">Set as default notification</string>
+    <string name="set_alarm_title">Set as default alarm</string>
+
+    <string name="set_ringtone_content">Are you sure to set as default ringtone?</string>
+
+    <string name="set_ringtone_success">Yes, Set Default Ringtone success!</string>
+    <string name="set_notification_success">Yes, Set Default Notification success!</string>
+    <string name="set_alarm_success">Yes, Set Default Alarm success!</string>
+    <string name="set_notification_content">Are you sure to set as default notification?</string>
+
+    <string name="set_alarm_content">Are you sure to set as alarm ringtone?</string>
+
+
+</resources>

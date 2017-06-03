@@ -22,6 +22,10 @@ import com.github.yuqilin.qmediaplayerapp.util.ToastUtils;
 import com.github.yuqilin.qmediaplayerapp.util.Util;
 import com.github.yuqilin.qmediaplayerapp.MainActivity;
 
+
+import android.media.RingtoneManager;
+import android.net.Uri;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -244,45 +248,45 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
                                 deldialog.setCancelable(false);
                                 deldialog.show();
                                 break;
-//                            case R.id.popup_song_default:
-//                                CommonDialog dialog =
-//                                        new CommonDialog(mContext, mContext.getString(R.string.set_ringtone_title),mContext.getString(R.string.set_ringtone_content),"",new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_RINGTONE,
-//                                                        Uri.fromFile(new File(audioWrapter.path)));
-//                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_ringtone_success));
-//                                            }
-//                                        });
-//                                dialog.setCancelable(true);
-//                                dialog.show();
-//                                break;
-//                            case R.id.popup_song_notification:
-//                                CommonDialog notidialog =
-//                                        new CommonDialog(mContext, mContext.getString(R.string.set_notification_title), mContext.getString(R.string.set_notification_content),"",new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_NOTIFICATION,
-//                                                        Uri.fromFile(new File(audioWrapter.path)));
-//                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_notification_success));
-//                                            }
-//                                        });
-//                                notidialog.setCancelable(true);
-//                                notidialog.show();
-//                                break;
-//                            case R.id.popup_song_alarm:
-//                                CommonDialog alarmdialog =
-//                                        new CommonDialog(mContext, mContext.getString(R.string.set_alarm_title), mContext.getString(R.string.set_alarm_content),"",new View.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(View v) {
-//                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_ALARM,
-//                                                        Uri.fromFile(new File(audioWrapter.path)));
-//                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_alarm_success));
-//                                            }
-//                                        });
-//                                alarmdialog.setCancelable(true);
-//                                alarmdialog.show();
-//                                break;
+                            case R.id.popup_song_default:
+                                CommonDialog dialog =
+                                        new CommonDialog(mContext, mContext.getString(R.string.set_ringtone_title),mContext.getString(R.string.set_ringtone_content),"",new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_RINGTONE,
+                                                        Uri.fromFile(new File(audioWrapter.filePath)));
+                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_ringtone_success));
+                                            }
+                                        });
+                                dialog.setCancelable(true);
+                                dialog.show();
+                                break;
+                            case R.id.popup_song_notification:
+                                CommonDialog notidialog =
+                                        new CommonDialog(mContext, mContext.getString(R.string.set_notification_title), mContext.getString(R.string.set_notification_content),"",new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_NOTIFICATION,
+                                                        Uri.fromFile(new File(audioWrapter.filePath)));
+                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_notification_success));
+                                            }
+                                        });
+                                notidialog.setCancelable(true);
+                                notidialog.show();
+                                break;
+                            case R.id.popup_song_alarm:
+                                CommonDialog alarmdialog =
+                                        new CommonDialog(mContext, mContext.getString(R.string.set_alarm_title), mContext.getString(R.string.set_alarm_content),"",new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                RingtoneManager.setActualDefaultRingtoneUri(mContext, RingtoneManager.TYPE_ALARM,
+                                                        Uri.fromFile(new File(audioWrapter.filePath)));
+                                                ToastUtils.makeToastAndShowLong(mContext, mContext.getString(R.string.set_alarm_success));
+                                            }
+                                        });
+                                alarmdialog.setCancelable(true);
+                                alarmdialog.show();
+                                break;
                         }
                         return false;
                     }
