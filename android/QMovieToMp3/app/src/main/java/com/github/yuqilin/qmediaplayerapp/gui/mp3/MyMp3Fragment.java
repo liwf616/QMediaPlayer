@@ -218,6 +218,14 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
         mAudioAdapter.notifyDataSetChanged();
     }
 
+    public void onDelete(AudioWrapter item) {
+        if ( currentItem != null &&
+                currentItem == item &&
+                currentItem.playStatus == 1) {
+            stop();
+        }
+    }
+
     @Override
     public boolean onLongClick(View v, int position, AudioWrapter item) {
         return false;

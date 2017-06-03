@@ -11,4 +11,5 @@ import com.github.yuqilin.qmediaplayerapp.media.AudioWrapter;
 public interface IAudioEventHandler {
     void onClick(View v, int position, AudioWrapter item);
     boolean onLongClick(View v, int position, AudioWrapter item);
+    void onDelete(AudioWrapter item);
 }

@@ -93,7 +93,6 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
 
         }
 
-
         if (media.playStatus == 0) {
             holder.mPlayStatus.setImageResource(R.drawable.icon_music);
         } else  {
@@ -235,6 +234,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
                                                 }
 
                                                 mAudios.remove(audioWrapter);
+                                                mEventsHandler.onDelete(audioWrapter);
                                                 notifyDataSetChanged();
 
                                                 ToastUtils.makeToastAndShow(mContext,mContext.getString(R.string.delete_success));
