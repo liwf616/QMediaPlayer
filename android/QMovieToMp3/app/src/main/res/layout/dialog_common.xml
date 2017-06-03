@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="56dip"
             android:text="@string/file_save_button_cancel"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_gray"
             android:textSize="14sp" />
 
         <TextView
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dip"
             android:text="OK"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/text_gray"
             android:textSize="14sp" />
 
 

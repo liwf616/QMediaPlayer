@@ -94,7 +94,9 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
 
     protected void initView(View view, Bundle savedInstanceState) {
         mAudioLoader = new AudioLoader(this);
+
         mGridView = (AutoFitRecyclerView) view.findViewById(R.id.audio_grid);
+
         mAudioAdapter = new AudioListAdapter((MainActivity) context, this);
 
         mGridView.setAdapter(mAudioAdapter);
@@ -162,7 +164,7 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
                     mediaPlayer.pause();
                     mCurrentPlayStatus.setImageResource(R.drawable.icon_play);
                     return;
-                } else if (!isFirstPlay){
+                } else if (!isFirstPlay) {
                     mediaPlayer.start();
                     mCurrentPlayStatus.setImageResource(R.drawable.icon_pause);
                     return;

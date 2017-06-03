@@ -130,6 +130,8 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         notifyDataSetChanged();
     }
 
+    /*
+    * add audio file to the end of list*/
     public void addAudio(AudioWrapter audio) {
         int position = getItemCount();
 
@@ -156,8 +158,8 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
         return mAudios.size();
     }
 
-    public void setPlayStatus(int pos,final int resId){
-        if (pos > mAudios.size()) {
+    public void setPlayStatus(int pos, final int resId){
+        if (pos >= mAudios.size()) {
             return;
         }
 
@@ -198,11 +200,13 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
 
     private void setOnPopupMenuListener(ViewHolder itemHolder, final int position) {
         itemHolder.popupMenu.setTag(mAudios.get(position));
+
         itemHolder.popupMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final AudioWrapter audioWrapter = (AudioWrapter) v.getTag();
                 final PopupMenu menu = new PopupMenu(mContext, v);
+
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -225,6 +229,7 @@ public class AudioListAdapter extends RecyclerView.Adapter<AudioListAdapter.View
 
                                                 mAudios.remove(audioWrapter);
                                                 notifyItemRemoved(position);
+
                                                 ToastUtils.makeToastAndShow(mContext,mContext.getString(R.string.delete_success));
                                             }
                                         });
