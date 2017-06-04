@@ -1,9 +1,12 @@
 package com.github.yuqilin.qmediaplayerapp.gui.mp3;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,11 +26,15 @@ import com.github.yuqilin.qmediaplayerapp.gui.view.AutoFitRecyclerView;
 import com.github.yuqilin.qmediaplayerapp.media.AudioLoader;
 import com.github.yuqilin.qmediaplayerapp.media.AudioWrapter;
 import com.github.yuqilin.qmediaplayerapp.media.VideoWrapper;
+import com.github.yuqilin.qmediaplayerapp.util.FileUtils;
+
 import android.media.MediaPlayer;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -43,6 +50,9 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
     private AudioListAdapter mAudioAdapter;
     private AudioLoader mAudioLoader;
     Context context;
+
+    private TextView mPathTv;
+    private LinearLayout mOpenFilell;
 
     public static final int SCAN_START = 1;
     public static final int SCAN_FINISH = 2;
@@ -104,6 +114,36 @@ public class MyMp3Fragment extends BaseFragment implements IAudioEventHandler, A
         mHandler.sendEmptyMessage(SCAN_START);
 
         mediaPlayer = new MediaPlayer();
+
+        mPathTv = (TextView) view.findViewById(R.id.path_tv);
+        mPathTv.setText(FileUtils.getStoragePath());
+
+        mOpenFilell = (LinearLayout)view.findViewById(R.id.openll);
+        mOpenFilell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAssignFolder(FileUtils.getStoragePath());
+            }
+        });
+    }
+
+
+    //使用文件管理器打开指定文件夹
+    private void openAssignFolder(String path){
+        File file = new File(path);
+        if(null==file || !file.exists()){
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(Uri.fromFile(file), "audio/*");
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
