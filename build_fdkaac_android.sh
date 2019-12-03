@@ -2,15 +2,14 @@
 
 set -e
 
-ANDROID_NDK=/Users/liwenfeng/gsx/android_sdks/android-ndk-r13b
-# ANDROID_NDK=/Users/yuqilin/tools/adt-bundle-mac-x86_64-20140702/sdk/ndk-bundle
-
 BUILD_ROOT=$(cd "$(dirname "$0")"; pwd)/build_out
+
 THIRD_PARTY=${BUILD_ROOT}/../ijkplayer/extra
 
 FDKAAC_VERSION=0.1.4
 FDKAAC_ROOT=${THIRD_PARTY}/fdk-aac-${FDKAAC_VERSION}
 
+echo $FDKAAC_ROOT
 cd $FDKAAC_ROOT
 
 $ANDROID_NDK/ndk-build V=1 NDK_PROJECT_PATH=. APP_BUILD_SCRIPT=./Android.mk NDK_APPLICATION_MK=./Application.mk clean

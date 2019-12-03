@@ -2,8 +2,6 @@
 
 set -e
 
-ANDROID_NDK=/Users/liwenfeng/gsx/android_sdks/android-ndk-r13b
-
 BUILD_ROOT=$(cd "$(dirname "$0")"; pwd)/
 THIRD_PARTY=${BUILD_ROOT}/ijkplayer/extra
 

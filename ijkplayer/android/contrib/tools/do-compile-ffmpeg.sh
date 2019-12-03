@@ -40,7 +40,7 @@ fi
 
 
 FF_BUILD_ROOT=`pwd`
-FF_ANDROID_PLATFORM=android-9
+FF_ANDROID_PLATFORM=android-21
 
 
 FF_BUILD_NAME=
@@ -215,12 +215,21 @@ mkdir -p $FF_PREFIX
 # mkdir -p $FF_SYSROOT
 
 
+echo "[*] make NDK standalone toolchain success"
+echo "$FF_TOOLCHAIN_PATH/touch"
+echo "$FF_MAKE_TOOLCHAIN_FLAGS"
+echo "$FF_ANDROID_PLATFORM"
+echo "$FF_TOOLCHAIN_NAME"
+echo "---------------------"
+
 FF_TOOLCHAIN_TOUCH="$FF_TOOLCHAIN_PATH/touch"
 if [ ! -f "$FF_TOOLCHAIN_TOUCH" ]; then
     $ANDROID_NDK/build/tools/make-standalone-toolchain.sh \
         $FF_MAKE_TOOLCHAIN_FLAGS \
         --platform=$FF_ANDROID_PLATFORM \
-        --toolchain=$FF_TOOLCHAIN_NAME
+        --toolchain=$FF_TOOLCHAIN_NAME \
+        --force \
+        --deprecated-headers
     touch $FF_TOOLCHAIN_TOUCH;
 fi
 
